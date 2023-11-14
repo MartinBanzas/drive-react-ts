@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FicheroModel from "../../models/FicheroModel";
+import { Download } from "../utils/Download";
 
 
 
@@ -10,7 +11,7 @@ export const FilesTable = () => {
 
   useEffect(() => {
     const fetchFicheros = async () => {
-      const baseUrl: string = "http://localhost:8082/api/ficheroes";
+      const baseUrl: string = "http://localhost:8081/api/ficheroes";
       const url: string = `${baseUrl}?page=0&size=9`;
       const response = await fetch(url);
 
@@ -19,6 +20,7 @@ export const FilesTable = () => {
       }
       const responseJson = await response.json();
 
+      console.log(responseJson);
       const responseData = responseJson._embedded.ficheroes;
 
       const loadedFiles: FicheroModel[] = [];
@@ -52,9 +54,7 @@ export const FilesTable = () => {
     <div>
       {ficheros.map((file) => (
         <div key={file.id}>
-          <a href={r + file.ruta} download={file.ruta}>
-            {file.ruta}
-          </a>
+          <Download file={file}/>
           <p>{file.descripcion}</p>
         </div>
       ))}
