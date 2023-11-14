@@ -20,7 +20,7 @@ export const NavBar = () => {
             <div className="ms-md-auto pe-md-3 d-flex align-items-center">
                 
                 <div className="input-group input-group-outline">
-                  <label className="form-label">Type here...</label>
+                  <label className="form-label">Introduce para buscar</label>
                   <input type="text" className="form-control"/>
                 </div>
                 

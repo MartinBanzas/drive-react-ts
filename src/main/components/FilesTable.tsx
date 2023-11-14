@@ -7,7 +7,6 @@ import { Download } from "../utils/Download";
 export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
-  const r = "../../../../Proyectos/Drive/uploads/";
 
   useEffect(() => {
     const fetchFicheros = async () => {
@@ -51,14 +50,34 @@ export const FilesTable = () => {
   }
 
   return (
-    <div>
-      {ficheros.map((file) => (
-        <div key={file.id}>
-          <Download file={file}/>
-          <p>{file.descripcion}</p>
-        </div>
-      ))}
-      <img src="../../../../Proyectos/Drive/uploads/cat-2083492_1280.jpg"/>
+    <div className="container-sm mt-5 overflow-auto bg-white rounded">
+      <table className="table table-striped rounded align-items-center ">
+        <thead>
+          <tr>
+            <th scope="col" className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
+            <th scope="col" className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Descripción</th>
+            <th scope="col" className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tipo</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {ficheros.map((file) => (
+            <tr key={file.id}>
+              <td>
+                <Download file={file} />
+              </td>
+              <td>{file.descripcion}</td>
+              <td>{file.descripcion}</td>
+            </tr>
+
+          )
+          
+          )}
+
+          
+        </tbody>
+      </table>
     </div>
   );
-};
+
+}

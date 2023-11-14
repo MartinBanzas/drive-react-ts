@@ -6,13 +6,13 @@ import { Footer } from './main/components/Footer';
 
 function App() {
   return (
-    <div>
-     <NavBar/>
-  
-  <FilesTable/>
-  <Footer/>
- </div>
-    
+    <div className='bg-gray-200'>
+      <NavBar />
+      <SideBar />
+      <FilesTable />
+      <Footer />
+    </div>
+
   );
 }
 

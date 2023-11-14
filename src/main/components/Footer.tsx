@@ -4,7 +4,7 @@ export const Footer = () => {
 
 
   return (
-    <footer className="footer py-4  fixed-bottom  ">
+    <footer className="footer py-4  fixed-bottom bg-gray-200  ">
       <div className="container-fluid">
         <div className="row align-items-center justify-content-lg-between">
           <div className="col-lg-6 mb-lg-4 ">
