@@ -10,7 +10,7 @@ export const FilesTable = () => {
 
   useEffect(() => {
     const fetchFicheros = async () => {
-      const baseUrl: string = "http://localhost:8081/api/ficheroes";
+      const baseUrl: string = "http://localhost:8082/api/ficheroes";
       const url: string = `${baseUrl}?page=0&size=9`;
       const response = await fetch(url);
 
@@ -29,6 +29,8 @@ export const FilesTable = () => {
           id: responseData[key].id,
           descripcion: responseData[key].descripcion,
           ruta: responseData[key].ruta,
+          tipo:responseData[key].tipo,
+          size:responseData[key].size
         });
       }
       setFicheros(loadedFiles);
@@ -50,7 +52,7 @@ export const FilesTable = () => {
   }
 
   return (
-    <div className="container-sm mt-5 overflow-auto bg-white rounded">
+    <div className="container-sm overflow-auto bg-white rounded ">
       <table className="table table-striped rounded align-items-center ">
         <thead>
           <tr>
@@ -67,7 +69,7 @@ export const FilesTable = () => {
                 <Download file={file} />
               </td>
               <td>{file.descripcion}</td>
-              <td>{file.descripcion}</td>
+              <td>{file.tipo}</td>
             </tr>
 
           )

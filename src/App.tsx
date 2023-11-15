@@ -6,7 +6,7 @@ import { Footer } from './main/components/Footer';
 
 function App() {
   return (
-    <div className='bg-gray-200'>
+    <div className='bg-gray-200' style={{height:"100vh"}}>
       <NavBar />
       <SideBar />
       <FilesTable />
