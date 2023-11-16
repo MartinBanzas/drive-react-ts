@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FicheroModel from "../../models/FicheroModel";
 import { Download } from "../utils/Download";
-import {formatFecha, formatSize} from "../utils/Utils";
+import {formatFecha, formatSize, getImg} from "../utils/Utils";
 
 
 export const FilesTable = () => {
@@ -10,7 +10,7 @@ export const FilesTable = () => {
 
   useEffect(() => {
     const fetchFicheros = async () => {
-      const baseUrl: string = "http://localhost:8081/api/ficheroes";
+      const baseUrl: string = "http://localhost:8082/api/ficheroes";
       const url: string = `${baseUrl}?page=0&size=9`;
       const response = await fetch(url);
 
@@ -29,7 +29,7 @@ export const FilesTable = () => {
           id: responseData[key].id,
           descripcion: responseData[key].descripcion,
           ruta: responseData[key].ruta,
-          tipo: responseData[key].tipo,
+          tipo: getImg(responseData[key].tipo),
           size: formatSize(responseData[key].size),
           fCreacion: formatFecha(responseData[key].fcreacion), //lower case, always use lower case...
         })
@@ -55,6 +55,10 @@ export const FilesTable = () => {
   }
 
   const ultimosFicheros = ficheros.slice(-7);
+
+  {ultimosFicheros.map((file, index) => (
+    <p key={index}>{/* Contenido basado en file */}</p>
+  ))}
 
   return (
     <div className="container-sm overflow-auto bg-white rounded ">
@@ -95,7 +99,7 @@ export const FilesTable = () => {
                 <Download file={file} />
               </td>
               <td>{file.descripcion}</td>
-              <td>{file.tipo}</td>
+              <td><img src={file.tipo} height="28px" width="28px"></img></td>
               <td>{file.size}</td>
               <td>{file.fCreacion}</td>
             </tr>

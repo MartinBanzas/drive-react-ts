@@ -1,3 +1,22 @@
+import css from "../../assets/icons/css.png";
+import pdf from "../../assets/icons/pdf.png";
+import java from "../../assets/icons/java.png";
+import gif from "../../assets/icons/gif.png";
+import html from "../../assets/icons/html.png"
+import odf from "../../assets/icons/odf.png";
+import doc from "../../assets/icons/doc.png";
+import jpg from "../../assets/icons/jpg.png";
+import png from "../../assets/icons/png.png";
+import zip from "../../assets/icons/zip.png";
+import sql from "../../assets/icons/sql.png";
+import txt from "../../assets/icons/txt.png";
+import cpp from "../../assets/icons/cpp.png"
+import js from "../../assets/icons/js.png"
+import df from "../../assets/icons/_blank.png"
+
+
+
+
 
 export const formatFecha = (fechaStr: string) => {
     const fecha = new Date(fechaStr);
@@ -20,4 +39,31 @@ export const formatSize = (size: number) => {
     }
 }
 
+export const getImg = (tipo: string) => {
+
+    switch (tipo) {
+
+        case "text/plain":
+        case "Optional[txt]": return txt; 
+
+        case "application/vnd.oasis.opendocument.text": return odf; 
+        case "application/pdf": return pdf; 
+        case "image/jpeg": return jpg; 
+        case "image/png": return png; 
+        case "application/msword": return doc;
+
+        case "text/javascript":
+        case "application/json": return js; ;
+
+        case "application/vnd.rar":
+        case "application/x-7z-compressed":
+        case "application/zip": return zip; 
+
+        case "text/html": return html; 
+
+        default: return df; 
+
+
+    }
+}
 
