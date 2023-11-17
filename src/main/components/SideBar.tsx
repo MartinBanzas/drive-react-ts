@@ -54,7 +54,7 @@ return (
                   <i className="material-icons opacity-10">receipt_long</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Billing</span>
+                <span className="nav-link-text ms-1">Conversor</span>
               </a>
             </li>
 
@@ -66,7 +66,7 @@ return (
                   <i className="material-icons opacity-10">view_in_ar</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Virtual Reality</span>
+                <span className="nav-link-text ms-1">Tetris</span>
               </a>
             </li>
 
