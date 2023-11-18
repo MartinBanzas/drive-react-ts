@@ -1,7 +1,7 @@
 
 import { SideBar } from './main/components/SideBar';
 import { NavBar } from './main/components/NavBar';
-import { FilesTable } from './main/components/FilesTable';
+import { FilesTable } from './main/components/Drive/FilesTable';
 import { Footer } from './main/components/Footer';
 
 function App() {

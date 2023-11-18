@@ -1,18 +1,18 @@
-import css from "../../assets/icons/css.png";
-import pdf from "../../assets/icons/pdf.png";
-import java from "../../assets/icons/java.png";
-import gif from "../../assets/icons/gif.png";
-import html from "../../assets/icons/html.png"
-import odf from "../../assets/icons/odf.png";
-import doc from "../../assets/icons/doc.png";
-import jpg from "../../assets/icons/jpg.png";
-import png from "../../assets/icons/png.png";
-import zip from "../../assets/icons/zip.png";
-import sql from "../../assets/icons/sql.png";
-import txt from "../../assets/icons/txt.png";
-import cpp from "../../assets/icons/cpp.png"
-import js from "../../assets/icons/js.png"
-import df from "../../assets/icons/_blank.png"
+import css from ".../../../../assets/icons/css.png";
+import pdf from "../../../../assets/icons/pdf.png";
+import java from "../../../../assets/icons/java.png";
+import gif from "../../../../assets/icons/gif.png";
+import html from "../../../../assets/icons/html.png"
+import odf from "../../../../assets/icons/odf.png";
+import doc from "../../../../assets/icons/doc.png";
+import jpg from "../../../../assets/icons/jpg.png";
+import png from "../../../../assets/icons/png.png";
+import zip from "../../../../assets/icons/zip.png";
+import sql from "../../../../assets/icons/sql.png";
+import txt from "../../../../assets/icons/txt.png";
+import cpp from "../../../../assets/icons/cpp.png"
+import js from "../../../../assets/icons/js.png"
+import ImgDefault from "../../../../assets/icons/_blank.png"
 
 
 
@@ -61,7 +61,7 @@ export const getImg = (tipo: string) => {
 
         case "text/html": return html; 
 
-        default: return df; 
+        default: return ImgDefault; 
 
 
     }

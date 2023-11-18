@@ -1,4 +1,4 @@
-import FicheroModel from "../../models/FicheroModel";
+import FicheroModel from "../../../models/FicheroModel";
 
 interface DownloadProps {
     file:FicheroModel;

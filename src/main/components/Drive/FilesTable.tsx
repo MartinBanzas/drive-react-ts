@@ -1,17 +1,54 @@
 import React, { useEffect, useState } from "react";
-import FicheroModel from "../../models/FicheroModel";
-import { Download } from "../utils/Download";
-import { formatFecha, formatSize, getImg } from "../utils/Utils";
+import FicheroModel from "../../../models/FicheroModel";
+import { Download } from "./Download";
+import { formatFecha, formatSize, getImg } from "./utils/Utils";
 
 
 export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
+  const [fichero, setFichero] = useState<File | null>(null);
+  
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = event.target.files;
+    setFichero(fileList ? fileList[0] : null);
+  }
+
+    const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!fichero) {
+      console.error("No se ha seleccionado ningún archivo.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", fichero);
+
+    try {
+      const response = await fetch("http://localhost:8082/drive/new/upload", {
+        method: "POST",
+        body: formData,
+      });
+    
+
+      if (response.ok) {
+        console.log(response);
+        console.log("File uploaded successfully");
+      
+      } else {
+        console.error("Failed to upload file");
+        
+      }
+    } catch (error) {
+      console.error("Error uploading file", error);
+    }
+  };
 
   useEffect(() => {
     const fetchFicheros = async () => {
       const baseUrl: string = "http://localhost:8082/api/ficheroes";
-      const url: string = `${baseUrl}?page=0&size=9`;
+      const url: string = `${baseUrl}`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -44,6 +81,15 @@ export const FilesTable = () => {
     });
   }, []);
 
+  async function handleSubmit(e: React.SyntheticEvent) {
+
+    e.preventDefault();
+    const file = new FileReader;
+    if (typeof file==='undefined') {
+     return;
+    }
+    const formData = new FormData();
+  }
 
 
   if (httpError) {
@@ -54,37 +100,40 @@ export const FilesTable = () => {
     );
   }
 
-  const ultimosFicheros = ficheros.slice(-3);
+  const ficherosDestacados = ficheros.slice(-3);
+  const baseUrl = "http://localhost:8082/drive";
 
 
 
 
   return (
     <div className="container-md text-center mt-4 bg-white rounded">
-    <div className="container-sm">
-      <div className="row"  >
-        {ultimosFicheros.map((file, index) => (
-          <div key={index} className="col-md-4 mb-4" >
-           
-            <div className="card mw-20 mt-3 h-100 overflow-hidden">
-              <div className="row g-0">
-                <div className="col-md-4">
-                  <img src={file.tipo} height={96} width={96} className=" img-fluid rounded-start" alt="..." />
-                </div>
-                <div className="col-md-8">
-                  <div className="card-body">
-                    <h5 className="card-title ">{file.ruta}</h5>
-                    <p className="card-text">{file.fCreacion}</p>
-                   
+      <div className="container-sm">
+        <div className="row">
+          {ficherosDestacados.map((file, index) => (
+            <div key={index} className="col-md-4 mb-4">
+              <div className="card mw-20 mt-3 h-100 ">
+                <div className="row g-0">
+                  <div className="col-md-4">
+                    <a className="card-title" href={`${baseUrl}/get/${file.id}`} download={file.ruta}>
+                      <img src={file.tipo} height={96} width={96} className="img-fluid rounded-start mt-4" alt="..." />
+                    </a>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <a className="card-title" href={`${baseUrl}/get/${file.id}`} download={file.ruta}>
+                        <h5 className="card-title">{file.ruta}</h5>
+                      </a>
+                      <p className="card-text">{file.fCreacion}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
       </div>
-      <div>
+      <div className="table-container" style={{ overflowY: "auto", maxHeight: "550px" }}>
         <table className="table table-striped rounded align-items-center">
           <thead>
             <tr>
@@ -95,7 +144,6 @@ export const FilesTable = () => {
               <th scope="col" className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha de modificación</th>
             </tr>
           </thead>
-  
           <tbody>
             {ficheros.map((file) => (
               <tr key={file.id}>
@@ -111,6 +159,11 @@ export const FilesTable = () => {
           </tbody>
         </table>
       </div>
+      <form onSubmit={handleUpload}>
+      <input type='file' onChange={handleFileChange}></input>
+            <input type="submit"></input>
+      </form>
     </div>
+    
   );
 }
