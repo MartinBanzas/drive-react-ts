@@ -1,50 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import FicheroModel from "../../../models/FicheroModel";
 import { Download } from "./Download";
 import { formatFecha, formatSize, getImg } from "./utils/Utils";
+import { FileRejection, useDropzone } from 'react-dropzone'
 
 
 export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
-  const [fichero, setFichero] = useState<File | null>(null);
-  
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = event.target.files;
-    setFichero(fileList ? fileList[0] : null);
-  }
 
-    const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!fichero) {
-      console.error("No se ha seleccionado ningún archivo.");
-      return;
-    }
-
+  const onDrop = useCallback(async (acceptedFiles: File[], rejectedFiles: FileRejection[], event: any) => {   
+    event.preventDefault();
+    event.stopPropagation();
+    const file = new FileReader;
+    file.readAsDataURL(acceptedFiles[0]);
     const formData = new FormData();
-    formData.append("file", fichero);
-
+    formData.append("file", acceptedFiles[0]);
     try {
       const response = await fetch("http://localhost:8082/drive/new/upload", {
         method: "POST",
         body: formData,
       });
-    
-
       if (response.ok) {
         console.log(response);
         console.log("File uploaded successfully");
-      
       } else {
         console.error("Failed to upload file");
-        
       }
     } catch (error) {
       console.error("Error uploading file", error);
     }
-  };
+  }, [])
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
+
+/*Hay que revisar useEffect para que esto se dispare cada vez que se sube un archivo*/
   useEffect(() => {
     const fetchFicheros = async () => {
       const baseUrl: string = "http://localhost:8082/api/ficheroes";
@@ -81,15 +71,6 @@ export const FilesTable = () => {
     });
   }, []);
 
-  async function handleSubmit(e: React.SyntheticEvent) {
-
-    e.preventDefault();
-    const file = new FileReader;
-    if (typeof file==='undefined') {
-     return;
-    }
-    const formData = new FormData();
-  }
 
 
   if (httpError) {
@@ -100,10 +81,10 @@ export const FilesTable = () => {
     );
   }
 
+
+
   const ficherosDestacados = ficheros.slice(-3);
   const baseUrl = "http://localhost:8082/drive";
-
-
 
 
   return (
@@ -133,7 +114,8 @@ export const FilesTable = () => {
           ))}
         </div>
       </div>
-      <div className="table-container" style={{ overflowY: "auto", maxHeight: "550px" }}>
+      <div {...getRootProps()} className="table-container" style={{ overflowY: "auto", maxHeight: "550px" }}>
+      <input {...getInputProps()} />
         <table className="table table-striped rounded align-items-center">
           <thead>
             <tr>
@@ -145,11 +127,15 @@ export const FilesTable = () => {
             </tr>
           </thead>
           <tbody>
+
+
             {ficheros.map((file) => (
-              <tr key={file.id}>
-                <td>
-                  <Download file={file} />
-                </td>
+
+              <tr key={file.id}> 
+                <td><Download file={file} />
+                <div {...getRootProps()}>
+              <input {...getInputProps()} />
+            </div></td>
                 <td>{file.descripcion}</td>
                 <td><img src={file.tipo} height="28px" width="28px" alt="icono" /></td>
                 <td>{file.size}</td>
@@ -159,11 +145,7 @@ export const FilesTable = () => {
           </tbody>
         </table>
       </div>
-      <form onSubmit={handleUpload}>
-      <input type='file' onChange={handleFileChange}></input>
-            <input type="submit"></input>
-      </form>
+
     </div>
-    
   );
 }
