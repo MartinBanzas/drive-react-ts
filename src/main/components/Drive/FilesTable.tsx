@@ -21,7 +21,7 @@ export const FilesTable = () => {
     formData.append("file", acceptedFiles[0]);
     
     try {
-      const response = await fetch("http://localhost:8082/drive/new/upload", {
+      const response = await fetch("http://localhost:8081/drive/new/upload", {
         method: "POST",
         body: formData,
       });
@@ -43,7 +43,7 @@ export const FilesTable = () => {
 
   //Fetch data for the file table
 const fetchFicheros = useCallback(async () => {
-  const baseUrl: string = "http://localhost:8082/api/ficheroes";
+  const baseUrl: string = "http://localhost:8081/api/ficheroes";
   const url: string = `${baseUrl}`;
   
   try {
@@ -88,7 +88,7 @@ useEffect(() => {
     );
   }
   const ficherosDestacados = ficheros.slice(-3);
-  const baseUrl = "http://localhost:8082/drive";
+  const baseUrl = "http://localhost:8081/drive";
 
   return (
     <div>
@@ -131,10 +131,7 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-
-
             {ficheros.map((file) => (
-
               <tr key={file.id}> 
                 <td><Download file={file}/> </td>
                 <td>{file.descripcion}</td>
