@@ -9,6 +9,7 @@ export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
 
+  //File Upload handling
   const onDrop = useCallback(async (acceptedFiles: File[], rejectedFiles: FileRejection[], event: any) => {   
     event.preventDefault();
     event.stopPropagation();
@@ -24,6 +25,7 @@ export const FilesTable = () => {
       if (response.ok) {
         console.log(response);
         console.log("File uploaded successfully");
+        fetchFicheros();
       } else {
         console.error("Failed to upload file");
       }
@@ -34,44 +36,44 @@ export const FilesTable = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
 
-/*Hay que revisar useEffect para que esto se dispare cada vez que se sube un archivo*/
-  useEffect(() => {
-    const fetchFicheros = async () => {
-      const baseUrl: string = "http://localhost:8082/api/ficheroes";
-      const url: string = `${baseUrl}`;
-      const response = await fetch(url);
+  //Fetch data for the file table
+const fetchFicheros = useCallback(async () => {
+  const baseUrl: string = "http://localhost:8082/api/ficheroes";
+  const url: string = `${baseUrl}`;
+  
+  try {
+    const response = await fetch(url);
 
-      if (!response.ok) {
-        throw new Error('Algo ha ido mal');
-      }
-      const responseJson = await response.json();
+    if (!response.ok) {
+      throw new Error('Algo ha ido mal');
+    }
 
-      console.log(responseJson);
-      const responseData = responseJson._embedded.ficheroes;
+    const responseJson = await response.json();
+    const responseData = responseJson._embedded.ficheroes;
 
-      const loadedFiles: FicheroModel[] = [];
+    const loadedFiles: FicheroModel[] = [];
 
-      for (const key in responseData) {
-        loadedFiles.push({
-          id: responseData[key].id,
-          descripcion: responseData[key].descripcion,
-          ruta: responseData[key].ruta,
-          tipo: getImg(responseData[key].tipo),
-          size: formatSize(responseData[key].size),
-          fCreacion: formatFecha(responseData[key].fcreacion), //lower case, always use lower case...
-        })
+    for (const key in responseData) {
+      loadedFiles.push({
+        id: responseData[key].id,
+        descripcion: responseData[key].descripcion,
+        ruta: responseData[key].ruta,
+        tipo: getImg(responseData[key].tipo),
+        size: formatSize(responseData[key].size),
+        fCreacion: formatFecha(responseData[key].fcreacion),
+      });
+    }
 
+    setFicheros(loadedFiles);
+  } catch (error) {
+   
+  }
+}, []);
 
-      }
-      setFicheros(loadedFiles);
-    };
-
-    fetchFicheros().catch((error: any) => {
-      setHttpError(error.message);
-    });
-  }, []);
-
-
+//Initial load of data with fetchFicheros
+useEffect(() => {
+  fetchFicheros();
+}, [fetchFicheros]);
 
   if (httpError) {
     return (
@@ -80,12 +82,8 @@ export const FilesTable = () => {
       </div>
     );
   }
-
-
-
   const ficherosDestacados = ficheros.slice(-3);
   const baseUrl = "http://localhost:8082/drive";
-
 
   return (
     <div className="container-md text-center mt-4 bg-white rounded">
@@ -132,10 +130,7 @@ export const FilesTable = () => {
             {ficheros.map((file) => (
 
               <tr key={file.id}> 
-                <td><Download file={file} />
-                <div {...getRootProps()}>
-              <input {...getInputProps()} />
-            </div></td>
+                <td><Download file={file}/> </td>
                 <td>{file.descripcion}</td>
                 <td><img src={file.tipo} height="28px" width="28px" alt="icono" /></td>
                 <td>{file.size}</td>
