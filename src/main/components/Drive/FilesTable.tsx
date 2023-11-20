@@ -3,11 +3,13 @@ import FicheroModel from "../../../models/FicheroModel";
 import { Download } from "./Download";
 import { formatFecha, formatSize, getImg } from "./utils/Utils";
 import { FileRejection, useDropzone } from 'react-dropzone'
+import { NewUpload } from "./NewUpload";
 
 
 export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
+  const [newUpload, setNewUpload]=useState(false);
 
   //File Upload handling
   const onDrop = useCallback(async (acceptedFiles: File[], rejectedFiles: FileRejection[], event: any) => {   
@@ -17,6 +19,7 @@ export const FilesTable = () => {
     file.readAsDataURL(acceptedFiles[0]);
     const formData = new FormData();
     formData.append("file", acceptedFiles[0]);
+    
     try {
       const response = await fetch("http://localhost:8082/drive/new/upload", {
         method: "POST",
@@ -25,6 +28,7 @@ export const FilesTable = () => {
       if (response.ok) {
         console.log(response);
         console.log("File uploaded successfully");
+        setNewUpload(true);
         fetchFicheros();
       } else {
         console.error("Failed to upload file");
@@ -32,6 +36,7 @@ export const FilesTable = () => {
     } catch (error) {
       console.error("Error uploading file", error);
     }
+    setNewUpload(true);
   }, [])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
@@ -86,6 +91,7 @@ useEffect(() => {
   const baseUrl = "http://localhost:8082/drive";
 
   return (
+    <div>
     <div className="container-md text-center mt-4 bg-white rounded">
       <div className="container-sm">
         <div className="row">
@@ -140,7 +146,9 @@ useEffect(() => {
           </tbody>
         </table>
       </div>
-
+     
     </div>
+   
+ </div>
   );
 }
