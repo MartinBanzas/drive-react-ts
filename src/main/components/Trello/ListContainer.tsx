@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { AddCard } from "./AddCard";
 import { Card } from "./Card";
 import { DragDropContext, Droppable, Draggable, DropResult, DraggableLocation } from "react-beautiful-dnd";
-
+import { collection, addDoc, getDocs, setDoc, doc, onSnapshot } from "firebase/firestore";
+import { db, getCards } from "./utils/firebase";
 
 export const ListContainer = () => {
 
-  localStorage.clear();
-  const localStorageJSON = localStorage.getItem("card");
-  const userData = localStorageJSON ? JSON.parse(localStorageJSON) : [];
-  const [lists, setLists] = useState(userData);
+ 
 
-  const saveTasksToLocalStorage = (updatedCards: {}) =>
-    localStorage.setItem("card", JSON.stringify(updatedCards));
+  const [lists, setLists] = useState<any>([]);
+  
+  const saveToFirebase = async (data: any) => {
+    try {
+     const { id } = data.id; // Asume que el ID está en la primera lista
+      const docRef = await setDoc(doc(db, 'tarjetas', "listas"), data);
+      console.log("Documento actualizado con ID: ", id);
+    } catch (error) {
+      console.error('Error al guardar en Firebase:', error);
+    }
+  };
+
+
 
   const createList = () => {
     const newList = {
@@ -33,13 +42,12 @@ export const ListContainer = () => {
     }));
 
     setLists(updatedLists);
-    saveTasksToLocalStorage(updatedLists);
+    saveToFirebase({ lists });
   };
 
 
 
   const handleTitleEditSave = (index: String) => {
-    console.log('Prueba');
     const updatedLists = lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] }) => {
       if (list.id === index) {
         return { ...list, title: list.title, editMode: false };
@@ -47,7 +55,7 @@ export const ListContainer = () => {
       return list;
     });
     setLists(updatedLists);
-    saveTasksToLocalStorage(updatedLists);
+    saveToFirebase({ lists });
   };
 
   const handleTitleClick = (indexEvento: String) => {
@@ -60,6 +68,7 @@ export const ListContainer = () => {
       return list;
     });
     setLists(updatedLists);
+    saveToFirebase({ lists });
   };
 
   const addCard = (text: String, listId: String) => {
@@ -75,8 +84,8 @@ export const ListContainer = () => {
     }));
 
     setLists(updatedLists);
-    saveTasksToLocalStorage(updatedLists);
-  };
+    saveToFirebase({ lists }); 
+ };
 
   const editCard=(idCard: String, newText: String) =>{
     const updatedLists = lists.map((list: { id: string; title: string; cards: { text: string; idCard: string }[] }) => {
@@ -94,7 +103,7 @@ export const ListContainer = () => {
     });
 
     setLists(updatedLists);
-    saveTasksToLocalStorage(updatedLists);
+    saveToFirebase({ lists });
   }
 
 
@@ -132,7 +141,7 @@ export const ListContainer = () => {
         const updatedLists = [...lists];
         updatedLists[listIndex] = { ...list, cards: updatedCards };
         setLists(updatedLists);
-        saveTasksToLocalStorage(updatedLists);
+        saveToFirebase({ lists });
       }
     } else {
       // Movement among different lists
@@ -154,8 +163,8 @@ export const ListContainer = () => {
         updatedLists[destinationListIndex] = { ...destinationList, cards: updatedDestinationCards };
 
         setLists(updatedLists);
-        saveTasksToLocalStorage(updatedLists);
-      }
+        saveToFirebase({ lists });
+           }
     }
   };
 
