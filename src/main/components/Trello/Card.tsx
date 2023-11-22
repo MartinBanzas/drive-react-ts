@@ -50,26 +50,25 @@ export const Card: React.FC<CardProps> = (props) => {
      
       const viewTemplate = (
         <div className="card bg-light shadow">
-        <div
-          className="container"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-            <div className="card-body">
-          <p className="card-text">{props.text}</p>
-          {isHovered && (
-            <div>
-              <button className="btn btn-success btn-sm px2" onDoubleClick={handleEditClick}>
-                Edit
-              </button>
-              <button className="btn btn-primary btn-sm px-2 ms-1" onDoubleClick={() => handleDelete()}>
-                X
-              </button>
+          <div
+            className="container"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="card-body" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <p className="card-text">{props.text}</p>
+              {isHovered && (
+                <div>
+                  <button className="btn btn-success btn-sm px2" onDoubleClick={handleEditClick}>
+                    Edit
+                  </button>
+                  <button className="btn btn-primary btn-sm px-2 ms-1" onDoubleClick={() => handleDelete()}>
+                    X
+                  </button>
+                </div>
+              )}
             </div>
-            
-          )}
-        </div>
-        </div>
+          </div>
         </div>
       );
 

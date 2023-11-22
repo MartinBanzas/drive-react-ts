@@ -6,6 +6,8 @@ import { DragDropContext, Droppable, Draggable, DropResult, DraggableLocation } 
 
 
 export const ListContainer = () => {
+
+  localStorage.clear();
   const localStorageJSON = localStorage.getItem("card");
   const userData = localStorageJSON ? JSON.parse(localStorageJSON) : [];
   const [lists, setLists] = useState(userData);
@@ -17,8 +19,10 @@ export const ListContainer = () => {
     const newList = {
       title: "Click to edit me",
       id: nanoid(),
+      editMode: false,
       cards: [],
     };
+    console.log(newList); 
     setLists([...lists, newList]);
   };
 
@@ -30,6 +34,32 @@ export const ListContainer = () => {
 
     setLists(updatedLists);
     saveTasksToLocalStorage(updatedLists);
+  };
+
+
+
+  const handleTitleEditSave = (index: String) => {
+    console.log('Prueba');
+    const updatedLists = lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] }) => {
+      if (list.id === index) {
+        return { ...list, title: list.title, editMode: false };
+      }
+      return list;
+    });
+    setLists(updatedLists);
+    saveTasksToLocalStorage(updatedLists);
+  };
+
+  const handleTitleClick = (indexEvento: String) => {
+   
+    const updatedLists = lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] }) => {
+     
+      if (list.id === indexEvento) {
+        return { ...list, editMode: true };
+      }
+      return list;
+    });
+    setLists(updatedLists);
   };
 
   const addCard = (text: String, listId: String) => {
@@ -48,7 +78,7 @@ export const ListContainer = () => {
     saveTasksToLocalStorage(updatedLists);
   };
 
-  function editCard(idCard: String, newText: String) {
+  const editCard=(idCard: String, newText: String) =>{
     const updatedLists = lists.map((list: { id: string; title: string; cards: { text: string; idCard: string }[] }) => {
       const updatedCards = list.cards.map((card) => {
         if (idCard === card.idCard) {
@@ -66,6 +96,7 @@ export const ListContainer = () => {
     setLists(updatedLists);
     saveTasksToLocalStorage(updatedLists);
   }
+
 
 
   const handleDragEnd = (result: DropResult) => {
@@ -138,13 +169,40 @@ export const ListContainer = () => {
       </div>
       <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
         <div className="rounded row row-cols-1 row-cols-sm-2 row-cols-md-4 gap-3 mt-5 mx-3">
-          {lists.map((list: { id: string; title: string; cards: { text: string; idCard: string }[] }) => (
+          {lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] },index:any) => (
             <Droppable droppableId={list.id} key={list.id}>
               {(provided) => (
-                <div className="col mb-4" key={list.id} ref={provided.innerRef} {...provided.droppableProps}>
+                <div ref={provided.innerRef} className="col mb-4" key={list.id}>
                   <div className="card h-100">
                     <div className="card-header bg-primary text-white font-italic font-weight-bold text-center">
-                      <h5 className="card-title">{list.title}</h5>
+                      {list.editMode ? (
+                        <div>
+                          <input
+                            type="text"
+                            required
+                            className="form-control bg-white"
+                            value={list.title}
+                            onChange={(e) => {
+                              const updatedLists = lists.map((item:any, i:any) => {
+                                if (i === index) {
+                                  return {
+                                    ...item,
+                                    title: e.target.value,
+                                  };
+                                }
+                                return item;
+                              });
+                              setLists(updatedLists);
+                            }}
+                          />
+                          <button className="btn btn-primary btn-sm" onClick={() =>handleTitleEditSave(list.id)}>
+                            Save
+                          </button>
+                      
+                        </div>
+                      ) : (
+                        <h5 onClick={() => handleTitleClick(list.id)} className="card-title">{list.title}</h5>
+                      )}
                     </div>
                     <div className="card-body">
                       {list.cards.map((card, index) => (
@@ -157,7 +215,7 @@ export const ListContainer = () => {
                               className="mb-3"
                               key={card.idCard}
                             >
-                              <Card idCard={card.idCard} text={card.text} deleteCard={deleteCard} editCard={editCard} />
+                              <Card idCard={card.idCard} key={card.idCard} text={card.text} deleteCard={deleteCard} editCard={editCard} />
                             </div>
                           )}
                         </Draggable>
@@ -173,5 +231,4 @@ export const ListContainer = () => {
         </div>
       </DragDropContext>
     </div>
-  );
-}
+  );}
