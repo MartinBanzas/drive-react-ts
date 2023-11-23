@@ -52,7 +52,7 @@ export const AddCard = (props:any) => {
         <div>
           <form>
             <button type="submit" onClick={handleClick} className="btn btn-primary btn-sm px-2 ">
-              ➕ Add new card
+              ➕ New card
             </button>
           </form>
         </div>

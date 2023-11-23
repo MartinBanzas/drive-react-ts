@@ -4,70 +4,44 @@ import { AddCard } from "./AddCard";
 import { Card } from "./Card";
 import { DragDropContext, Droppable, Draggable, DropResult, DraggableLocation } from "react-beautiful-dnd";
 import {  setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
+import  './utils/spacing.css';
 import { db, cardCollection } from "./utils/firebase";
 
 export const ListContainer = () => {
 
   const [lists, setLists] = useState<any>([]);
-  
   const saveToFirebase = async (data: any) => {
     try {
-      const  id  = 'pruebas'; // Asume que el ID está en la primera lista
-      const docRef = await setDoc(doc(db, 'tarjetas', id), data);
-      console.log("Documento actualizado con ID: ", id);
-    } catch (error) {
-      console.error('Error al guardar en Firebase:', error);
-    }
-  };
-
-  const fetchFromFirebase = async () => {
-    try {
       const docRef = doc(db, 'tarjetas', 'pruebas');
-      const docSnap = await getDoc(docRef);
-  
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        const formattedData = {
-          lists: data.lists.map((list: any) => ({
-            ...list,
-            cards: list.cards.map((card: any) => ({
-              ...card,
-            })),
-          })),
-        };
-        setLists(formattedData.lists);
-        console.log('Datos cargados desde Firebase:', formattedData);
-      } else {
-        console.log('No hay datos en Firebase.');
-      }
+      const dataToSave = { lists: data }; 
+      await setDoc(docRef, dataToSave);
+      console.log('Datos guardados en Firestore:', dataToSave);
     } catch (error) {
-      console.error('Error al obtener datos de Firebase:', error);
+      console.error('Error al guardar en Firestore:', error);
     }
   };
 
-  useEffect(() => {
-  fetchFromFirebase();
-}, []); 
-
-//Código en pruebas.
-/*useEffect(() => {
-  const unsubscribe = onSnapshot(cardCollection, (snapshot) => {
-    const listsSync = snapshot.docs;
-    const formattedData = {
-      lists: listsSync.map((list) => ({
-        ...list.data(),
-        cards: list.data.cards.map((card:any) => ({
-          ...card,
+useEffect(() => {
+  const unsubscribe = onSnapshot(doc(db, 'tarjetas', 'pruebas'), (doc) => {
+    if (doc.exists()) {
+      const data = doc.data();
+      const formattedData = {
+        lists: data.lists.map((list: any) => ({
+          ...list,
+          cards: list.cards.map((card: any) => ({
+            ...card,
+          })),
         })),
-      })),
-    };
-    setLists(formattedData.lists);
+      };
+      setLists(formattedData.lists);
+      console.log('Datos recibidos de Firebase:', formattedData);
+    } else {
+      console.log('No hay datos en Firebase.');
+    }
   });
 
   return unsubscribe;
-}, []);*/
-
-
+}, []);
 
   const createList = () => {
     const newList = {
@@ -87,7 +61,7 @@ export const ListContainer = () => {
     }));
 
     setLists(updatedLists);
-    saveToFirebase({ lists });
+   saveToFirebase(lists);
   };
 
 
@@ -100,7 +74,9 @@ export const ListContainer = () => {
       return list;
     });
     setLists(updatedLists);
-    saveToFirebase({ lists });
+    saveToFirebase(lists);
+
+   
   };
 
   const handleTitleClick = (indexEvento: String) => {
@@ -113,7 +89,9 @@ export const ListContainer = () => {
       return list;
     });
     setLists(updatedLists);
-    saveToFirebase({ lists });
+    saveToFirebase(lists);
+
+   
   };
 
   const addCard = (text: String, listId: String) => {
@@ -129,7 +107,9 @@ export const ListContainer = () => {
     }));
 
     setLists(updatedLists);
-    saveToFirebase({ lists }); 
+    saveToFirebase(lists);
+
+     
  };
 
   const editCard=(idCard: String, newText: String) =>{
@@ -148,18 +128,16 @@ export const ListContainer = () => {
     });
 
     setLists(updatedLists);
-    saveToFirebase({ lists });
+    saveToFirebase(lists);
+
+  
   }
-
-
-
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
     }
 
     const { source, destination } = result;
-
 
     const move = (source: any[], destination: any[], droppableSource: any, droppableDestination: any) => {
       const sourceClone = Array.from(source);
@@ -186,7 +164,9 @@ export const ListContainer = () => {
         const updatedLists = [...lists];
         updatedLists[listIndex] = { ...list, cards: updatedCards };
         setLists(updatedLists);
-        saveToFirebase({ lists });
+        saveToFirebase(lists);
+
+        
       }
     } else {
       // Movement among different lists
@@ -208,27 +188,28 @@ export const ListContainer = () => {
         updatedLists[destinationListIndex] = { ...destinationList, cards: updatedDestinationCards };
 
         setLists(updatedLists);
-        saveToFirebase({ lists });
+        saveToFirebase(lists);
+
+   
            }
     }
   };
 
 
   return (
-    <div className="container">
+    <div className="">
       <div>
-        <button className="btn btn-primary position-absolute top-10 end-1 p-1" onClick={createList}>
+        <button className="btn btn-primary position-absolute top-10 end-1 p-1 " onClick={createList}>
           Crear Lista
         </button>
       </div>
       <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
-        <div className="rounded row row-cols-1 row-cols-sm-2 row-cols-md-4 gap-3 mt-5 mx-3">
-
+        <div className="ml-1 d-flex justify-content-center flex-row rounded row-cols-1 row-cols-sm-2  row-cols-md-5 flex-wrap gap-3 mt-5 spacing">
           {lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] },index:any) => (
             <Droppable droppableId={list.id} key={list.id}>
               {(provided) => (
                 <div ref={provided.innerRef} className="col mb-4" key={list.id}>
-                  <div className="card h-100">
+                  <div className="card">
                     <div className="card-header bg-primary text-white font-italic font-weight-bold text-center">
                       {list.editMode ? (
                         <div>

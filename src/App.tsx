@@ -7,7 +7,7 @@ import { ListContainer } from './main/components/Trello/ListContainer';
 
 function App() {
   return (
-    <div className='bg-gray-200' style={{height:"100vh"}}>
+    <div className='bg-gray-200 '>
       <NavBar />
       <SideBar />
      <ListContainer/>
