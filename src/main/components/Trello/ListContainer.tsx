@@ -3,24 +3,69 @@ import { nanoid } from "nanoid";
 import { AddCard } from "./AddCard";
 import { Card } from "./Card";
 import { DragDropContext, Droppable, Draggable, DropResult, DraggableLocation } from "react-beautiful-dnd";
-import { collection, addDoc, getDocs, setDoc, doc, onSnapshot } from "firebase/firestore";
-import { db, getCards } from "./utils/firebase";
+import {  setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
+import { db, cardCollection } from "./utils/firebase";
 
 export const ListContainer = () => {
-
- 
 
   const [lists, setLists] = useState<any>([]);
   
   const saveToFirebase = async (data: any) => {
     try {
-     const { id } = data.id; // Asume que el ID está en la primera lista
-      const docRef = await setDoc(doc(db, 'tarjetas', "listas"), data);
+      const  id  = 'pruebas'; // Asume que el ID está en la primera lista
+      const docRef = await setDoc(doc(db, 'tarjetas', id), data);
       console.log("Documento actualizado con ID: ", id);
     } catch (error) {
       console.error('Error al guardar en Firebase:', error);
     }
   };
+
+  const fetchFromFirebase = async () => {
+    try {
+      const docRef = doc(db, 'tarjetas', 'pruebas');
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const formattedData = {
+          lists: data.lists.map((list: any) => ({
+            ...list,
+            cards: list.cards.map((card: any) => ({
+              ...card,
+            })),
+          })),
+        };
+        setLists(formattedData.lists);
+        console.log('Datos cargados desde Firebase:', formattedData);
+      } else {
+        console.log('No hay datos en Firebase.');
+      }
+    } catch (error) {
+      console.error('Error al obtener datos de Firebase:', error);
+    }
+  };
+
+  useEffect(() => {
+  fetchFromFirebase();
+}, []); 
+
+//Código en pruebas.
+/*useEffect(() => {
+  const unsubscribe = onSnapshot(cardCollection, (snapshot) => {
+    const listsSync = snapshot.docs;
+    const formattedData = {
+      lists: listsSync.map((list) => ({
+        ...list.data(),
+        cards: list.data.cards.map((card:any) => ({
+          ...card,
+        })),
+      })),
+    };
+    setLists(formattedData.lists);
+  });
+
+  return unsubscribe;
+}, []);*/
 
 
 
@@ -178,6 +223,7 @@ export const ListContainer = () => {
       </div>
       <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
         <div className="rounded row row-cols-1 row-cols-sm-2 row-cols-md-4 gap-3 mt-5 mx-3">
+
           {lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] },index:any) => (
             <Droppable droppableId={list.id} key={list.id}>
               {(provided) => (
