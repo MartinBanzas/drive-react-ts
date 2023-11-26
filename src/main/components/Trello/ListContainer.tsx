@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, Draggable, DropResult, DraggableLocation } 
 import {  setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
 import  './utils/spacing.css';
 import { db, cardCollection } from "./utils/firebase";
+import { DeleteListButton, DeleteProps } from "./DeleteList";
 
 export const ListContainer = () => {
 
@@ -52,6 +53,7 @@ useEffect(() => {
     };
     console.log(newList); 
     setLists([...lists, newList]);
+    saveToFirebase(lists);
   };
 
   const deleteCard = (idCard: String) => {
@@ -64,6 +66,11 @@ useEffect(() => {
    saveToFirebase(lists);
   };
 
+  const deleteList = (idList: String) => {
+    const updatedLists = lists.filter((list: any) => list.id !== idList);
+    setLists(updatedLists);
+    saveToFirebase(updatedLists);
+  }
 
 
   const handleTitleEditSave = (index: String) => {
@@ -204,7 +211,7 @@ useEffect(() => {
         </button>
       </div>
       <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
-        <div className="ml-1 d-flex justify-content-center flex-row rounded row-cols-1 row-cols-sm-2  row-cols-md-5 flex-wrap gap-3 mt-5 spacing">
+        <div className=" d-flex justify-content-center flex-row rounded row-cols-1 row-cols-sm-2  row-cols-md-5 flex-wrap gap-3 mt-5 spacing">
           {lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] },index:any) => (
             <Droppable droppableId={list.id} key={list.id}>
               {(provided) => (
@@ -240,7 +247,7 @@ useEffect(() => {
                         <h5 onClick={() => handleTitleClick(list.id)} className="card-title">{list.title}</h5>
                       )}
                     </div>
-                    <div className="card-body">
+                    <div className="card-body ml-1 mr-5">
                       {list.cards.map((card, index) => (
                         <Draggable key={card.idCard} draggableId={card.idCard} index={index}>
                           {(provided) => (
@@ -257,7 +264,10 @@ useEffect(() => {
                         </Draggable>
                       ))}
                       {provided.placeholder}
+                      <div className="d-flex gap-2">
                       <AddCard addTask={(text: String) => addCard(text, list.id)} />
+                      <DeleteListButton idList={list.id} deleteList={deleteList} />
+                      </div>
                     </div>
                   </div>
                 </div>
