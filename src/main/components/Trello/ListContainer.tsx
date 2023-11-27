@@ -5,8 +5,8 @@ import { Card } from "./Card";
 import { DragDropContext, Droppable, Draggable, DropResult, DraggableLocation } from "react-beautiful-dnd";
 import {  setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
 import  './utils/spacing.css';
-import { db, cardCollection } from "./utils/firebase";
-import { DeleteListButton, DeleteProps } from "./DeleteList";
+import { db } from "./utils/firebase";
+import { DeleteListButton } from "./DeleteList";
 
 export const ListContainer = () => {
 
@@ -215,8 +215,8 @@ useEffect(() => {
           {lists.map((list: { id: string; editMode:boolean, title: string; cards: { text: string; idCard: string }[] },index:any) => (
             <Droppable droppableId={list.id} key={list.id}>
               {(provided) => (
-                <div ref={provided.innerRef} className="col mb-4" key={list.id}>
-                  <div className="card">
+                <div ref={provided.innerRef} className="col-12 col-sm-6 col-md-4 mb-4" key={list.id}>
+                  <div className="card " >
                     <div className="card-header bg-primary text-white font-italic font-weight-bold text-center">
                       {list.editMode ? (
                         <div>
@@ -244,10 +244,10 @@ useEffect(() => {
                       
                         </div>
                       ) : (
-                        <h5 onClick={() => handleTitleClick(list.id)} className="card-title">{list.title}</h5>
+                        <h5 onClick={() => handleTitleClick(list.id)} className="card-title text-white">{list.title}</h5>
                       )}
                     </div>
-                    <div className="card-body ml-1 mr-5">
+                    <div className="card-body">
                       {list.cards.map((card, index) => (
                         <Draggable key={card.idCard} draggableId={card.idCard} index={index}>
                           {(provided) => (

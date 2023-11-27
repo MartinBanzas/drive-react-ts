@@ -3,6 +3,7 @@ import '../../assets/css/nucleo-svg.css'
 import '../../assets/css/material-dashboard.css'
 import logo from '../../assets/img/logo-ct.png'
 import bootstrap from 'bootstrap'
+import { Link, NavLink } from 'react-router-dom'
 
 
 export const SideBar = () => {
@@ -12,10 +13,10 @@ return (
 
       <div className="sidenav-header">
         <i className="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-        <a className="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+        <Link className="navbar-brand m-0" to="./home" target="_blank">
           <img src={logo} className="navbar-brand-img h-100" alt="main_logo" />
           <span className="ms-1 font-weight-bold text-white">Martin's Drive</span>
-        </a>
+        </Link>
       </div>
 
 
@@ -24,38 +25,38 @@ return (
         <div className="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link text-white " href="./dashboard.html">
+              <Link className="nav-link text-white " to="./home">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">dashboard</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Archivos</span>
-              </a>
+              </Link>
             </li>
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./tables.html">
+              <Link className="nav-link text-white " to="./trello">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">table_view</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Trello (notas)</span>
-              </a>
+              </Link>
             </li>
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./billing.html">
+              <Link className="nav-link text-white " to="./conversor">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">receipt_long</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Conversor</span>
-              </a>
+              </Link>
             </li>
 
 

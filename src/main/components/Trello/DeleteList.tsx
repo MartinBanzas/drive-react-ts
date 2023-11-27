@@ -13,7 +13,7 @@ export const DeleteListButton: React.FC<DeleteProps> = (props) => {
 
     return (
 
-        <button onClick={handleClick} className="btn btn-secondary btn-sm">Delete List</button>
+        <button onClick={handleClick} className="btn btn-success btn-sm">Delete List</button>
 
     );
 }

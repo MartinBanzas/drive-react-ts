@@ -73,19 +73,22 @@ export const Card: React.FC<CardProps> = (props) => {
       );
 
       const editingTemplate = (
-        <form>
-          <input
-            type="text"
-            value={newText}
-            onChange={handleNameChange} 
-          />
-            <button className="btn btn-primary mt-1 btn-sm px-2" onClick={handleSaveClick}>
+        <div className="d-flex align-items-center">
+          <form>
+            <input
+              type="text"
+              value={newText}
+              onChange={handleNameChange}
+              className="form-control"
+            />
+            <button className="btn btn-primary ms-2 btn-sm px-2" onClick={handleSaveClick}>
               Save
             </button>
-            <button className=" btn btn-secondary ms-1 px-2  mt-1 btn-sm" onClick={handleCancelClick}>
+            <button className="btn btn-secondary ms-1 btn-sm px-2" onClick={handleCancelClick}>
               Cancel
             </button>
-        </form>
+          </form>
+        </div>
       );
 
 
