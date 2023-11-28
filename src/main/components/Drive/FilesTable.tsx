@@ -43,7 +43,7 @@ export const FilesTable = () => {
 
   //Fetch data for the file table
 const fetchFicheros = useCallback(async () => {
-  const baseUrl: string = "http://localhost:8081/api/ficheroes";
+  const baseUrl: string = "http://localhost:8082/api/ficheroes";
   const url: string = `${baseUrl}`;
   
   try {
@@ -88,7 +88,7 @@ useEffect(() => {
     );
   }
   const ficherosDestacados = ficheros.slice(-3);
-  const baseUrl = "http://localhost:8081/drive";
+  const baseUrl = "http://localhost:8082/drive";
 
   return (
     <div>

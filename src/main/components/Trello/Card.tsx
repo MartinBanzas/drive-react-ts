@@ -56,7 +56,7 @@ export const Card: React.FC<CardProps> = (props) => {
             onMouseLeave={handleMouseLeave}
           >
             <div className="card-body" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <p className="card-text">{props.text}</p>
+              <p className="card-text text-break">{props.text}</p>
               {isHovered && (
                 <div>
                   <button className="btn btn-success btn-sm px2" onDoubleClick={handleEditClick}>
