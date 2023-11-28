@@ -4,14 +4,21 @@ import yen from '../../../assets/icons/yen-symbol.png'
 import dolar from '../../../assets/icons/dollar.png'
 import pound from '../../../assets/icons/pound-symbol-variant.png'
 
-type ExchangeRate = number | string;
+interface Rates {
+  rates: {
+    USD: Number,
+    CNY: Number,
+    JPY: Number,
+    GBP: Number
+  };
+
+}
 
 export const CoinConversor = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [amount, setAmount] = useState<string>('');
-  const [exchangeRate, setExchangeRate] = useState<ExchangeRate>(0);
+  const [exchangeRate, setExchangeRate] = useState<Rates['rates'] | undefined>();
   const [convertedAmount, setConvertedAmount] = useState<Number>();
-  const [conversionType, setConversionType] = useState('');
   const [yenOrYuan, setYenOrYuan] = useState('');
 
   const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,36 +31,44 @@ export const CoinConversor = () => {
     } else setYenOrYuan('');
   };
 
-  const fetchRateExchange = useCallback(async (conversionType: string) => {
+  const fetchRateExchange = useCallback(async () => {
     const api = "api.frankfurter.app";
-    const currencyOg = "EUR";
-    const currencyDestination = selectedOption;
-
-    const url = `https://${api}/latest?from=${currencyOg}&to=${currencyDestination}`;
-
+    const url = `https://${api}/latest?from=EUR&to=USD,CNY,JPY,GBP`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Algo ha ido mal');
       }
-      const responseJson = await response.json();
-      const newExchangeRate = Object.values(responseJson.rates)[0];
-      setExchangeRate(Number(newExchangeRate));
-      setConversionType(conversionType);
+      const responseJson: Rates = await response.json();
+      const newExchangeRate = responseJson.rates;
+      setExchangeRate(newExchangeRate);
+     
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
-  }, [selectedOption]);
+  }, []);
 
   useEffect(() => {
-    if (amount !== '' && typeof exchangeRate === 'number') {
-      const cantidad: number = conversionType === 'From' ? Number(amount) * exchangeRate : Number(amount) / exchangeRate;
+    fetchRateExchange();
+  }, []);
+
+  const handleAmount = (event: ChangeEvent<HTMLInputElement>) => {
+    setAmount(event.target.value);
+  }
+
+  const handleConversion = (conversionType: string): void => {
+
+    if (exchangeRate) {
+      let fConversion;
+      switch (selectedOption) {
+        case "JPY": fConversion = exchangeRate.JPY; break;
+        case "USD": fConversion = exchangeRate.USD; break;
+        case "GBP": fConversion = exchangeRate.GBP; break;
+        case "CNY": fConversion = exchangeRate.CNY; break;
+      }
+      const cantidad: number = conversionType === 'From' ? Number(amount) * Number(fConversion) : Number(amount) / Number(fConversion);
       setConvertedAmount(Number(cantidad.toFixed(2)));
     }
-  }, [amount, exchangeRate]);
-
-  function handleAmount(event: ChangeEvent<HTMLInputElement>): void {
-    setAmount(event.target.value);
   }
 
   return (
@@ -79,10 +94,10 @@ export const CoinConversor = () => {
               <input type="number" id="convertedAmount" value={convertedAmount?.toString()} className="form-control" disabled placeholder="Cantidad convertida" />
             </div>
             <div className='justify-content-center align-items-right mt-3'>
-              <button className="btn btn-primary btn-sm" id="euro" onClick={() => fetchRateExchange("To")}>
+              <button className="btn btn-primary btn-sm" id="euro" onClick={() => handleConversion("To")}>
                 To €
               </button>
-              <button className="btn btn-success btn-sm ms-2" id="other" onClick={() => fetchRateExchange("From")}>
+              <button className="btn btn-success btn-sm ms-2" id="other" onClick={() => handleConversion("From")}>
                 From €
               </button>
             </div>

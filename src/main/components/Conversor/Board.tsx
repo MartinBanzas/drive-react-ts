@@ -4,7 +4,9 @@ import { CoinConversor } from "./CoinConversor";
 export const Board = () => {
 
     return (
-   // <CoinConversor/>
+        <div>
+    <CoinConversor/>
    <Calculator/>
+   </div>
     );
 }
