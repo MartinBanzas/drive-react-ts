@@ -94,10 +94,10 @@ export const CoinConversor = () => {
               <input type="number" id="convertedAmount" value={convertedAmount?.toString()} className="form-control" disabled placeholder="Cantidad convertida" />
             </div>
             <div className='justify-content-center align-items-right mt-3'>
-              <button className="btn btn-primary btn-sm" id="euro" onClick={() => handleConversion("To")}>
+              <button className="btn btn-primary btn-md text-break" id="euro" onClick={() => handleConversion("To")}>
                 To €
               </button>
-              <button className="btn btn-success btn-sm ms-2" id="other" onClick={() => handleConversion("From")}>
+              <button className="btn btn-success btn-sm text-break ms-2" id="other" onClick={() => handleConversion("From")}>
                 From €
               </button>
             </div>
