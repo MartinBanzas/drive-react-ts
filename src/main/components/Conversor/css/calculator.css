@@ -1,0 +1,11 @@
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+}
+
+/* Puedes ajustar el tamaño y otros estilos según tus preferencias */
+.btn-calc {
+  width: 100%;
+  height: 100%;
+}

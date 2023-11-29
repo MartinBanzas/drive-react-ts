@@ -74,7 +74,7 @@ export const CoinConversor = () => {
   return (
     <div className="container d-flex ">
       <div className="card">
-        <div className="card-body">
+        <div className="card-body ">
           <div className="form-check">
             <input className="form-check-input" name="money" onChange={handleChangeRadio} type="radio" value="JPY" />
             <img src={yen} height="16px" width="16px" alt="yen" />
@@ -85,19 +85,19 @@ export const CoinConversor = () => {
             <input className="form-check-input" name="money" onChange={handleChangeRadio} type="radio" value="CNY" />
             <img src={yen} height="16px" width="16px" alt="yen" />
             {yenOrYuan !== '' && (
-              <p className={`text-danger`}>
+              <p className="text-danger mt">
                 *{yenOrYuan === 'JPY' ? 'Yen' : 'Yuan'}
               </p>
             )}
             <div>
-              <input type="number" id="amount" className="form-control" placeholder="Cantidad" onChange={handleAmount} />
+              <input type="number" id="amount" className="form-control mt-3" placeholder="Cantidad" onChange={handleAmount} />
               <input type="number" id="convertedAmount" value={convertedAmount?.toString()} className="form-control" disabled placeholder="Cantidad convertida" />
             </div>
             <div className='justify-content-center align-items-right mt-3'>
-              <button className="btn btn-primary btn-md text-break" id="euro" onClick={() => handleConversion("To")}>
+              <button className="btn btn-primary btn-sm " id="euro" onClick={() => handleConversion("To")}>
                 To €
               </button>
-              <button className="btn btn-success btn-sm text-break ms-2" id="other" onClick={() => handleConversion("From")}>
+              <button className="btn btn-success btn-sm ms-2" id="other" onClick={() => handleConversion("From")}>
                 From €
               </button>
             </div>

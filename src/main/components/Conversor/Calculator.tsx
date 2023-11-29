@@ -1,70 +1,95 @@
-import './utils/calculator.css';
+import { useState } from 'react';
+import './css/calculator.css';
+import { calcFactorial } from './css/utils/Math';
+
+
 
 export const Calculator = () => {
 
+  const [number, setNumber] = useState('');
 
 
-    return (
- 
-<div className='container'>
-  <div id='calculator'>
+  const handleResult = () => {
+    try {
+      const og = number;
+      if (number.includes("^")) {
+        const parts = number.split("^");
+        const result = Math.pow(Number(parts[0]), Number(parts[1])).toString();
+        setNumber(result);
+      } else {
+        const result=eval(number);
+        result %1!==0 ? setNumber(result.toFixed(3)) : setNumber(result);
+      }
+    } catch (error) {
+      
+      setNumber("Error");
+    }
+  }
 
- 
+  const handleButtonClick = (event: any) => setNumber(number + event.target.value);
 
-    <div id='title' className='text-center'>
-      <h5><b>ELECTRONIC CALCULATOR</b></h5>
-    </div>
+  const handleOtherOperations = (event: any) => {
+    try {
+      switch (event.target.value) {
+        case "√": const sqrt = Math.sqrt(Number(number)).toFixed(2); setNumber(sqrt.toString()); break;
+        case "!": const factorial = calcFactorial(Number(number)); factorial != undefined ? setNumber(factorial.toString()) : setNumber('Error'); break;
+        // Needs a protection against undefined.
+        case "³√": const cubic = Math.cbrt(Number(number)).toFixed(8); setNumber(cubic.toString());break;
+        case "C": setNumber(''); break;
+        case "π": setNumber(number + "3.14"); break;
+        case "±": const negativeN = Number(number) * -1; setNumber(negativeN.toString());
+      }
+    } catch (error) {
+      setNumber("Error");
+    }
+  }
 
-   
+  return (
 
-    <div id='entrybox' className='text-right'>
-      <div id='entry'>
-        <p id='answer'>0</p>
+
+    <div>
+
+      <p className="display-6 bg-gradient-dark text-white">{number === '' ? "0" : number}</p>
+      <p className="display-6 bg-gradient-dark text-white"> </p>
+
+
+      <div className="card calculator-grid gap-1">
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="1" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="2" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="3" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="+" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="^" />
+
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="4" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="5" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="6" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="-" />
+        <input type="button" onClick={handleOtherOperations} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="√" />
+
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="7" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="8" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="9" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="*" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="%" />
+
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="/" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="0" />
+        <input type="button" onClick={handleButtonClick} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="." />
+        <input type="button" onClick={handleResult} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="=" />
+        <input type="button" onClick={handleOtherOperations} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="π" />
+
+        <input type="button" onClick={handleOtherOperations} className="btn btn-primary btn-sm btn-calc " value="C" />
+        <input type="button" onClick={handleOtherOperations} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="!" />
+        <input type="button" onClick={handleOtherOperations} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="³√" />
+        <input type="button" onClick={handleOtherOperations} className="btn btn-primary btn-sm btn-calc bg-gradient-dark" value="±" />
+
       </div>
-      <div id='history'>
-        <p>0</p>
-      </div>
-    </div>
-
-    
-
-    <div id='buttons'>
-
-      <button className='red text-white' value='ac'>AC</button>
-      <button className='red text-white' value='ce'>CE</button>
-      <button className='text-white' value='/'>&divide;</button>
-      <button className='text-white' value='*'>x</button>
-
-      <button className='text-white' value='7'>7</button>
-      <button className='text-white' value='8'>8</button>
-      <button className='text-white' value='9'>9</button>
-      <button className='text-white' value='-'>-</button>
-
-      <button className='text-white' value='4'>4</button>
-      <button className='text-white' value='5'>5</button>
-      <button className='text-white' value='6'>6</button>
-      <button className='text-white' value='+'>+</button>
-
-
-      <button className='text-white' value='1'>1</button>
-      <button className='text-white' value='2'>2</button>
-      <button className='text-white' value='3'>3</button>
-      <button  className='invisible'>N</button>
-
-      <button id='zeroButton' className='text-white' value='0'>0</button>
-      <button className="text-white point" value='.'>.</button>
-      <button id='equalButton' className='text-white' value='='>=</button>
 
     </div>
-    
-    <div id='tester'></div>
-  </div>
-
-</div>
-
-
-
-
-
-    );
+  );
 }
+
+
+
+
+
