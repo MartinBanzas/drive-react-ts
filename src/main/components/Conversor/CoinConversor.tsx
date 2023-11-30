@@ -72,7 +72,7 @@ export const CoinConversor = () => {
   }
 
   return (
-    <div className="container d-flex ">
+    <div className=" ">
       <div className="card">
         <div className="card-body ">
           <div className="form-check">
