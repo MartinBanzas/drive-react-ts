@@ -40,15 +40,17 @@ export const formatSize = (size: number) => {
 }
 
 export const getImg = (tipo: string) => {
-
+    console.log(tipo);
     switch (tipo) {
 
+        
         case "text/plain":
         case "Optional[txt]": return txt; 
 
         case "application/vnd.oasis.opendocument.text": return odf; 
         case "application/pdf": return pdf; 
         case "image/jpeg": return jpg; 
+        case "image/jpg": return jpg; 
         case "image/png": return png; 
         case "application/msword": return doc;
 

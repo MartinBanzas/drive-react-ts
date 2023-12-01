@@ -21,7 +21,7 @@ export const FilesTable = () => {
     formData.append("file", acceptedFiles[0]);
     
     try {
-      const response = await fetch("http://localhost:8082/drive/new/upload", {
+      const response = await fetch("http://localhost:8081/drive/new/upload", {
         method: "POST",
         body: formData,
       });

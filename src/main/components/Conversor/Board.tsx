@@ -20,7 +20,7 @@ export const Board = () => {
                 <div className="col-md-3 mt-5">
                     <Calculator />
                 </div>
-                {/* Agrega otro elemento aquí si es necesario */}
+                {/* Agregar otro elemento aquí si es necesario */}
             </div>
         </div>
     );

@@ -49,7 +49,7 @@ export const Units = () => {
             <label htmlFor="ft">Pies</label>
 
            
-            <input type="radio" className="form-check-input" onChange={handleChangeRadio} name="units" id="gl" value="Gallons" />
+            <input type="radio" className="form-check-input" onChange={handleChangeRadio} name="units" id="gl" value="gl" />
             <label htmlFor="gl">Galones</label>
 
            
@@ -60,7 +60,7 @@ export const Units = () => {
             <input type="radio" className="form-check-input" onChange={handleChangeRadio} id="yardas" name="units" value="Yards" />
             <label htmlFor="yardas">Yardas</label>
 
-            <input type="number" className="ms-2" onChange={handleChangeInput}></input>
+            <input type="number" className="form-check-input ms-2 col-xs-2" onChange={handleChangeInput}></input>
             <p className="display-2 leading">{convertedAmount !== '' ? convertedAmount : ''}</p>
             <button className="btn btn-primary" onClick={handleConversion}>Convertir</button>
         </div>
