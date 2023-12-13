@@ -61,7 +61,7 @@ return (
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./virtual-reality.html">
+              <a className="nav-link text-white " href="./tetris">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">view_in_ar</i>
@@ -85,7 +85,7 @@ return (
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./notifications.html">
+              <a className="nav-link text-white " href="./calendar">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">notifications</i>

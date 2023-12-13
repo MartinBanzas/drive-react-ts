@@ -26,11 +26,11 @@ export const Units = () => {
     const handleConversion = () => {
         switch (selectedUnit) {
             case 'kW': const hp = Number(amount)*Number(rates.kw); setConvertedAmount(hp.toFixed().toString() +'HP'); break; 
-            case 'lbs':const kg = Number(amount)*Number(rates.lbs); setConvertedAmount(kg.toString() +'KG'); break;  
-            case 'gl': const liters = Number(amount)*Number(rates.galons); setConvertedAmount(liters.toString() +'litros'); break;  
+            case 'lbs':const kg = Number(amount)*Number(rates.lbs); setConvertedAmount(kg.toFixed(2).toString() +'KG'); break;  
+            case 'gl': const liters = Number(amount)*Number(rates.galons); setConvertedAmount(liters.toFixed(2).toString() +'litros'); break;  
             case 'Miles': const km = Number(amount)*Number(rates.miles); setConvertedAmount(km.toString() +"km"); break;
             case 'Yards': const meters = Number(amount)*Number(rates.yards); setConvertedAmount(meters.toFixed(2).toString() +"metros"); break; 
-            case 'Feet': const heightMeters = Number(amount)*Number(rates.feet); setConvertedAmount(heightMeters.toString() +"metro(s)"); break; 
+            case 'Feet': const heightMeters = Number(amount)*Number(rates.feet); setConvertedAmount(heightMeters.toFixed(2).toString() +"metro(s)"); break; 
         } 
     }
 
@@ -60,8 +60,8 @@ export const Units = () => {
             <input type="radio" className="form-check-input" onChange={handleChangeRadio} id="yardas" name="units" value="Yards" />
             <label htmlFor="yardas">Yardas</label>
 
-            <input type="number" className="form-check-input ms-2 col-xs-2" onChange={handleChangeInput}></input>
-            <p className="display-2 leading">{convertedAmount !== '' ? convertedAmount : ''}</p>
+            <input type="number" className="form-control" placeholder="Introduce la cantidad" onChange={handleChangeInput}></input>
+            <p className="display-4 leading">{convertedAmount !== '' ? convertedAmount : ''}</p>
             <button className="btn btn-primary" onClick={handleConversion}>Convertir</button>
         </div>
     );
