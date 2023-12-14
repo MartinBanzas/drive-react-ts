@@ -5,7 +5,7 @@ import { Units } from "./Units";
 export const Board = () => {
     return (
         <div className="container mt-4">
-            {/* Primer par de elementos */}
+    
             <div className="row">
                 <div className="col-md-3">
                     <CoinConversor />
@@ -15,7 +15,7 @@ export const Board = () => {
                 </div>
             </div>
 
-            {/* Segundo par de elementos */}
+           
             <div className="row mt-3">
                 <div className="col-md-3 mt-5">
                     <Calculator />
