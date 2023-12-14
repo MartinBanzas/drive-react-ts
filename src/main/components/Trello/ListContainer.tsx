@@ -51,7 +51,6 @@ useEffect(() => {
       editMode: false,
       cards: [],
     };
-    console.log(newList); 
     setLists([...lists, newList]);
     saveToFirebase(lists);
   };
