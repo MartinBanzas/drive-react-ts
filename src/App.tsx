@@ -7,13 +7,15 @@ import { ListContainer } from './main/components/Trello/ListContainer';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Board } from './main/components/Conversor/Board';
 import { Main } from './main/components/Tetris/components/Main';
+import { CalendarMain } from './main/components/Calendar/CalendarMain';
+
 
 
 function App() {
   return (
     <div className='bg-gray-200 '>
       <NavBar />
-      <SideBar />
+     <SideBar />
       <Switch>
         <Route path='/' exact>
           <Redirect to='/home' />
@@ -29,6 +31,10 @@ function App() {
         </Route>
         <Route path='/tetris'>
           <Main/>
+        </Route>
+
+        <Route path='/calendar'>
+          <CalendarMain/>
         </Route>
       </Switch>
       <Footer />

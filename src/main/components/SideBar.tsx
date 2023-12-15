@@ -61,38 +61,38 @@ return (
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./tetris">
+              <Link className="nav-link text-white " to="./tetris">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">view_in_ar</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Tetris</span>
-              </a>
+              </Link>
             </li>
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./rtl.html">
+              <Link className="nav-link text-white " to="./calendar">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">format_textdirection_r_to_l</i>
                 </div>
 
-                <span className="nav-link-text ms-1">RTL</span>
-              </a>
+                <span className="nav-link-text ms-1">Calendar</span>
+              </Link>
             </li>
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./calendar">
+              <Link className="nav-link text-white " to="./calendar">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">notifications</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Notifications</span>
-              </a>
+              </Link>
             </li>
 
 
