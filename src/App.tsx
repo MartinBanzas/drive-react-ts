@@ -6,6 +6,7 @@ import { Footer } from './main/components/Footer';
 import { ListContainer } from './main/components/Trello/ListContainer';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Board } from './main/components/Conversor/Board';
+import { Main } from './main/components/Tetris/components/Main';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Board/>
         </Route>
         <Route path='/tetris'>
+          <Main/>
         </Route>
       </Switch>
       <Footer />
