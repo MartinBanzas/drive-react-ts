@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Stage from "./Stage/Stage";
 import Display from "./Display/Display";
@@ -14,16 +14,14 @@ import tetrisOg from '../../../../assets/music/Tetris Theme (Piano Version) - 40
 import piano from '../../../../assets/music/Tetris Theme (Piano Version) - 400k Special.m4a';
 import tecno from '../../../../assets/music/Tetris (Techno Version).m4a';
 import orchestra from '../../../../assets/music/Tetris Theme - Contemporary Big BandClassical Fusion Version (The 8-Bit Big Band).m4a'
-
-
-
+import redArmy from '../../../../assets/music/Red Army Choir Korobeiniki.m4a';
 
 export const Main: React.FC = () => {
 
-  const audio = [tetrisOg, piano, tecno, orchestra];
+  const audio = [tetrisOg, piano, tecno, orchestra, redArmy];
 
-
-  const soundUrl = audio[Math.floor(Math.random() * 3)];
+  const [repro, setRepro] = React.useState(true);
+  const soundUrl = audio[Math.floor(Math.random() * 4)];
   const [sound, { stop }] = useSound(soundUrl)
 
   const [dropTime, setDroptime] = React.useState<null | number>(null);
@@ -61,7 +59,7 @@ export const Main: React.FC = () => {
     setLevel(1);
     setRows(0);
     setGameOver(false);
-    sound();
+    repro ? sound() : stop();
   };
 
 
@@ -89,10 +87,7 @@ export const Main: React.FC = () => {
       // Also increase speed
       setDroptime(1000 / level + 200);
     }
-    if (level >= 2) {
-      stop();
-      sound()
-    };
+   
 
     if (!isColliding(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
@@ -111,6 +106,7 @@ export const Main: React.FC = () => {
     drop();
   }, dropTime);
 
+
   return (
     <StyledTetrisWrapper role='button' tabIndex={0} onKeyDown={move} onKeyUp={keyUp} ref={gameArea}>
       <StyledTetris>
@@ -128,7 +124,7 @@ export const Main: React.FC = () => {
             </>
           )}
         </div>
-        <Stage stage={stage} />
+        <button onClick={()=>setRepro(false)}>Test</button>        <Stage stage={stage} />
       </StyledTetris>
     </StyledTetrisWrapper>
   );
