@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from "react";
 
 type Props = {
-    music: boolean;
-    level?: number;
-    gameOver?: boolean;
+    level: number;
+    musicOver: boolean;
 };
 
 export const Music = (props: Props) => {
+    const gameOver = require('../../../assets/music/gameOver.m4a')
     const tetrisOg = require('../../../assets/music/tetrisgameboy.mp3');
     const piano = require('../../../assets/music/Tetris Theme (Piano Version) - 400k Special.m4a');
     const tecno = require('../../../assets/music/Tetris (Techno Version).m4a');
     const orchestra = require('../../../assets/music/Tetris Theme - Contemporary Big BandClassical Fusion Version (The 8-Bit Big Band).m4a');
     const redArmy = require('../../../assets/music/Red Army Choir Korobeiniki.m4a');
     const audioRef = useRef<HTMLAudioElement>(null);
-
+    let render =0;
     let music;
     useEffect(() => {
         switch (props.level) {
@@ -37,18 +37,17 @@ export const Music = (props: Props) => {
                 break;
         }
 
+        if (props.musicOver) music=[gameOver];
+
         if (audioRef.current) {
-            if (props.gameOver) {
-                audioRef.current.pause();
-                return;
-            }
+           
             const [selectedMusic] = music;
             audioRef.current.src = selectedMusic;
-            props.music ? audioRef.current.play() : audioRef.current.pause();
+            audioRef.current.play();
         }
+render++;
 
-
-    }, [props.level, props.gameOver]);
+    }, [props.level, props.musicOver]);
 
     return (
         <div>

@@ -16,6 +16,7 @@ export const Main: React.FC = () => {
 //Hay que controlar la ejecución de la música con un booleano que cambia con el re-render
 //o dará el fallo de reproducción no autorizada de html.
   const [music, setMusic] = React.useState(false);
+  const [musicOver, setMusicOver] = React.useState(false);
   const [dropTime, setDroptime] = React.useState<null | number>(null);
   const [gameOver, setGameOver] = React.useState(true);
   const [levelMusic, setLevelMusic]=React.useState(0);
@@ -52,6 +53,7 @@ export const Main: React.FC = () => {
     setLevel(1);
     setRows(0);
     setGameOver(false);
+    setMusicOver(false);
     setMusic(true);
   };
 
@@ -90,7 +92,7 @@ export const Main: React.FC = () => {
         console.log('Game over!');
         setGameOver(true);
         setDroptime(null);
-
+        setMusicOver(true)
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
@@ -121,7 +123,7 @@ export const Main: React.FC = () => {
       </StyledTetris>
      
      { music ? (  
-      <Music music={music} level={levelMusic} gameOver={gameOver} />) : null}
+      <Music level={levelMusic} musicOver={musicOver} />) : null}
     </StyledTetrisWrapper>
   );
 };
