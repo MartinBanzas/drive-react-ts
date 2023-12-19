@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-
+import React from "react";
 import Stage from "./Stage/Stage";
 import Display from "./Display/Display";
 import StartButton from "./StartButton/StartButton";
@@ -9,29 +8,23 @@ import { useInterval } from "../Hooks/useInterval";
 import { useStage } from "../Hooks/useStage";
 import { usePlayer } from "../Hooks/usePlayer";
 import { useGameStatus } from "../Hooks/useGameStatus";
-import useSound from "use-sound";
-import tetrisOg from '../../../../assets/music/Tetris Theme (Piano Version) - 400k Special.m4a';
-import piano from '../../../../assets/music/Tetris Theme (Piano Version) - 400k Special.m4a';
-import tecno from '../../../../assets/music/Tetris (Techno Version).m4a';
-import orchestra from '../../../../assets/music/Tetris Theme - Contemporary Big BandClassical Fusion Version (The 8-Bit Big Band).m4a'
-import redArmy from '../../../../assets/music/Red Army Choir Korobeiniki.m4a';
+import { Music } from "../Music";
+
 
 export const Main: React.FC = () => {
 
-  const audio = [tetrisOg, piano, tecno, orchestra, redArmy];
-
-  const [repro, setRepro] = React.useState(true);
-  const soundUrl = audio[Math.floor(Math.random() * 4)];
-  const [sound, { stop }] = useSound(soundUrl)
-
+//Hay que controlar la ejecución de la música con un booleano que cambia con el re-render
+//o dará el fallo de reproducción no autorizada de html.
+  const [music, setMusic] = React.useState(false);
   const [dropTime, setDroptime] = React.useState<null | number>(null);
   const [gameOver, setGameOver] = React.useState(true);
-
+  const [levelMusic, setLevelMusic]=React.useState(0);
   const gameArea = React.useRef<HTMLDivElement>(null);
 
   const { player, updatePlayerPos, resetPlayer, playerRotate } = usePlayer();
   const { stage, setStage, rowsCleared } = useStage(player, resetPlayer);
   const { score, setScore, rows, setRows, level, setLevel } = useGameStatus(rowsCleared);
+
 
   const movePlayer = (dir: number) => {
     if (!isColliding(player, stage, { x: dir, y: 0 })) {
@@ -59,7 +52,7 @@ export const Main: React.FC = () => {
     setLevel(1);
     setRows(0);
     setGameOver(false);
-    repro ? sound() : stop();
+    setMusic(true);
   };
 
 
@@ -84,10 +77,10 @@ export const Main: React.FC = () => {
     // Increase level when player has cleared 10 rows
     if (rows > level * 10) {
       setLevel(prev => prev + 1);
-      // Also increase speed
+     setLevelMusic(prev=>prev+1);
       setDroptime(1000 / level + 200);
     }
-   
+
 
     if (!isColliding(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
@@ -97,6 +90,7 @@ export const Main: React.FC = () => {
         console.log('Game over!');
         setGameOver(true);
         setDroptime(null);
+
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
@@ -105,7 +99,6 @@ export const Main: React.FC = () => {
   useInterval(() => {
     drop();
   }, dropTime);
-
 
   return (
     <StyledTetrisWrapper role='button' tabIndex={0} onKeyDown={move} onKeyUp={keyUp} ref={gameArea}>
@@ -124,8 +117,11 @@ export const Main: React.FC = () => {
             </>
           )}
         </div>
-        <button onClick={()=>setRepro(false)}>Test</button>        <Stage stage={stage} />
+        <Stage stage={stage} />
       </StyledTetris>
+     
+     { music ? (  
+      <Music music={music} level={levelMusic} gameOver={gameOver} />) : null}
     </StyledTetrisWrapper>
   );
 };

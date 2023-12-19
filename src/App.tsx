@@ -9,8 +9,6 @@ import { Board } from './main/components/Conversor/Board';
 import { Main } from './main/components/Tetris/components/Main';
 import { CalendarMain } from './main/components/Calendar/CalendarMain';
 
-
-
 function App() {
   return (
     <div className='bg-gray-200 '>
@@ -32,7 +30,6 @@ function App() {
         <Route path='/tetris'>
           <Main/>
         </Route>
-
         <Route path='/calendar'>
           <CalendarMain/>
         </Route>
