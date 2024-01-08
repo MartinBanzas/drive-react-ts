@@ -2,8 +2,7 @@ import '../../assets/css/nucleo-icons.css'
 import '../../assets/css/nucleo-svg.css'
 import '../../assets/css/material-dashboard.css'
 import logo from '../../assets/img/logo-ct.png'
-import bootstrap from 'bootstrap'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 export const SideBar = () => {

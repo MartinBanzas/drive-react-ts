@@ -18,7 +18,6 @@ export const Footer = () => {
               <a href="https://www.creative-tim.com" className="font-weight-bold" target="_blank">
                 Martín Antelo Jallas
               </a>
-             
             </div>
           </div>
           <div className="col-lg-6" >
