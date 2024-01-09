@@ -1,20 +1,13 @@
 import '../../assets/css/nucleo-icons.css'
 import '../../assets/css/nucleo-svg.css'
 import '../../assets/css/material-dashboard.css'
-import { useOktaAuth } from '@okta/okta-react'
 import { SpinnerLoading } from '../utils/SpinnerLoading'
 import { Link } from 'react-router-dom'
 export const NavBar = () => {
 
-  const {oktaAuth, authState} = useOktaAuth();
 
-  if (!authState) {
-    return <SpinnerLoading/>
-  }
 
-  const handleLogout = async () => oktaAuth.signOut();
 
-  console.log(authState);
 
     return (
         <nav className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
@@ -40,21 +33,16 @@ export const NavBar = () => {
             <ul className="navbar-nav  justify-content-end">
             
               <li className="nav-item d-flex align-items-center">
-                {!authState.isAuthenticated ?
+              
                 <Link to="/login" className="btn btn-outline-primary btn-sm mb-0 me-3">
                   <i className="fa fa-user me-sm-1"></i>
                   
                   <span className="d-sm-inline d-none">Iniciar sesión</span>
                
                 </Link>
-                 : 
-                 <button onClick={handleLogout} className="btn btn-outline-primary btn-sm mb-0 me-3">
-                 <i className="fa fa-user me-sm-1"></i>
                  
-                 <span className="d-sm-inline d-none">Cerrar sesión</span>
-              
-               </button>
-                 }
+                 
+                 
               </li>
              
             </ul>
@@ -69,3 +57,9 @@ export const NavBar = () => {
 
 
 
+/*<button onClick={handleLogout} className="btn btn-outline-primary btn-sm mb-0 me-3">
+                 <i className="fa fa-user me-sm-1"></i>
+                 
+                 <span className="d-sm-inline d-none">Cerrar sesión</span>
+              
+               </button>*/
