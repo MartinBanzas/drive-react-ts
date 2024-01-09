@@ -50,9 +50,7 @@ render++;
     }, [props.level, props.musicOver]);
 
     return (
-        <div>
-            <audio id="audio_tag" ref={audioRef} />
-        </div>
+            <audio id="audio_tag" ref={audioRef} /> 
     );
 
 }
