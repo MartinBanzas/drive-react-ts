@@ -1,6 +1,3 @@
-import '../../assets/css/nucleo-icons.css'
-import '../../assets/css/nucleo-svg.css'
-import '../../assets/css/material-dashboard.css'
 import logo from '../../assets/img/logo-ct.png'
 import { Link } from 'react-router-dom'
 
@@ -78,7 +75,7 @@ return (
                   <i className="material-icons opacity-10">format_textdirection_r_to_l</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Calendar</span>
+                <span className="nav-link-text ms-1">Calendario</span>
               </Link>
             </li>
 
@@ -90,13 +87,13 @@ return (
                   <i className="material-icons opacity-10">notifications</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Notifications</span>
+                <span className="nav-link-text ms-1">Notificaciones</span>
               </Link>
             </li>
 
 
             <li className="nav-item mt-3">
-              <h6 className="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+              <h6 className="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Personal</h6>
             </li>
 
             <li className="nav-item">
@@ -106,7 +103,7 @@ return (
                   <i className="material-icons opacity-10">person</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Profile</span>
+                <span className="nav-link-text ms-1">Perfil</span>
               </a>
             </li>
 
@@ -118,7 +115,7 @@ return (
                   <i className="material-icons opacity-10">login</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Sign In</span>
+                <span className="nav-link-text ms-1">Cerrar sesión</span>
               </a>
             </li>
 
@@ -130,7 +127,7 @@ return (
                   <i className="material-icons opacity-10">assignment</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Sign Up</span>
+                <span className="nav-link-text ms-1">Acerca de</span>
               </a>
             </li>
 

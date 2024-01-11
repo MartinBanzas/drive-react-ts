@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './css/calculator.css';
-import { calcFactorial } from './css/utils/Math';
+import { calcFactorial } from './utils/Math';
 
 export const Calculator = () => {
 

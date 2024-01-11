@@ -1,6 +1,4 @@
-import '../../../assets/css/nucleo-icons.css'
-import '../../../assets/css/nucleo-svg.css'
-import '../../../assets/css/material-dashboard.css'
+
 import React, { useCallback } from 'react'
 import logo from '../../assets/img/logo-ct.png'
 
@@ -19,17 +17,19 @@ export const SignIn = () => {
     }
 
     const sendLoginRequest = useCallback(async (event: any) => {
-        event.preventDefault();
-        event.stopPropagation();
-
+        
         const formData = {
             username: email,
             password: password
         }
 
         try {
-            const response = await fetch("http://localhost:8081/login", {
+            const response = await fetch("http://localhost:8081/loginUser", {
                 method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
                 body: JSON.stringify(formData),
             });
             if (response.ok) {
@@ -37,6 +37,7 @@ export const SignIn = () => {
 
 
             } else {
+                console.log(response);
                 console.error("Fracaso en el logeo");
             }
         } catch (error) {
@@ -46,7 +47,7 @@ export const SignIn = () => {
     }, [])
 
     return (
-        <div>
+      /*  <div>
             <div className="container position-sticky z-index-sticky top-0">
                 <div className="row">
                     <div className="col-12">
@@ -103,7 +104,8 @@ export const SignIn = () => {
 
                     </div>
                 </div>
-            </div>
+            </div>*/
+            <div>
             <main className="main-content  mt-0">
                 <div className="page-header align-items-start min-vh-100" >
                     <span className="mask bg-gradient-dark opacity-6"></span>
@@ -136,7 +138,7 @@ export const SignIn = () => {
                                     <div className="card-body">
                                         <form role="form" className="text-start">
                                             <div className="input-group input-group-outline my-3">
-                                                <label htmlFor='email' className="form-label">{email ? "" : labelEmail}</label>
+                                                <label htmlFor='text' className="form-label">{email ? "" : labelEmail}</label>
                                                 <input type="email" onChange={(event) => setEmail(event.target.value)} onClick={handleLabelClick} id='email' className="form-control" />
                                             </div>
                                             <div className="input-group input-group-outline mb-3">

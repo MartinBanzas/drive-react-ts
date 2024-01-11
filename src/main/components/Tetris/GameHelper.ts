@@ -2,11 +2,7 @@ import { PLAYER } from './Hooks/usePlayer';
 import { STAGE } from './Hooks/useStage';
 import { STAGE_WIDTH, STAGE_HEIGHT } from './Setup';
 import { TETROMINOS } from './Setup';
-import useSound from 'use-sound';
-import tetrisOg from '../../../assets/music/tetrisgameboy.mp3';
-import tecno from '../../../assets/music/Tetris (Techno Version).m4a'
-import orchestral from '../../../assets/music/Tetris Theme - Contemporary Big BandClassical Fusion Version (The 8-Bit Big Band).m4a'
-import piano from '../../../assets/music/Tetris Theme (Piano Version) - 400k Special.m4a'
+
 
 
 export const createStage = () => Array.from(Array(STAGE_HEIGHT), () => Array(STAGE_WIDTH).fill([0, 'clear']));

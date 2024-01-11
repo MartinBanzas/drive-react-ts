@@ -9,13 +9,13 @@ export const Footer = () => {
 
 
   return (
-    <footer className="footer py-4 bg-gray-200 mt-5  ">
+    <footer className="footer py-4  fixed-bottom">
       <div className="container-fluid">
         <div className="row align-items-center justify-content-lg-between">
           <div className="col-lg-6 mb-lg-4 ">
             <div className="copyright text-center text-sm text-muted">
               © {new Date().getFullYear()}, hecho con <i className="fa fa-heart"></i> por {' '}
-              <a href="https://www.creative-tim.com" className="font-weight-bold" target="_blank">
+              <a href="https://www.linkedin.com/in/martin-antelo-jallas" className="font-weight-bold" target="_blank">
                 Martín Antelo Jallas
               </a>
             </div>
@@ -24,11 +24,9 @@ export const Footer = () => {
             <ul className="nav nav-footer justify-content-center justify-content-lg-end">
               <li className="nav-item">
               <a href="https://www.linkedin.com/in/martin-antelo-jallas" className="nav-link text-muted" target="_blank">
-                 
                 <img src={linkedin} width="32px" height="32px">
-               
-               
-                </img> </a>
+                </img> 
+                </a>
               </li>
               <li className="nav-item">
                 <a href="https://github.com/Atolmspek" className="nav-link text-muted" target="_blank">
@@ -43,7 +41,6 @@ export const Footer = () => {
               <li className="nav-item">
                 <a href="https://www.creative-tim.com/license" className="nav-link pe-0 text-muted" target="_blank">
                 <img src={whatsapp} width="32px" height="32px"></img>
-
                 </a>
               </li>
             </ul>

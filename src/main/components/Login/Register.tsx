@@ -1,7 +1,5 @@
 
-import '../../../assets/css/nucleo-icons.css'
-import '../../../assets/css/nucleo-svg.css'
-import '../../../assets/css/material-dashboard.css'
+
 import img from '../../../assets/img/illustrations/illustration-signup.jpg'
 export const Register = () => {
 // // style="background-image: url('../assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
@@ -81,12 +79,12 @@ export const Register = () => {
               <div className="card card-plain">
                 <div className="card-header bg-gray-200">
                   <h4 className="font-weight-bolder">Sign Up</h4>
-                  <p className="mb-0">Enter your email and password to register</p>
+                  <p className="mb-0">Introduce tu email o contraseña para registrarte</p>
                 </div>
                 <div className="card-body">
                   <form role="form">
                     <div className="input-group input-group-outline mb-3">
-                      <label className="form-label">Name</label>
+                      <label className="form-label">Nombre</label>
                       <input type="text" className="form-control"/>
                     </div>
                     <div className="input-group input-group-outline mb-3">
@@ -94,13 +92,13 @@ export const Register = () => {
                       <input type="email" className="form-control"/>
                     </div>
                     <div className="input-group input-group-outline mb-3">
-                      <label className="form-label">Password</label>
+                      <label className="form-label">Contraseña</label>
                       <input type="password" className="form-control"/>
                     </div>
                     <div className="form-check form-check-info text-start ps-0">
                       <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked/>
                       <label className="form-check-label" htmlFor="flexCheckDefault">
-                        I agree the <a href="javascript:;" className="text-dark font-weight-bolder">Terms and Conditions</a>
+                        Estoy de acuerdo con los <a href="javascript:;" className="text-dark font-weight-bolder">Términos y Condiciones</a>
                       </label>
                     </div>
                     <div className="text-center">

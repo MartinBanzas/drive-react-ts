@@ -4,8 +4,6 @@ import { Download } from "./Download";
 import { formatFecha, formatSize, getImg } from "./utils/Utils";
 import { FileRejection, useDropzone } from 'react-dropzone'
 
-
-
 export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
@@ -91,13 +89,21 @@ useEffect(() => {
   const baseUrl = "http://localhost:8081/drive";
 
   return (
-    <div>
-    <div className="container-md text-center mt-4 bg-white rounded">
+  
+    <div className="container-md text-center bg-white mt-6 rounded">
+        
       <div className="container-sm">
+      <div className="mt-2 card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div className="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 className="text-white text-capitalize ps-3">Tus ficheros</h6>
+              </div>
+            </div>
+      
         <div className="row">
+          
           {ficherosDestacados.map((file, index) => (
-            <div key={index} className="col-md-4 mb-4">
-              <div className="card mw-20 mt-3 h-100 ">
+            <div key={index} className="col-md-4 mb-4 ">
+              <div className="card mw-20 mt-3 h-100  ">
                 <div className="row g-0">
                   <div className="col-md-4">
                     <a className="card-title" href={`${baseUrl}/get/${file.id}`} download={file.ruta}>
@@ -118,7 +124,7 @@ useEffect(() => {
           ))}
         </div>
       </div>
-      <div {...getRootProps()} className="table-container" style={{ overflowY: "auto", maxHeight: "550px" }}>
+      <div {...getRootProps()} className="table-responsive bg-white" style={{ overflowY: "auto", maxHeight: "550px" }}>
       <input {...getInputProps()} />
         <table className="table table-striped rounded align-items-center">
           <thead>
@@ -146,6 +152,6 @@ useEffect(() => {
      
     </div>
    
- </div>
+
   );
 }

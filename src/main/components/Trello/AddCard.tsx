@@ -42,7 +42,7 @@ export const AddCard = (props:any) => {
             <button type="submit" className="btn btn-primary btn-sm mt-2 px-2 ">
               ➕ Save
             </button>
-            <button className="btn btn-secondary btn-sm px-2 mt-2 ms-1" onClick={cancelClick}>Cancel</button>
+            <button className="btn btn-secondary btn-sm px-2 mt-2 ms-1" onClick={cancelClick}>Cancelar</button>
     
           </form>
         </div>
@@ -52,7 +52,7 @@ export const AddCard = (props:any) => {
         <div>
           <form>
             <button type="submit" onClick={handleClick} className="btn btn-primary btn-sm px-2 ">
-              ➕ New card
+              ➕ Nueva
             </button>
           </form>
         </div>

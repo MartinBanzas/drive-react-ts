@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-
-
 export const Units = () => {
 
     const rates = {
