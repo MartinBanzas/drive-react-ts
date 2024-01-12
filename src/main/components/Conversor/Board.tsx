@@ -4,7 +4,7 @@ import { Units } from "./Units";
 
 export const Board = () => {
     return (
-        <div className="container mt-4">
+        <div className="container mt-5">
     
             <div className="row">
                 <div className="col-md-3">

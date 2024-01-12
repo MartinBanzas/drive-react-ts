@@ -46,7 +46,7 @@ useEffect(() => {
 
   const createList = () => {
     const newList = {
-      title: "Click to edit me",
+      title: "Clicka para editarme",
       id: nanoid(),
       editMode: false,
       cards: [],
@@ -205,7 +205,7 @@ useEffect(() => {
   return (
     <div>
       <div>
-        <button className="btn btn-primary position-absolute top-10 end-1 p-1 " onClick={createList}>
+        <button className="btn btn-primary position-absolute mt-3 end-1 p-1 " onClick={createList}>
           Crear Lista
         </button>
       </div>

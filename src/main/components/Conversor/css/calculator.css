@@ -8,6 +8,6 @@
   width: 100%;
   height: 100%;
   &:active {
-    transform: translateY(4px) !important;
+    transform: translateY(8px) !important;
   }
 }

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-
-
 export const AddCard = (props:any) => {
 
     const [Text, setText] = useState("");
@@ -35,12 +33,12 @@ export const AddCard = (props:any) => {
         <div className="" onSubmit={handleSubmit}>
           <form>
             <input
-
+            className="mr-2"
               value={Text}
               onChange={handleChange}
             />
-            <button type="submit" className="btn btn-primary btn-sm mt-2 px-2 ">
-              ➕ Save
+            <button type="submit" className=" ms-2 btn btn-primary btn-sm mt-2 px-2 ">
+              ➕ Guardar
             </button>
             <button className="btn btn-secondary btn-sm px-2 mt-2 ms-1" onClick={cancelClick}>Cancelar</button>
     

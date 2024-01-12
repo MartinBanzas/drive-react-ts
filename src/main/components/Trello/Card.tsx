@@ -79,13 +79,13 @@ export const Card: React.FC<CardProps> = (props) => {
               type="text"
               value={newText}
               onChange={handleNameChange}
-              className="form-control"
+              className="form-control bg-gray-200 mb-2"
             />
             <button className="btn btn-primary ms-2 btn-sm px-2" onClick={handleSaveClick}>
-              Save
+              Guardar
             </button>
             <button className="btn btn-secondary ms-1 btn-sm px-2" onClick={handleCancelClick}>
-              Cancel
+              Cancelar
             </button>
           </form>
         </div>

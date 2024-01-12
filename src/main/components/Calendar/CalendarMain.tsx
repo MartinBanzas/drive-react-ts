@@ -4,11 +4,9 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 
 export const CalendarMain = ()  => {
 
-
-
     return  (
       
-      <div className="container mt-5 bg-white w-50">
+      <div className="container mt-7 bg-white w-50">
         <FullCalendar
         plugins={[ dayGridPlugin ]}
         initialView="dayGridMonth"
