@@ -13,12 +13,13 @@ import { Register } from './main/components/Login/Register';
 import './assets/css/nucleo-icons.css'
 import './assets/css/nucleo-svg.css'
 import './assets/css/material-dashboard.css'
+import './assets/css/main.css'
 
 function App() {
 
   return (
-    <div className='bg-gray-200'>
-       <SideBar/> 
+    <div className='App Site bg-gray-200'>
+      <SideBar/>
         <Switch>
           <Route path='/' exact>
             <Redirect to='/home' />

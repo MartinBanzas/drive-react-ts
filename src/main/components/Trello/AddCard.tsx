@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { nanoid } from 'nanoid';
+
 
 
 export const AddCard = (props:any) => {

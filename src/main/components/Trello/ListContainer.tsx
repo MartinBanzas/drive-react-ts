@@ -203,7 +203,7 @@ useEffect(() => {
 
 
   return (
-    <div className="">
+    <div>
       <div>
         <button className="btn btn-primary position-absolute top-10 end-1 p-1 " onClick={createList}>
           Crear Lista
