@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom'
 
 export const SideBar = () => {
 
+  const handleLogout = () => {
+      localStorage.removeItem("token");
+      window.location.href = "http://localhost:3000/SignIn";
+  }
+
 return (
     <aside className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
 
@@ -39,7 +44,7 @@ return (
                   <i className="material-icons opacity-10">table_view</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Trello (notas)</span>
+                <span className="nav-link-text ms-1">Tareas cooperativas</span>
               </Link>
             </li>
 
@@ -109,13 +114,14 @@ return (
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./sign-in.html">
+              <a className="nav-link text-white " onClick={handleLogout}>
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">login</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Cerrar sesión</span>
+            
               </a>
             </li>
 

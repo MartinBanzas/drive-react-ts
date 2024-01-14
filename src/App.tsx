@@ -8,47 +8,91 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Board } from './main/components/Conversor/Board';
 import { Main } from './main/components/Tetris/components/Main';
 import { CalendarMain } from './main/components/Calendar/CalendarMain';
-import { SignIn } from './main/components/Login/SignIn';
+import { Login } from './main/components/Login/Login';
 import { Register } from './main/components/Login/Register';
+import { TokenHandler } from './main/components/Login/TokenHandler';
 import './assets/css/nucleo-icons.css'
 import './assets/css/nucleo-svg.css'
 import './assets/css/material-dashboard.css'
 import './assets/css/main.css'
 
-function App() {
+
+const handleLogin: any = () => {
+
+  return (
+    <Switch>
+    <div className='App Site bg-gray-200'>
+    <Route path='/' exact>
+          <Redirect to='/login' />
+        </Route>
+        <Route path='/login' exact>
+        <Login />
+        </Route>
+   
+        <Route path='/register'>
+          <Register />
+        </Route>
+        <Route>
+          <div>
+            <h1>Error 404: Página no encontrada</h1>
+            {/* Redirección de error, hacer página más visual... */}
+          </div>
+        </Route>
+    </div>
+    </Switch>
+  )
+}
+
+const global: any = () => {
 
   return (
     <div className='App Site bg-gray-200'>
-      <SideBar/>
-        <Switch>
-          <Route path='/' exact>
-            <Redirect to='/home' />
-          </Route>
-          <Route path='/home'>
-            <FilesTable />
-          </Route>
-          <Route path='/signIn'>
-            <SignIn />
-          </Route>
-          <Route path='/signUp'>
-            <Register />
-          </Route>
-          <Route path='/trello'>
-            <ListContainer />
-          </Route>
-          <Route path='/conversor'>
-            <Board />
-          </Route>
-          <Route path='/tetris'>
-            <Main />
-          </Route>
-          <Route path='/calendar'>
-            <CalendarMain />
-          </Route>
-        </Switch>
-        <Footer />
+      <Switch>
+        <Route path='/' exact>
+          <Redirect to='/home' />
+        </Route>
+        <Route path='/home'>
+          <SideBar />
+          <FilesTable />
+        </Route>
+        <Route path='/register'>
+          <Register />
+        </Route>
+        <Route path='/trello'>
+          <SideBar />
+          <ListContainer />
+        </Route>
+        <Route path='/conversor'>
+          <SideBar />
+          <Board />
+        </Route>
+        <Route path='/tetris'>
+          <SideBar />
+          <Main />
+        </Route>
+        <Route path='/calendar'>
+          <SideBar />
+          <CalendarMain />
+        </Route>
+        <Route>
+          <div>
+            <h1>Error 404: Página no encontrada</h1>
+            {/* Redirección de error, hacer página más visual... */}
+          </div>
+        </Route>
+      </Switch>
+      <Footer />
     </div>
   );
+
+
+}
+
+
+const App = () => {
+  return (
+    TokenHandler() ? global() : handleLogin()
+  )
 }
 
 export default App;

@@ -2,12 +2,12 @@
 import React, { useCallback } from 'react'
 import logo from '../../assets/img/logo-ct.png'
 
-export const SignIn = () => {
+export const Login = () => {
 
     const [email, setEmail] = React.useState("");
     const [labelEmail, setLabelEmail] = React.useState("Email");
     const [password, setPassword] = React.useState("");
-    const [labelPassword, setLabelPassword] = React.useState("Password");
+    const [labelPassword, setLabelPassword] = React.useState("Contraseña");
 
     const handleLabelClick = (event: any) => {
         switch (event.target.id) {
@@ -34,18 +34,8 @@ export const SignIn = () => {
             if (response.ok) {
                 const responseBody = await response.text();
                 console.log(responseBody);
-                const [headerBase64, payloadBase64, signatureBase64] = responseBody.split(".");
-
-                // Decodificar la carga (payload) del token
-                const payloadJson = atob(payloadBase64);
-                const payload = JSON.parse(payloadJson);
-
-                // Acceder a la información del payload, por ejemplo, la fecha de expiración
-                const expirationTimestamp = payload.exp;
-                const expirationDate = new Date(expirationTimestamp * 1000); // Multiplicar por 1000 para convertir a milisegundos
-
-                console.log("Fecha de expiración:", expirationDate);
-
+                localStorage.setItem('token', responseBody);
+                window.location.href = "http://localhost:3000/home";
             } else {
 
                 console.log(response);
@@ -125,7 +115,7 @@ export const SignIn = () => {
                                 <div className="card z-index-0 fadeIn3 fadeInBottom">
                                     <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                         <div className="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                                            <h4 className="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
+                                            <h4 className="text-white font-weight-bolder text-center mt-2 mb-0">Iniciar sesión</h4>
                                             <div className="row mt-3">
                                                 <div className="col-2 text-center ms-auto">
                                                     <a className="btn btn-link px-3" href="javascript:;">
@@ -163,7 +153,7 @@ export const SignIn = () => {
                                                 <button type="button" onClick={sendLoginRequest} className="btn bg-gradient-primary w-100 my-4 mb-2">Entrar</button>
                                             </div>
                                             <p className="mt-4 text-sm text-center">
-                                                ¿No tienes cuenta? <a href="/signUp" className="text-primary text-gradient font-weight-bold">Regístrate</a>
+                                                ¿No tienes cuenta? <a href="/register" className="text-primary text-gradient font-weight-bold">Regístrate</a>
                                             </p>
                                         </form>
                                     </div>
