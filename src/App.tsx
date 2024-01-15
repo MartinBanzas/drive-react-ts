@@ -1,6 +1,7 @@
 
 import { SideBar } from './main/components/SideBar';
 import { NavBar } from './main/components/NavBar';
+import { Error } from './main/components/Error';
 import { FilesTable } from './main/components/Drive/FilesTable';
 import { Footer } from './main/components/Footer';
 import { ListContainer } from './main/components/Trello/ListContainer';
@@ -10,7 +11,7 @@ import { Main } from './main/components/Tetris/components/Main';
 import { CalendarMain } from './main/components/Calendar/CalendarMain';
 import { Login } from './main/components/Login/Login';
 import { Register } from './main/components/Login/Register';
-import { TokenHandler } from './main/components/Login/TokenHandler';
+import { isTokenValid } from './main/components/Login/TokenHandler';
 import './assets/css/nucleo-icons.css'
 import './assets/css/nucleo-svg.css'
 import './assets/css/material-dashboard.css'
@@ -21,24 +22,21 @@ const handleLogin: any = () => {
 
   return (
     <Switch>
-    <div className='App Site bg-gray-200'>
-    <Route path='/' exact>
+      <div className='App Site bg-gray-200'>
+        <Route path='/' exact>
           <Redirect to='/login' />
         </Route>
         <Route path='/login' exact>
-        <Login />
+          <Login />
         </Route>
-   
+
         <Route path='/register'>
           <Register />
         </Route>
         <Route>
-          <div>
-            <h1>Error 404: Página no encontrada</h1>
-            {/* Redirección de error, hacer página más visual... */}
-          </div>
+         <Error/>
         </Route>
-    </div>
+      </div>
     </Switch>
   )
 }
@@ -75,10 +73,7 @@ const global: any = () => {
           <CalendarMain />
         </Route>
         <Route>
-          <div>
-            <h1>Error 404: Página no encontrada</h1>
-            {/* Redirección de error, hacer página más visual... */}
-          </div>
+        <Error/>
         </Route>
       </Switch>
       <Footer />
@@ -91,7 +86,7 @@ const global: any = () => {
 
 const App = () => {
   return (
-    TokenHandler() ? global() : handleLogin()
+    isTokenValid ? global() : handleLogin()
   )
 }
 

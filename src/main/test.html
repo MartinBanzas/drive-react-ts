@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Context Menu</title>
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="customContextMenu">Haz clic derecho aquí</div>
+
+  <script>
+    const customContextMenu = document.getElementById("customContextMenu");
+
+    // Agregar el evento contextmenu
+    customContextMenu.addEventListener("contextmenu", (event) => {
+      event.preventDefault(); // Evitar que aparezca el menú predeterminado
+
+      // Obtener las coordenadas del clic derecho
+      const x = event.clientX;
+      const y = event.clientY;
+
+      // Crear y mostrar tu propio menú
+      const menu = document.createElement("div");
+      menu.innerHTML = `
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+      `;
+      menu.style.position = "fixed";
+      menu.style.top = `${y}px`;
+      menu.style.left = `${x}px`;
+      menu.style.border = "1px solid #ccc";
+      menu.style.backgroundColor = "#fff";
+      menu.style.padding = "8px";
+      menu.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+      menu.style.zIndex = "1000";
+
+      // Agregar el menú al cuerpo del documento
+      document.body.appendChild(menu);
+
+      // Agregar un evento para cerrar el menú al hacer clic fuera de él
+      document.addEventListener("click", closeMenu);
+    });
+
+    // Función para cerrar el menú
+    function closeMenu() {
+      const menu = document.querySelector("#customContextMenu > div");
+      if (menu) {
+        menu.remove();
+        document.removeEventListener("click", closeMenu);
+      }
+    }
+  </script>
+</body>
+</html>

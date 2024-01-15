@@ -1,14 +1,11 @@
-export const TokenHandler = () => {
-
+const TokenHandler = () => {
     const tokenLocalStorage = localStorage.getItem('token');
-
 
     if (!tokenLocalStorage) {
         // Manejar el caso donde el token no está presente
         console.error("Token no encontrado en el almacenamiento local.");
-        return false;
+        return { valid: false, username: null };
     }
-
 
     const [headerBase64, payloadBase64, signatureBase64] = tokenLocalStorage.split(".");
 
@@ -16,13 +13,15 @@ export const TokenHandler = () => {
     const payloadJson = atob(payloadBase64);
     const payload = JSON.parse(payloadJson);
 
-    // Acceder a la información del payload, por ejemplo, la fecha de expiración
+  
+    //Fecha caducidad
     const expirationTimestamp = payload.exp;
-    const expirationDate = new Date(expirationTimestamp * 1000); 
+    const expirationDate = new Date(expirationTimestamp * 1000);
 
- return expirationDate.getTime() > Date.now();
+    //username
+    const username = payload.username; // Asumiendo que 'username' es el campo en el payload que contiene el nombre de usuario
+
+    return { valid: expirationDate.getTime() > Date.now(), username };
 }
 
-export const DeleteToken = () => {
-    localStorage.removeItem("token");
-}
+export const { valid: isTokenValid, username: getUsername } = TokenHandler();

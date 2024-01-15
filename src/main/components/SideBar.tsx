@@ -6,7 +6,7 @@ export const SideBar = () => {
 
   const handleLogout = () => {
       localStorage.removeItem("token");
-      window.location.href = "http://localhost:3000/SignIn";
+      window.location.href = "http://localhost:3000/login";
   }
 
 return (
