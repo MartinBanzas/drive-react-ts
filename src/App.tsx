@@ -36,6 +36,10 @@ const handleLogin: any = () => {
         <Route>
          <Error/>
         </Route>
+        <Route path='/tetris'>
+          <SideBar />
+          <Main />
+        </Route>
       </div>
     </Switch>
   )

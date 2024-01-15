@@ -10,7 +10,9 @@
 
 # production
 /build
-assets/
+/assets/music
+/assets/img
+/assets/icons
 
 # misc
 .DS_Store
