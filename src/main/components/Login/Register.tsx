@@ -2,6 +2,7 @@
 
 import React, { useCallback } from 'react';
 import img from '../../../assets/img/illustrations/illustration-signup.jpg'
+import { FormValidation } from './FormValidation';
 export const Register = () => {
   // // style="background-image: url('../assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
 
@@ -12,7 +13,19 @@ export const Register = () => {
   const [labelPassword, setLabelPassword] = React.useState("Contraseña");
   const [email, setEmail] = React.useState("");
   const [labelEmail, setLabelEmail] = React.useState("Email");
+  const [validationError, setValidationError] = React.useState<string | null>(null);
 
+
+  const validateFields =() => {
+
+    if (FormValidation(name, password, email)) {
+      sendRegisterRequest()
+    }
+    else {
+      setValidationError("*Por favor, ajústate al formato. Min 8 caracteres para la contraseña, y debe tener caracteres que no sean letras");
+      console.log('No valido');
+    }
+  }
 
   const handleLabelClick = (event: any) => {
 
@@ -23,7 +36,7 @@ export const Register = () => {
     }
   }
 
-  const sendRegisterRequest = useCallback(async (event: any) => {
+  const sendRegisterRequest = useCallback(async () => {
     const formData = {
       nombre: name,
       username: email,
@@ -98,7 +111,7 @@ export const Register = () => {
                           </label>
                         </div>
                         <div className="text-center">
-                          <button type="button" onClick={sendRegisterRequest} className="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Registrarse</button>
+                          <button type="button" onClick={()=>validateFields()} className="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Registrarse</button>
                         </div>
                       </form>
                     </div>
@@ -106,6 +119,7 @@ export const Register = () => {
                       <p className="mb-2 text-sm mx-auto">
                         ¿Ya tienes cuenta? <a href="/login" className="text-primary text-gradient font-weight-bold">Inicia sesión</a>
                       </p>
+                      {validationError && <p className="text-danger text-primary text-gradient font-weight-bold">{validationError}</p>}
                     </div>
                   </div>
                 </div>
