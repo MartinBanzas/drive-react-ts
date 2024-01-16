@@ -10,9 +10,13 @@
 
 # production
 /build
-/assets/music
-/assets/img
-/assets/icons
+/src/assets/music
+/src/assets/img
+/src/assets/icons
+/src/assets/css/material-dashboard.css
+/src/assets/css/material-dashboard.min.css
+/src/assets/css/nucleo-icons.css
+/src/assets/scss
 
 # misc
 .DS_Store

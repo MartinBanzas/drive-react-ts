@@ -9,6 +9,7 @@ import { useStage } from "../Hooks/useStage";
 import { usePlayer } from "../Hooks/usePlayer";
 import { useGameStatus } from "../Hooks/useGameStatus";
 import { Music } from "../Music";
+import { Leaderboard } from "./Leaderboard/Leaderboard";
 
 
 export const Main: React.FC = () => {
@@ -101,7 +102,6 @@ export const Main: React.FC = () => {
   useInterval(() => {
     drop();
   }, dropTime);
-
   return (
     <StyledTetrisWrapper role='button' tabIndex={0} onKeyDown={move} onKeyUp={keyUp} ref={gameArea}>
       <StyledTetris>
@@ -119,12 +119,13 @@ export const Main: React.FC = () => {
             </>
           )}
         </div>
+        
         <Stage stage={stage} />
+        <Leaderboard />
       </StyledTetris>
      
-     { music ? (  
-      <Music level={levelMusic} musicOver={musicOver} />) : null}
+      {music ? (  
+        <Music level={levelMusic} musicOver={musicOver} />) : null}
+     
     </StyledTetrisWrapper>
-  );
-};
-
+  );}
