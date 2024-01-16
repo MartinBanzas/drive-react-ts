@@ -24,7 +24,7 @@ export const Leaderboard = () => {
                 users.push({
                     nombre: responseData[key].nombre,
                     puntuacion: responseData[key].puntuacion,
-                   
+
                 });
             }
 
@@ -41,12 +41,22 @@ export const Leaderboard = () => {
 
     return (
         <div>
-            {/* Renderiza la información de los usuarios según tus necesidades */}
-            {puntuacion.map((user, index) => (
-                <div key={index}>
-                    <p>{`Nombre: ${user.nombre}, Puntuación: ${user.puntuacion}`}</p>
-                </div>
-            ))}
+            <table className="container table table-success align-items-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Puntuación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {puntuacion.map((user) => (
+                        <tr key={user.puntuacion}>
+                            <td>{user.nombre}</td>
+                            <td>{user.puntuacion}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
-};
+                    }    
