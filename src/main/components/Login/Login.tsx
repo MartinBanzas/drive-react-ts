@@ -33,7 +33,6 @@ export const Login = () => {
 
             if (response.ok) {
                 const responseBody = await response.text();
-                console.log(responseBody);
                 localStorage.setItem('token', responseBody);
                 window.location.href = "http://localhost:3000/home";
             } else {

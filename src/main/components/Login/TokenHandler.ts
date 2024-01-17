@@ -16,10 +16,11 @@ const TokenHandler = () => {
   
     //Fecha caducidad
     const expirationTimestamp = payload.exp;
+   
     const expirationDate = new Date(expirationTimestamp * 1000);
 
     //username
-    const username = payload.username; // Asumiendo que 'username' es el campo en el payload que contiene el nombre de usuario
+    const username = payload.sub; // Asumiendo que 'username' es el campo en el payload que contiene el nombre de usuario
 
     return { valid: expirationDate.getTime() > Date.now(), username };
 }

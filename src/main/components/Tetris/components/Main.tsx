@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Stage from "./Stage/Stage";
 import Display from "./Display/Display";
 import StartButton from "./StartButton/StartButton";
@@ -11,7 +11,9 @@ import { useGameStatus } from "../Hooks/useGameStatus";
 import { Music } from "../Music";
 import { Leaderboard } from "./Leaderboard/Leaderboard";
 import { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { fetchResults } from "./Leaderboard/ScoreRest";
+import UserModel from "../../../../models/UserModel";
+import { handleNewMaximumScore } from "./Leaderboard/NewMaximumScore";
 
 export const Main: React.FC = () => {
 
@@ -28,10 +30,20 @@ export const Main: React.FC = () => {
   const { player, updatePlayerPos, resetPlayer, playerRotate } = usePlayer();
   const { stage, setStage, rowsCleared } = useStage(player, resetPlayer);
   const { score, setScore, rows, setRows, level, setLevel } = useGameStatus(rowsCleared);
+  const [playerList, setPlayerList] = useState<UserModel[]>([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const result = await fetchResults();
+        setPlayerList(result);
+    };
+
+    fetchData();
+}, []); 
 
 
   const handleClose = () =>{setOpen(false)}
-
   const movePlayer = (dir: number) => {
     if (!isColliding(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0, collided: false });
@@ -96,6 +108,7 @@ export const Main: React.FC = () => {
       if (player.pos.y < 1) {
         console.log('Game over!');
         setGameOver(true);
+        handleNewMaximumScore(score, playerList);
         setDroptime(null);
         setMusicOver(true)
       }
@@ -127,7 +140,7 @@ export const Main: React.FC = () => {
         
         <Stage stage={stage} />
         <button onClick={()=> setOpen(!open)} className="btn btn-primary mt-2">Ver las clasificaciones</button>
-        <Leaderboard isOpen={open} onClose={handleClose}/>
+        <Leaderboard isOpen={open} handleClose={handleClose} playerList={playerList}/>
       </StyledTetris>
      
       {music ? (  
