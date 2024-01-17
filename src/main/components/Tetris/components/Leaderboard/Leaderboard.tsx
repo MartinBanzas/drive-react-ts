@@ -1,9 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import UserModel from "../../../../../models/UserModel";
+import { Modal } from "react-bootstrap";
 
-export const Leaderboard = () => {
+interface LeaderboardProps {
+    isOpen: boolean;
+    onClose:Function;
+}
+
+export const Leaderboard: React.FC<LeaderboardProps> = ({ isOpen, onClose }) => {
+
+    const [showModal, setShowModal] = useState(isOpen);
+
+   
+    const handleShow = () => setShowModal(true);
     const [puntuacion, setPuntuacion] = useState<UserModel[]>([]);
-
+    const [open, setOpen] = React.useState(false);
     const fetchFicheros = useCallback(async () => {
         const baseUrl: string = "http://localhost:8081/api/users";
         const url: string = `${baseUrl}`;
@@ -35,28 +46,30 @@ export const Leaderboard = () => {
         }
     }, []);
 
-    useEffect(() => {
-        fetchFicheros();
-    }, [fetchFicheros]);
-
     return (
-        <div>
-            <table className="container table table-success align-items-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Puntuación</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {puntuacion.map((user) => (
-                        <tr key={user.puntuacion}>
-                            <td>{user.nombre}</td>
-                            <td>{user.puntuacion}</td>
+        <Modal show={isOpen} backdrop="static">
+            <Modal.Header closeButton>
+                <Modal.Title>Leaderboard</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <table className="container table table-success align-items-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Puntuación</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {puntuacion.map((user) => (
+                            <tr key={user.puntuacion}>
+                                <td>{user.nombre}</td>
+                                <td>{user.puntuacion}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </Modal.Body>
+        
+        </Modal>
     );
-                    }    
+};

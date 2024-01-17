@@ -10,7 +10,8 @@ import { usePlayer } from "../Hooks/usePlayer";
 import { useGameStatus } from "../Hooks/useGameStatus";
 import { Music } from "../Music";
 import { Leaderboard } from "./Leaderboard/Leaderboard";
-
+import { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
 
 export const Main: React.FC = () => {
 
@@ -22,11 +23,14 @@ export const Main: React.FC = () => {
   const [gameOver, setGameOver] = React.useState(true);
   const [levelMusic, setLevelMusic]=React.useState(0);
   const gameArea = React.useRef<HTMLDivElement>(null);
+  const [open, setOpen] = React.useState(false);
 
   const { player, updatePlayerPos, resetPlayer, playerRotate } = usePlayer();
   const { stage, setStage, rowsCleared } = useStage(player, resetPlayer);
   const { score, setScore, rows, setRows, level, setLevel } = useGameStatus(rowsCleared);
 
+
+  const handleClose = () =>{setOpen(false)}
 
   const movePlayer = (dir: number) => {
     if (!isColliding(player, stage, { x: dir, y: 0 })) {
@@ -102,6 +106,7 @@ export const Main: React.FC = () => {
   useInterval(() => {
     drop();
   }, dropTime);
+  
   return (
     <StyledTetrisWrapper role='button' tabIndex={0} onKeyDown={move} onKeyUp={keyUp} ref={gameArea}>
       <StyledTetris>
@@ -121,7 +126,8 @@ export const Main: React.FC = () => {
         </div>
         
         <Stage stage={stage} />
-        <Leaderboard />
+        <button onClick={()=> setOpen(!open)} className="btn btn-primary mt-2">Ver las clasificaciones</button>
+        <Leaderboard isOpen={open} onClose={handleClose}/>
       </StyledTetris>
      
       {music ? (  
