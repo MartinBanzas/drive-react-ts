@@ -143,8 +143,11 @@ export const Main: React.FC = () => {
         <Leaderboard isOpen={open} handleClose={handleClose} playerList={playerList}/>
       </StyledTetris>
      
-      {music ? (  
-        <Music level={levelMusic} musicOver={musicOver} />) : null}
+      {
+        music ? (  
+        <Music level={levelMusic} musicOver={musicOver} />) 
+        : null
+        }
      
     </StyledTetrisWrapper>
   );}

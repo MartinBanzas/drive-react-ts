@@ -4,7 +4,7 @@ const TokenHandler = () => {
     if (!tokenLocalStorage) {
         // Manejar el caso donde el token no está presente
         console.error("Token no encontrado en el almacenamiento local.");
-        return { valid: false, username: null };
+        return { valid: false, nombre: null };
     }
 
     const [headerBase64, payloadBase64, signatureBase64] = tokenLocalStorage.split(".");
@@ -19,10 +19,11 @@ const TokenHandler = () => {
    
     const expirationDate = new Date(expirationTimestamp * 1000);
 
+  
     //username
-    const username = payload.sub; // Asumiendo que 'username' es el campo en el payload que contiene el nombre de usuario
-
-    return { valid: expirationDate.getTime() > Date.now(), username };
+    const nombre = payload.nombre; // Asumiendo que 'username' es el campo en el payload que contiene el nombre de usuario
+    console.log(nombre);
+    return { valid: expirationDate.getTime() > Date.now(), nombre: nombre };
 }
 
-export const { valid: isTokenValid, username: getUsername } = TokenHandler();
+export const { valid: isTokenValid, nombre: getNombre } = TokenHandler();

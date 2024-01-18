@@ -14,7 +14,6 @@ export const fetchResults = async () => {
 
         const responseJson = await response.json();
         const responseData = responseJson._embedded.users;
-        console.log(responseData);
         const users: UserModel[] = [];
 
         for (const key in responseData) {

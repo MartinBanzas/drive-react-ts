@@ -1,54 +1,52 @@
-import { getUsername } from "../../../Login/TokenHandler";
+import { getNombre } from "../../../Login/TokenHandler";
 import UserModel from "../../../../../models/UserModel";
+import { useCallback } from "react";
 
 
-const username = getUsername;
+const nombre = getNombre;
 
-const compareScore = (score:number, playerList:UserModel[]) => {
-    for (const player of playerList) {
-      if (score > player.puntuacion && username === player.nombre) {
-        return true;
-      }
+const compareScore = (score: number, playerList: UserModel[]) => {
+  for (const player of playerList) {
+    console.log(nombre);
+    console.log(player.puntuacion, player.nombre);
+    if (score > player.puntuacion && nombre === player.nombre) {
+      return true;
     }
-    return false;
-  };
+  }
+  return false;
+};
+
+
+
+
+export const handleNewMaximumScore = (score: number, playerList: UserModel[]) => {
+
   
-    
+  if (compareScore(score, playerList)) {
+
+    const request = useCallback
 
 
-export const handleNewMaximumScore = (score:number, playerList:UserModel[]) => {
-
-    if (compareScore(score, playerList)) {
-
-    const apiUrl = 'http://tu-api-rest.com/tu-recurso/123';  // Reemplaza con la URL de tu recurso específico
-
-
-
+    const apiUrl = 'http://localhost:8081/tetris/highScore';  // Reemplaza con la URL de tu recurso específico
     const newData = {
-      nombre:username,
-      puntuacion:score
-    };
-    
-
+      nombre: nombre,
+      puntuacion: score
+    }
     fetch(apiUrl, {
-      method: 'PATCH',  // O 'PUT' según tus necesidades
+      method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
-      
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(newData),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error al actualizar el recurso');
-      }
-      return response.json();
-    })
-    .then(data => {
-      // Manejar la respuesta del servidor después de la actualización
-      console.log('Recurso actualizado correctamente', data);
-    })
-    .catch(error => {
-      console.error('Error en la solicitud:', error);
-    });
-}}
+      .then(async response => {
+        if (response.ok) {
+          console.log('Recurso actualizado correctamente');
+        } else {
+          console.log('Algo ha ido mal al actualizar la puntuació');
+        }
+
+      })
+  }
+
+}

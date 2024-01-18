@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import UserModel from "../../../../../models/UserModel";
 import { Modal } from "react-bootstrap";
-import { fetchResults } from "./ScoreRest";
+
 interface LeaderboardProps {
     isOpen: boolean;
     handleClose:Function;
@@ -10,13 +10,6 @@ interface LeaderboardProps {
 
 export const Leaderboard: React.FC<LeaderboardProps> = ({ isOpen, handleClose, playerList }) => {
 
-    const [showModal, setShowModal] = useState(isOpen);
-
-   
-    const handleShow = () => setShowModal(true);
-    
-   
-  
     return (
         <Modal show={isOpen} onClick={handleClose}  backdrop="static">
             <Modal.Header closeButton>
