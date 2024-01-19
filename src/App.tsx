@@ -69,8 +69,9 @@ const global: any = () => {
           <Board />
         </Route>
         <Route path='/tetris'>
-          
+          <SideBar/>
           <Main />
+
         </Route>
         <Route path='/calendar'>
           <SideBar />

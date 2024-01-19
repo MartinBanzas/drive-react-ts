@@ -57,7 +57,7 @@ return (
                   <i className="material-icons opacity-10">receipt_long</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Conversor</span>
+                <span className="nav-link-text ms-1">Utilidades</span>
               </Link>
             </li>
 
@@ -143,8 +143,8 @@ return (
 
         <div className="sidenav-footer position-absolute w-100 bottom-0 ">
           <div className="mx-3">
-            <a className="btn btn-outline-primary mt-4 w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree" type="button">Documentation</a>
-            <a className="btn bg-gradient-primary w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Subir fichero</a>
+           
+            <a className="btn bg-gradient-primary w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Documentación</a>
           </div>
 
         </div>
