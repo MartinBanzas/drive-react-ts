@@ -16,6 +16,7 @@ import './assets/css/nucleo-icons.css'
 import './assets/css/nucleo-svg.css'
 import './assets/css/material-dashboard.css'
 import './assets/css/main.css'
+import { Chat } from './main/components/Chat/Chat';
 
 
 const handleLogin: any = () => {
@@ -23,6 +24,7 @@ const handleLogin: any = () => {
   return (
     <Switch>
       <div className='App Site bg-gray-200'>
+        
         <Route path='/' exact>
           <Redirect to='/login' />
         </Route>
@@ -33,13 +35,20 @@ const handleLogin: any = () => {
         <Route path='/register'>
           <Register />
         </Route>
-        <Route>
-         <Error/>
-        </Route>
+
+     
+
         <Route path='/tetris'>
           <SideBar />
           <Main />
         </Route>
+
+       
+        <Route>
+         <SideBar/>
+          <Error />
+        </Route>
+
       </div>
     </Switch>
   )
@@ -50,36 +59,62 @@ const global: any = () => {
   return (
     <div className='App Site bg-gray-200'>
       <Switch>
+
         <Route path='/' exact>
           <Redirect to='/home' />
         </Route>
+
         <Route path='/home'>
           <SideBar />
           <FilesTable />
         </Route>
+
         <Route path='/register'>
           <Register />
         </Route>
+
         <Route path='/trello'>
           <SideBar />
           <ListContainer />
         </Route>
+
         <Route path='/conversor'>
           <SideBar />
           <Board />
         </Route>
-        <Route path='/tetris'>
-          <SideBar/>
-          <Main />
 
+        <Route path='/tetris'>
+          <SideBar />
+          <Main />
         </Route>
+
         <Route path='/calendar'>
           <SideBar />
           <CalendarMain />
         </Route>
-        <Route>
-        <Error/>
+
+      
+
+        <Route path='/login'>
+          <Login />
         </Route>
+
+        <Route path='/messages'>
+         
+          <Chat />
+        </Route>
+
+        <Route>
+          <Error />
+        </Route>
+
+        <Route>
+          <SideBar/>
+          <Error />
+        </Route>
+
+   
+
       </Switch>
       <Footer />
     </div>

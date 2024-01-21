@@ -87,13 +87,13 @@ return (
 
 
             <li className="nav-item">
-              <Link className="nav-link text-white " to="./calendar">
+              <Link className="nav-link text-white " to="./chat">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">notifications</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Notificaciones</span>
+                <span className="nav-link-text ms-1">Mensajes</span>
               </Link>
             </li>
 

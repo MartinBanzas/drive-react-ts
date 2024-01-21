@@ -215,7 +215,7 @@ useEffect(() => {
             <Droppable droppableId={list.id} key={list.id}>
               {(provided) => (
                 <div ref={provided.innerRef} className="col-12 col-sm-6 col-md-4 mb-4" key={list.id}>
-                  <div className="card " >
+                  <div className="card">
                     <div className="card-header bg-primary text-white font-italic font-weight-bold text-center">
                       {list.editMode ? (
                         <div>
