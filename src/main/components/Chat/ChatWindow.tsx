@@ -19,18 +19,33 @@ export const ChatWindow = () => {
     const msg2 = {
         sender: "Martin",
         body: "Este es un segundo mensaje de prueba",
-        receiver: "Ruben",
+        receiver: "Jaime",
         date: Date.now(),
      
     };
 
-    const arr = [msg, msg2];
+    const msg3 = {
+        sender: "Mercedes",
+        body: "Este es un segundo mensaje de prueba de Mercedes a Martin",
+        receiver: "Martin",
+        date: Date.now(),
+    }
+
+    const msg4 = {
+        sender: "Martin",
+        body: "Este es un segundo mensaje de prueba de Martin a Mercedes",
+        receiver: "Mercedes",
+        date: Date.now(),
+    }
+
+    const arr = [msg, msg2, msg3, msg4];
 
     const [mensaje, setMensaje]=React.useState(arr);
 
     const toggleUser = (username:string) => {
-    const userSelected =    arr.filter((element)=> element.receiver!=getNombre && element.sender!==username);
+    const userSelected =    arr.filter((element)=>  element.sender==username || element.sender==getNombre);
 
+    setMensaje(userSelected);
     }
 
    
