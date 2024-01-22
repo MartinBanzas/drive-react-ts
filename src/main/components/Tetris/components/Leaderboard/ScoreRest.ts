@@ -27,7 +27,7 @@ export const fetchResults = async () => {
     } catch (error) {
       
         console.error('Error al obtener datos:', error);
-        return []; // Otra opción es devolver un valor por defecto en caso de error
+        return [];
     }
 };
 

@@ -16,7 +16,7 @@ import './assets/css/nucleo-icons.css'
 import './assets/css/nucleo-svg.css'
 import './assets/css/material-dashboard.css'
 import './assets/css/main.css'
-import { Chat } from './main/components/Chat/Chat';
+import { ChatWindow } from './main/components/Chat/ChatWindow';
 
 
 const handleLogin: any = () => {
@@ -100,12 +100,8 @@ const global: any = () => {
         </Route>
 
         <Route path='/messages'>
-         
-          <Chat />
-        </Route>
-
-        <Route>
-          <Error />
+         <SideBar/>
+          <ChatWindow />
         </Route>
 
         <Route>

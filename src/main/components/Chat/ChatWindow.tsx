@@ -1,8 +1,9 @@
 import React from "react";
 
 import { getNombre } from "../Login/TokenHandler";
+import { UsersBar } from "./UsersBar";
 
-export const Chat = () => {
+export const ChatWindow = () => {
 
     console.log(getNombre);
     const msg = {
@@ -58,6 +59,7 @@ export const Chat = () => {
                 </div>
             ))}
             <input type="text" className="form-text mt-3 w-100" placeholder="Escribe aquí..."/>
+            <UsersBar/>
         </div>
     );
 };

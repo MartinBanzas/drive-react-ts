@@ -87,7 +87,7 @@ return (
 
 
             <li className="nav-item">
-              <Link className="nav-link text-white " to="./chat">
+              <Link className="nav-link text-white " to="./messages">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">notifications</i>
