@@ -2,10 +2,12 @@ import React from "react";
 
 import { getNombre } from "../Login/TokenHandler";
 import { UsersBar } from "./UsersBar";
+import { useState } from "react";
 
 export const ChatWindow = () => {
 
-    console.log(getNombre);
+    
+
     const msg = {
         sender: "Ruben",
         body: "Hola, esto es un mensaje de prueba",
@@ -23,6 +25,16 @@ export const ChatWindow = () => {
     };
 
     const arr = [msg, msg2];
+
+    const [mensaje, setMensaje]=React.useState(arr);
+
+    const toggleUser = (username:string) => {
+    const userSelected =    arr.filter((element)=> element.receiver!=getNombre && element.sender!==username);
+
+    }
+
+   
+
 
     const formatDateTime = (timestamp:any) => {
         const options = {
@@ -42,7 +54,7 @@ export const ChatWindow = () => {
 
     return (
         <div className="container w-25">
-            {arr.map((message) => (
+            {mensaje.map((message) => (
                 <div key={message.date} className="card mt-3">
                     <div
                         className={`card-header ${
@@ -54,12 +66,16 @@ export const ChatWindow = () => {
                         
                     </div>
                     <div className="card-body">
+                        
                         <p className="card-text">{message.body}</p>
                     </div>
+                  
                 </div>
             ))}
             <input type="text" className="form-text mt-3 w-100" placeholder="Escribe aquí..."/>
-            <UsersBar/>
+            <button className="btn btn-primary btn-sm mt-2">Enviar</button>
+            <UsersBar toggleUser={toggleUser}/>
+            
         </div>
     );
 };

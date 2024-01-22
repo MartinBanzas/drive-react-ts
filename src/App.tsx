@@ -43,6 +43,10 @@ const handleLogin: any = () => {
           <Main />
         </Route>
 
+        <Route path='/messages'>
+         <SideBar/>
+          <ChatWindow />
+        </Route>
        
         <Route>
          <SideBar/>
@@ -108,8 +112,6 @@ const global: any = () => {
           <SideBar/>
           <Error />
         </Route>
-
-   
 
       </Switch>
       <Footer />
