@@ -2,13 +2,14 @@ import React from "react";
 
 import { getNombre } from "../Login/TokenHandler";
 import { UsersBar } from "./UsersBar";
-import { useState } from "react";
+import { nanoid } from 'nanoid'
 
 export const ChatWindow = () => {
 
     
 
     const msg = {
+        key:nanoid(),
         sender: "Ruben",
         body: "Hola, esto es un mensaje de prueba",
         receiver: "Martin",
@@ -17,6 +18,7 @@ export const ChatWindow = () => {
     };
 
     const msg2 = {
+        key:nanoid(),
         sender: "Martin",
         body: "Este es un segundo mensaje de prueba",
         receiver: "Jaime",
@@ -25,6 +27,7 @@ export const ChatWindow = () => {
     };
 
     const msg3 = {
+        key:nanoid(),
         sender: "Mercedes",
         body: "Este es un segundo mensaje de prueba de Mercedes a Martin",
         receiver: "Martin",
@@ -32,24 +35,43 @@ export const ChatWindow = () => {
     }
 
     const msg4 = {
+        key:nanoid(),
         sender: "Martin",
         body: "Este es un segundo mensaje de prueba de Martin a Mercedes",
         receiver: "Mercedes",
         date: Date.now(),
     }
 
-    const arr = [msg, msg2, msg3, msg4];
+    const msg5 = {
+        key:nanoid(),
+        sender: "Martin",
+        body: "Este es un mensaje de prueba de Martin a Felipe",
+        receiver: "Felipe",
+        date: Date.now(),
+    }
+
+
+    const msg6 = {
+        key:nanoid(),
+        sender: "Felipe",
+        body: "Este es un mensaje de prueba de Felipe a Martin",
+        receiver: "Martín",
+        date: Date.now(),
+    }
+    const arr = [msg, msg2, msg3, msg4, msg5,msg6];
 
     const [mensaje, setMensaje]=React.useState(arr);
 
-    const toggleUser = (username:string) => {
-    const userSelected =    arr.filter((element)=>  element.sender==username || element.sender==getNombre);
-
-    setMensaje(userSelected);
-    }
+    const toggleUser = (username: string) => {
+        const userSelected = arr.filter(
+          (element) =>
+            element.sender === username ||
+            (element.sender === getNombre && element.receiver === username)
+        );
 
    
-
+        setMensaje(userSelected); 
+    }
 
     const formatDateTime = (timestamp:any) => {
         const options = {
@@ -70,14 +92,14 @@ export const ChatWindow = () => {
     return (
         <div className="container w-25">
             {mensaje.map((message) => (
-                <div key={message.date} className="card mt-3">
+                <div key={message.key} className="card mt-3">
                     <div
                         className={`card-header ${
-                            getNombre==message.receiver ? "bg-primary" : "bg-secondary"
+                            getNombre===message.sender ? "bg-secondary" : "bg-primary"
                         } text-white`}
                     >
                    
-                        {  getNombre==message.receiver ? `${message.sender} escribió el día` : "Escribiste..."}
+                        {  getNombre===message.receiver ? `${message.sender} escribió el día` : "Escribiste..."}
                         
                     </div>
                     <div className="card-body">

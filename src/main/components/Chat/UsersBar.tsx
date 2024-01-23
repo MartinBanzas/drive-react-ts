@@ -25,6 +25,8 @@ export const UsersBar: React.FC <UserProps> = ({toggleUser}) => {
     fetchData();
   }, []);
 
+  
+
   return (
     <div className="container-fluid w-25 text-white position-fixed mt-3 top-0 end-1 border-radius-xl bg-gradient-dark  ">
       <ul className="navbar-nav">
