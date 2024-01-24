@@ -81,8 +81,6 @@ useEffect(() => {
     });
     setLists(updatedLists);
     saveToFirebase(lists);
-
-   
   };
 
   const handleTitleClick = (indexEvento: String) => {
@@ -95,9 +93,7 @@ useEffect(() => {
       return list;
     });
     setLists(updatedLists);
-    saveToFirebase(lists);
-
-   
+    saveToFirebase(lists);   
   };
 
   const addCard = (text: String, listId: String) => {

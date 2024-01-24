@@ -20,17 +20,15 @@ export const AddCard = (props:any) => {
     
       const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-    
         props.addTask(Text);
         setText("");
         setAdding(false);
     
-        
       };
 
 
       const newCard = (
-        <div className="" onSubmit={handleSubmit}>
+        <div onSubmit={handleSubmit}>
           <form>
             <input
             className="mr-2"
