@@ -1,17 +1,17 @@
 import React from "react";
 import UserModel from "../../../../../models/UserModel";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 interface LeaderboardProps {
     isOpen: boolean;
-    handleClose:Function;
+    handleClose: () => void; // Especifica el tipo de handleClose más precisamente
     playerList: UserModel[];
 }
 
 export const Leaderboard: React.FC<LeaderboardProps> = ({ isOpen, handleClose, playerList }) => {
 
     return (
-        <Modal show={isOpen} onClick={handleClose}  backdrop="static">
+        <Modal show={isOpen} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>Tabla de clasificaciones</Modal.Title>
             </Modal.Header>
@@ -32,6 +32,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ isOpen, handleClose, p
                         ))}
                     </tbody>
                 </table>
+                <Button variant="primary" onClick={handleClose}>Cerrar</Button>
             </Modal.Body>
         </Modal>
     );

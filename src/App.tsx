@@ -53,6 +53,13 @@ const handleLogin: any = () => {
           <Error />
         </Route>
 
+        
+        <Route path='/calendar'>
+          <SideBar />
+          <CalendarMain />
+        </Route>
+
+
       </div>
     </Switch>
   )
