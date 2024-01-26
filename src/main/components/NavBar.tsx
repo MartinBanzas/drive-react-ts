@@ -25,7 +25,7 @@ export const NavBar = () => {
                
                 </Link>
                  
-                 
+
                  
               </li>
              
