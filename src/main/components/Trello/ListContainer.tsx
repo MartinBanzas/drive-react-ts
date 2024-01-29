@@ -5,7 +5,7 @@ import { Card } from "./Card";
 import { DragDropContext, Droppable, Draggable, DropResult, DraggableLocation } from "react-beautiful-dnd";
 import {  setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
 import  './utils/spacing.css';
-import { db } from "./utils/firebase";
+import { db } from "../../utils/FirebaseConfig";
 import { DeleteListButton } from "./DeleteList";
 
 export const ListContainer = () => {

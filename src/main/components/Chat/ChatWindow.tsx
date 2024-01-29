@@ -4,7 +4,7 @@ import { getNombre } from "../Login/TokenHandler";
 import { UsersBar } from "./UsersBar";
 import { nanoid } from "nanoid";
 import {  setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
-import { db } from "../Trello/utils/firebase";
+import { db } from "../../utils/FirebaseConfig";
 
 
 export const ChatWindow = () => {

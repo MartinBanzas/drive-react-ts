@@ -9,7 +9,7 @@ const TokenHandler = () => {
 
     const [headerBase64, payloadBase64, signatureBase64] = tokenLocalStorage.split(".");
 
-    // Decodificar la carga (payload) del token
+  
     const payloadJson = atob(payloadBase64);
     const payload = JSON.parse(payloadJson);
 
@@ -21,9 +21,10 @@ const TokenHandler = () => {
 
   
     //username
-    const nombre = payload.nombre; // Asumiendo que 'username' es el campo en el payload que contiene el nombre de usuario
-    console.log(nombre);
-    return { valid: expirationDate.getTime() > Date.now(), nombre: nombre };
+    const roles=payload.roles;
+    const nombre = payload.nombre; 
+ 
+    return { valid: expirationDate.getTime() > Date.now(), nombre: nombre, role:roles };
 }
 
-export const { valid: isTokenValid, nombre: getNombre } = TokenHandler();
+export const { valid: isTokenValid, nombre: getNombre, role:roles } = TokenHandler();
