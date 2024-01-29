@@ -1,6 +1,7 @@
 
 import React, { useCallback } from 'react'
 import logo from '../../assets/img/logo-ct.png'
+import bg from '../../../assets/img/login-bg.jpg'
 
 export const Login = () => {
 
@@ -45,9 +46,8 @@ export const Login = () => {
         }
     }, [email, password]);
 
-    return (
-      
-        <div>
+    return (  
+        <div style={{ backgroundImage: `url(${bg})` }}>
             <main className="main-content  mt-0">
                 <div className="page-header align-items-start min-vh-100" >
                     <span className="mask bg-gradient-dark opacity-6"></span>

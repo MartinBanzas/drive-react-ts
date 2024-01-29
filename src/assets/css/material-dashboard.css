@@ -105,6 +105,19 @@
   }
 }
 
+.fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active
+{
+  background-color: var(--bs-secondary);;
+  border-color: var(--bs-secondary);;
+
+}
+
+.fc .fc-button-primary
+{
+  background-color: var(--bs-primary);
+  border-color:var(--bs-primary);
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

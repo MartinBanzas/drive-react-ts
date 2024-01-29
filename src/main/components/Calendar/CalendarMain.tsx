@@ -9,6 +9,7 @@ import { Button, Modal } from "react-bootstrap";
 import { collection, doc, getDocs, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../../utils/FirebaseConfig";
 import { getNombre, roles } from "../Login/TokenHandler";
+import esLocale from '@fullcalendar/core/locales/es';
 
 
 interface EventList {
@@ -120,7 +121,7 @@ export const CalendarMain = () => {
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="dayGridMonth"
-        locale={"es"}
+        locale={esLocale}
         aspectRatio={2}
         dateClick={(arg: { dateStr: any })=>setShowAddEvent(true)}
         editable={true}
@@ -128,6 +129,11 @@ export const CalendarMain = () => {
         events={events?.map((event) => ({ ...event, start: event.date }))}
         select={(arg: DateSelectArg) => setNewDate(arg)}
         eventClick={handleEventClick}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        }}
        // eventColor='#378006'
       />
 

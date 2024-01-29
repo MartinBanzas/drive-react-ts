@@ -30,6 +30,7 @@ const handleLogin: any = () => {
         </Route>
         <Route path='/login' exact>
           <Login />
+          <Footer />
         </Route>
 
         <Route path='/register'>
@@ -48,9 +49,9 @@ const handleLogin: any = () => {
           <ChatWindow />
         </Route>
        
-        <Route>
-         <SideBar/>
-          <Error />
+        <Route path='/conversor'>
+          <SideBar />
+          <Board />
         </Route>
 
         
@@ -59,6 +60,7 @@ const handleLogin: any = () => {
           <CalendarMain />
         </Route>
 
+        <Footer />
       </div>
     </Switch>
   )
