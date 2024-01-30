@@ -39,11 +39,12 @@ export const CalendarMain = () => {
 
 
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
-  const [events, setEvents] = useState<EventList[]>();
+  const [eventsToShow, setEventsToShow] = useState<EventList[]>();
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showAddEvent, setShowAddEvent] = useState(false);
   const [newDate, setNewDate] = useState<DateSelectArg>();
   const [newEvent, setNewEvent] = useState("");
+  const [fireBaseEvents, setFireBaseEvents]=useState<EventList[]>();
 
   const handleEventClick=(arg: EventClickArg): void=> {
     setShowDeleteConfirmation(true);
@@ -52,9 +53,10 @@ export const CalendarMain = () => {
 
   const handleConfirmDelete = () => {
     // Filtra los eventos eliminando el evento con el ID seleccionado
-    if (events) {
-      const newEvents = events.filter((evento) => evento.id !== selectedEventId);
-      setEvents(newEvents);
+    if (fireBaseEvents) {
+      const updatedEvents = fireBaseEvents.filter((evento) => evento.id !== selectedEventId);
+      setEventsToShow(updatedEvents);
+      setFireBaseEvents(updatedEvents);
       setShowDeleteConfirmation(false);
     }
   };
@@ -64,9 +66,11 @@ export const CalendarMain = () => {
     const unsubscribe = onSnapshot(doc(db, 'tarjetas', 'calendario'), (doc) => {
       if (doc.exists()) {
         const data = doc.data().lists;
-       // const filteredData = data.filter((event:any)=> event.creator==getNombre || event.roles=="ADMIN_ROLE")
+        setFireBaseEvents(data);
+                const filteredData = data.filter((event:any)=> event.creator==getNombre || event.userRoles=="ADMIN_ROLE")
+                console.log(filteredData);
 
-        setEvents(data);
+        setEventsToShow(filteredData);
         console.log('Datos recibidos de Firebase:', data);
       } else {
         console.log('No hay datos en Firebase.');
@@ -79,8 +83,8 @@ export const CalendarMain = () => {
   }, []);
 
   const saveEventsToFirestore = () => {
-    if (events) {
-      saveToFirebase(events);
+    if (fireBaseEvents) {
+      saveToFirebase(fireBaseEvents);
     }
   };
 
@@ -88,12 +92,12 @@ export const CalendarMain = () => {
     return () => {
       saveEventsToFirestore();
     };
-  }, [events]); // Ejecutar solo cuando cambia la variable events
+  }, [fireBaseEvents]); // Ejecutar solo cuando cambia la variable events
   
   // Llamar a la función al inicio para guardar los eventos si ya están disponibles
   useEffect(() => {
     saveEventsToFirestore();
-  }, [events]);
+  }, [fireBaseEvents]);
   
 
   const handleNewEvent = () => {
@@ -107,9 +111,11 @@ export const CalendarMain = () => {
         creator: getNombre,
         color: roles == "ADMIN_ROLE" ? "red" : ""
       };
-      if (events) {
-        const list = [...events, newEventList];
-        setEvents(list);
+      if (eventsToShow && fireBaseEvents) {
+        const list = [...eventsToShow, newEventList];
+        const global = [...fireBaseEvents, newEventList];
+        setFireBaseEvents(global);
+        setEventsToShow(list);
         setShowAddEvent(false);
 
       }
@@ -126,7 +132,7 @@ export const CalendarMain = () => {
         dateClick={(arg: { dateStr: any })=>setShowAddEvent(true)}
         editable={true}
         selectable={true}
-        events={events?.map((event) => ({ ...event, start: event.date }))}
+        events={eventsToShow?.map((event) => ({ ...event, start: event.date }))}
         select={(arg: DateSelectArg) => setNewDate(arg)}
         eventClick={handleEventClick}
         headerToolbar={{
