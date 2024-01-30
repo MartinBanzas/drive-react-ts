@@ -37,8 +37,6 @@ const handleLogin: any = () => {
           <Register />
         </Route>
 
-     
-
         <Route path='/tetris'>
           <SideBar />
           <Main />
@@ -46,20 +44,18 @@ const handleLogin: any = () => {
 
         <Route path='/messages'>
          <SideBar/>
-         
+          <ChatWindow/>
         </Route>
        
         <Route path='/conversor'>
           <SideBar />
           <Board />
         </Route>
-
         
         <Route path='/calendar'>
           <SideBar />
           <CalendarMain />
         </Route>
-
         <Footer />
       </div>
     </Switch>
