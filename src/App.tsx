@@ -46,7 +46,7 @@ const handleLogin: any = () => {
 
         <Route path='/messages'>
          <SideBar/>
-          <ChatWindow />
+         
         </Route>
        
         <Route path='/conversor'>
@@ -113,11 +113,10 @@ const global: any = () => {
 
         <Route path='/messages'>
          <SideBar/>
-          <ChatWindow />
+          <ChatWindow/>
         </Route>
 
         <Route>
-          <SideBar/>
           <Error />
         </Route>
 
