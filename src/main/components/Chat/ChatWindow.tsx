@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from "../../utils/FirebaseConfig";
 import { Button, Modal } from "react-bootstrap";
+import { WelcomeScreen } from "./WelcomeScreen";
 
 interface Message {
   key: string;
@@ -76,7 +77,7 @@ export const ChatWindow = () => {
       sender: getNombre, // Invoca la función getNombre para obtener el nombre del remitente
       body: inputText,
       receiver: userSelected,
-      date: Date.now(),
+      date:formatDateTime(Date.now())
     };
 
     try {
@@ -123,52 +124,57 @@ export const ChatWindow = () => {
   };
 
   const formatDateTime = (timestamp: any) => {
-    const options = {
-      weekday: "long",
+    const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
       hour: "numeric",
       minute: "numeric",
-      second: "numeric",
       hour12: false,
-      timeZone: "UTC",
+      timeZone: "Europe/Madrid",
     };
 
-    return new Date(timestamp).toLocaleDateString("es-ES");
+    return new Date(timestamp).toLocaleDateString("es-ES", options);
   };
-
   return (
     <div className="container w-25">
-      {messagesToShow?.map((message) => (
-        <div key={message.key} className="card mt-3">
-          <div 
-            onDoubleClick={()=>handleDoubleClick(message.key)}
-            className={`card-header ${
-              getNombre === message.sender ? "bg-secondary" : "bg-primary"
-            } text-white`}
-          >
-            {getNombre === message.receiver
-              ? `${message.sender} escribió el día`
-              : "Escribiste..."}
-          </div>
-          <div className="card-body">
-            <p className="card-text">{message.body}</p>
-          </div>
-        </div>
-      ))}
-      <input
-        type="text"
-        className="form-text mt-3 w-100"
-        onChange={(event) => setInputText(event?.target.value)}
-        value={inputText}
-        placeholder="Escribe aquí..."
-      />
-      <button className="btn btn-primary btn-sm mt-2" onClick={postNewMsg}>
-        Enviar
-      </button>
+      {userSelected === "" ? (
+        <WelcomeScreen />
+      ) : (
+        <>
+          {messagesToShow?.map((message) => (
+            <div key={message.key} className="card mt-3">
+              <div 
+                onDoubleClick={() => handleDoubleClick(message.key)}
+                className={`card-header ${
+                  getNombre === message.sender ? "bg-secondary" : "bg-primary"
+                } text-white`}
+              >
+                {getNombre === message.receiver
+                  ? `${message.sender} escribió el ${message.date}`
+                  : `El ${message.date} escribiste...`}
+              </div>
+              <div className="card-body">
+                <p className="card-text">{message.body}</p>
+              </div>
+            </div>
+          ))}
+          <input
+            type="text"
+            className="form-text mt-3 w-100"
+            onChange={(event) => setInputText(event?.target.value)}
+            value={inputText}
+            placeholder="Escribe aquí..."
+          />
+          <button className="btn btn-primary btn-sm mt-2" onClick={postNewMsg}>
+            Enviar
+          </button>
+        </>
+      )}
+  
       <UsersBar toggleUser={toggleUser} />
-
+  
       <Modal
         show={showDeleteConfirmation}
         onHide={() => setShowDeleteConfirmation(false)}
@@ -178,7 +184,7 @@ export const ChatWindow = () => {
         </Modal.Header>
         <Modal.Body>¿Quieres eliminar el mensaje?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={()=>setShowDeleteConfirmation(false)}>
+          <Button variant="secondary" onClick={() => setShowDeleteConfirmation(false)}>
             Cancelar
           </Button>
           <Button variant="primary" onClick={handleDelete}>
@@ -187,5 +193,4 @@ export const ChatWindow = () => {
         </Modal.Footer>
       </Modal>
     </div>
-  );
-};
+  )};
