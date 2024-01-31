@@ -6,8 +6,8 @@ import { FilesTable } from './main/components/Drive/FilesTable';
 import { Footer } from './main/components/Footer';
 import { ListContainer } from './main/components/Trello/ListContainer';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Board } from './main/components/Conversor/Board';
-import { Main } from './main/components/Tetris/components/Main';
+import { Board } from './main/components/Conversor/MainBoard';
+import { Main } from './main/components/Tetris/components/TetrisMain';
 import { CalendarMain } from './main/components/Calendar/CalendarMain';
 import { Login } from './main/components/Login/Login';
 import { Register } from './main/components/Login/Register';
@@ -17,6 +17,7 @@ import './assets/css/nucleo-svg.css'
 import './assets/css/material-dashboard.css'
 import './assets/css/main.css'
 import { ChatWindow } from './main/components/Chat/ChatWindow';
+import { About } from './main/components/About';
 
 
 const handleLogin: any = () => {
@@ -51,13 +52,25 @@ const handleLogin: any = () => {
           <SideBar />
           <Board />
         </Route>
+
+        <Route path='/trello'>
+          <SideBar />
+          <ListContainer />
+        </Route>
         
         <Route path='/calendar'>
           <SideBar />
           <CalendarMain />
         </Route>
-        <Footer />
+       
+
+       <Route path='/about'>
+        <SideBar/>
+        <About/>
+       </Route>
+       <Footer/>
       </div>
+    
     </Switch>
   )
 }

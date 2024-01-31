@@ -128,14 +128,14 @@ return (
 
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./sign-up.html">
+            <Link className="nav-link text-white " to="./about">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">assignment</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Acerca de</span>
-              </a>
+              </Link>
             </li>
 
           </ul>

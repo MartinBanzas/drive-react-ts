@@ -55,10 +55,10 @@ export const Units = () => {
             <label htmlFor="Millas">Millas</label>
 
         
-            <input type="radio" className="form-check-input" onChange={handleChangeRadio} id="yardas" name="units" value="Yards" />
+            <input type="radio" className="form-check-input " onChange={handleChangeRadio} id="yardas" name="units" value="Yards" />
             <label htmlFor="yardas">Yardas</label>
 
-            <input type="number" className="form-control" placeholder="Introduce la cantidad" onChange={handleChangeInput}></input>
+            <input type="number" className="form-text mt-3 w-100" placeholder="Introduce la cantidad" onChange={handleChangeInput}></input>
             <p className="display-4 leading">{convertedAmount !== '' ? convertedAmount : ''}</p>
             <button className="btn btn-primary" onClick={handleConversion}>Convertir</button>
         </div>

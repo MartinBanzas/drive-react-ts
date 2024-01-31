@@ -2,28 +2,9 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import yen from "../../../assets/icons/yen-symbol.png";
 import dolar from "../../../assets/icons/dollar.png";
 import pound from "../../../assets/icons/pound-symbol-variant.png";
+import { Rates, fetchRateExchange } from "./utils/DataAPI";
 
-interface Rates {
-  rates: {
-    USD: number;
-    CNY: number;
-    JPY: number;
-    GBP: number;
-    HKD: number;
-    INR: number;
-    KRW: number;
-    AUD: number;
-    CAD: number;
-    CHR: number;
-    BRL: number;
-    NOK: number;
-    SEK: number;
-    TRY: number;
-    DKK: number;
-    CZK: number;
-    HUF: number;
-  };
-}
+
 
 export const CoinConversor = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -37,24 +18,17 @@ export const CoinConversor = () => {
     setSelectedOption(event.target.value);
   };
 
-  const fetchRateExchange = useCallback(async () => {
-    const api = "api.frankfurter.app";
-    const url = `https://${api}/latest?from=EUR&to=USD,CNY,JPY,GBP,HKD,INR,KRW,AUD,CAD,CHR,BRL,NOK,TRY,SEK,DKK,CZK,HUF`;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Algo ha ido mal");
-      }
-      const responseJson: Rates = await response.json();
-      const newExchangeRate = responseJson.rates;
-      setExchangeRate(newExchangeRate);
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchRateExchange();
+    const getExchangeRate = async () => {
+      try {
+        const exchangeRate = await fetchRateExchange();
+        setExchangeRate(exchangeRate);
+      } catch (error) {
+        console.error("Error al obtener el tipo de cambio:", error);
+      }
+    };
+  
+    getExchangeRate();
   }, []);
 
   const handleAmount = (event: ChangeEvent<HTMLInputElement>) => {

@@ -123,7 +123,7 @@ export const CalendarMain = () => {
   };
 
   return (
-    <div className="container mt-7 bg-white w-50">
+    <div className="container mt-7 bg-white w-100">
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="dayGridMonth"

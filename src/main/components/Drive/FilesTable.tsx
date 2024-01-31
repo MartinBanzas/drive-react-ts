@@ -93,7 +93,7 @@ useEffect(() => {
     <div className="container-md text-center bg-white mt-6 rounded">
         
       <div className="container-sm">
-      <div className="mt-2 card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div className="mt-2 card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div className="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                 <h6 className="text-white text-capitalize ps-3">Tus ficheros</h6>
               </div>
