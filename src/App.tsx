@@ -63,6 +63,10 @@ const handleLogin: any = () => {
           <CalendarMain />
         </Route>
        
+        <Route path='/home'>
+          <SideBar />
+          <FilesTable />
+        </Route>
 
        <Route path='/about'>
         <SideBar/>

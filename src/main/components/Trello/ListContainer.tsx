@@ -23,7 +23,7 @@ export const ListContainer = () => {
   };
 
 useEffect(() => {
-  const unsubscribe = onSnapshot(doc(db, 'tarjetas', 'pruebas'), (doc) => {
+  const unsubscribe = onSnapshot(doc(db, 'tarjetas', 'trello'), (doc) => {
     if (doc.exists()) {
       const data = doc.data();
       const formattedData = {
