@@ -4,7 +4,7 @@ const TokenHandler = () => {
     if (!tokenLocalStorage) {
         // Manejar el caso donde el token no está presente
         console.error("Token no encontrado en el almacenamiento local.");
-        return { valid: false, nombre: null };
+        return { valid: false, nombre: 'Martin' };
     }
 
     const [headerBase64, payloadBase64, signatureBase64] = tokenLocalStorage.split(".");

@@ -10,6 +10,8 @@ import { collection, doc, getDocs, onSnapshot, setDoc } from "firebase/firestore
 import { db } from "../../utils/FirebaseConfig";
 import { getNombre, roles } from "../Login/TokenHandler";
 import esLocale from '@fullcalendar/core/locales/es';
+import { ModalDelete } from "./Modals/ModalDelete";
+import { ModalAdd } from "./Modals/ModalAdd";
 
 
 interface EventList {
@@ -122,6 +124,11 @@ export const CalendarMain = () => {
     }
   };
 
+  const handleStop = (events:any) => {
+    console.log('hola');
+    console.log(events)
+  }
+
   return (
     <div className="container mt-7 bg-white w-100">
       <FullCalendar
@@ -135,6 +142,7 @@ export const CalendarMain = () => {
         events={eventsToShow?.map((event) => ({ ...event, start: event.date }))}
         select={(arg: DateSelectArg) => setNewDate(arg)}
         eventClick={handleEventClick}
+        eventResize={()=>handleStop(eventsToShow)}
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
@@ -143,46 +151,10 @@ export const CalendarMain = () => {
        // eventColor='#378006'
       />
 
-      <Modal
-        show={showDeleteConfirmation}
-        onHide={() => setShowDeleteConfirmation(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Borrar evento</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>¿Quieres eliminar el evento?</Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowDeleteConfirmation(false)}
-          >
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleConfirmDelete}>
-            Confirmar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+<ModalDelete handleConfirmDelete={handleConfirmDelete} showDeleteConfirmation={showDeleteConfirmation}
+  setShowDeleteConfirmation={setShowDeleteConfirmation}/>
+<ModalAdd showAddEvent={showAddEvent} handleNewEvent={handleNewEvent} setShowAddEvent={setShowAddEvent}  setNewEvent={setNewEvent} />
 
-      <Modal show={showAddEvent} onHide={() => setShowAddEvent(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Añadir evento</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input
-            type="text"
-            onChange={(event) => setNewEvent(event.target.value)}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowAddEvent(false)}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleNewEvent}>
-            Confirmar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };
