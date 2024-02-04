@@ -1,7 +1,4 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
-import yen from "../../../assets/icons/yen-symbol.png";
-import dolar from "../../../assets/icons/dollar.png";
-import pound from "../../../assets/icons/pound-symbol-variant.png";
 import { Rates, fetchRateExchange } from "./utils/DataAPI";
 
 
@@ -118,7 +115,7 @@ export const CoinConversor = () => {
               <option value="CNY">Yuan chino</option>
               <option value="INR">Rupia india</option>
               <option value="CAD">Dólar canadiense</option>
-              <option value="AUD">Dolar australiano</option>
+              <option value="AUD">Dólar australiano</option>
               <option value="KRW">Won surcoreano</option>
               <option value="HKD">Dólar hongkones</option>
               <option value="DKK">Corona danesa</option>

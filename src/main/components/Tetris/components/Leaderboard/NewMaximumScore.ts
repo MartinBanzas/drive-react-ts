@@ -27,7 +27,7 @@ export const handleNewMaximumScore = (score: number, playerList: UserModel[]) =>
     const request = useCallback
 
 
-    const apiUrl = 'http://localhost:8081/tetris/highScore';  // Reemplaza con la URL de tu recurso específico
+    const apiUrl = 'http://localhost:8080/tetris/highScore';  // Reemplaza con la URL de tu recurso específico
     const newData = {
       nombre: nombre,
       puntuacion: score
@@ -43,7 +43,7 @@ export const handleNewMaximumScore = (score: number, playerList: UserModel[]) =>
         if (response.ok) {
           console.log('Recurso actualizado correctamente');
         } else {
-          console.log('Algo ha ido mal al actualizar la puntuació');
+          console.log('Algo ha ido mal al actualizar la puntuación');
         }
 
       })

@@ -314,10 +314,10 @@ export const ListContainer = () => {
                               }}
                             />
                             <button
-                              className="btn btn-primary btn-sm"
+                              className="btn btn-secondary btn-sm mt-2"
                               onClick={() => handleTitleEditSave(list.id)}
                             >
-                              Save
+                              Guardar
                             </button>
                           </div>
                         ) : (

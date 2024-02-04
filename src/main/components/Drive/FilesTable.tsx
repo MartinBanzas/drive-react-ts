@@ -24,7 +24,7 @@ export const FilesTable = () => {
       formData.append("file", acceptedFiles[0]);
 
       try {
-        const response = await fetch("http://localhost:8081/drive/new/upload", {
+        const response = await fetch("http://localhost:8080/drive/new/upload", {
           method: "POST",
           body: formData,
         });
@@ -51,7 +51,7 @@ export const FilesTable = () => {
 
   //Fetch data for the file table
   const initialFilesFetch = useCallback(async () => {
-    const baseUrl: string = "http://localhost:8081/api/ficheroes";
+    const baseUrl: string = "http://localhost:8080/api/ficheroes";
     const url: string = `${baseUrl}`;
 
     try {

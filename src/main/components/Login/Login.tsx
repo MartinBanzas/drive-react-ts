@@ -24,7 +24,7 @@ export const Login = () => {
         };
 
         try {
-            const response = await fetch("http://localhost:8081/auth/loginUser", {
+            const response = await fetch("http://localhost:8080/auth/loginUser", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

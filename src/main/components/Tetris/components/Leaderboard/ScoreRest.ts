@@ -2,7 +2,7 @@ import UserModel from "../../../../../models/UserModel";
 
 
 export const fetchResults = async () => {
-    const baseUrl: string = "http://localhost:8081/api/users";
+    const baseUrl: string = "http://localhost:8080/api/users";
     const url: string = `${baseUrl}`;
 
     try {

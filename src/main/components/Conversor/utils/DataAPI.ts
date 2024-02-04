@@ -3,7 +3,7 @@
 export const fetchClimateData = async ( city: String, country:String) => {
   const apiKey = "5d22dee67f1f6a4a8092cad66ab624d4";
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}&units=metric`;
   try {
     const response = await fetch(url);
     if (!response.ok) {
