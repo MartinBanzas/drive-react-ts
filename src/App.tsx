@@ -38,40 +38,8 @@ const handleLogin: any = () => {
           <Register />
         </Route>
 
-        <Route path='/tetris'>
-          <SideBar />
-          <Main />
-        </Route>
 
-        <Route path='/messages'>
-         <SideBar/>
-          <ChatWindow/>
-        </Route>
-       
-        <Route path='/conversor'>
-          <SideBar />
-          <Board />
-        </Route>
-
-        <Route path='/trello'>
-          <SideBar />
-          <ListContainer />
-        </Route>
-        
-        <Route path='/calendar'>
-          <SideBar />
-          <CalendarMain />
-        </Route>
-       
-        <Route path='/home'>
-          <SideBar />
-          <FilesTable />
-        </Route>
-
-       <Route path='/about'>
-        <SideBar/>
-        <About/>
-       </Route>
+    
        <Footer/>
       </div>
     
@@ -129,9 +97,17 @@ const global: any = () => {
           <ChatWindow/>
         </Route>
 
+        <Route path='/about'>
+        <SideBar/>
+        <About/>
+       </Route>
+
         <Route>
           <Error />
         </Route>
+
+      
+
 
       </Switch>
       <Footer />

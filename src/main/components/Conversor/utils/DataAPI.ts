@@ -3,16 +3,21 @@
 export const fetchClimateData = async ( city: String, country:String) => {
   const apiKey = "5d22dee67f1f6a4a8092cad66ab624d4";
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}&units=metric`;
+  const url='https://api.openweathermap.org/data/2.5/'
+  const fetchCurrentWeather = `${url}weather?q=${city},${country}&APPID=${apiKey}&units=metric`;
+  const fetchForecast = `${url}forecast?q=${city},${country}&APPID=${apiKey}&units=metric`;
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
+    const currentResponse = await fetch(fetchCurrentWeather);
+    const forecastResponse =await fetch(fetchForecast)
+    if (!currentResponse.ok || !forecastResponse.ok) {
       throw new Error("Algo ha ido mal");
     }
 
-    const responseJson = await response.json();
-    console.log(responseJson);
-    return responseJson;
+    const currentWeatherJson = await currentResponse.json();
+    const forecastJson = await forecastResponse.json();
+   // console.log(currentWeatherJson);
+    console.log(forecastJson)
+    return {currentWeatherJson, forecastJson };
   } catch (error) {
     console.error("Error en la solicitud:", error);
   }

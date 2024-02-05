@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./css/calculator.css";
-import { calcFactorial } from "./utils/Math";
+import { calcFactorial } from "./utils/Utils";
 
 export const Calculator = () => {
   const [number, setNumber] = useState("");

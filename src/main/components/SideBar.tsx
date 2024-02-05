@@ -30,7 +30,7 @@ return (
               <Link className="nav-link text-white " to="./home">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">dashboard</i>
+                  <i className="material-icons opacity-10">upload</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Archivos</span>
@@ -82,6 +82,17 @@ return (
                 </div>
 
                 <span className="nav-link-text ms-1">Calendario</span>
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link text-white " to="./messages">
+
+                <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                  <i className="material-icons opacity-10">notifications</i>
+                </div>
+
+                <span className="nav-link-text ms-1">El Tiempo</span>
               </Link>
             </li>
 

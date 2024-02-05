@@ -40,6 +40,8 @@ export const formatSize = (size: number) => {
 }
 
 export const getImg = (tipo: string) => {
+
+    console.log(tipo);
     switch (tipo) {
 
         
@@ -56,9 +58,10 @@ export const getImg = (tipo: string) => {
         case "text/javascript":
         case "application/json": return js; ;
 
-        case "application/vnd.rar":
+        case "application/x-zip-compressed":
         case "application/x-7z-compressed":
-        case "application/zip": return zip; 
+        case "application/x-rar-compressed":
+        return zip;
 
         case "text/html": return html; 
 

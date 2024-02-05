@@ -12,9 +12,6 @@ interface ModalAddProps {
 export const ModalAdd: React.FC<ModalAddProps> = ({
  
 showAddEvent, setShowAddEvent,setNewEvent, handleNewEvent }) => {
-
-
-
     return (
         <Modal show={showAddEvent} onHide={() => setShowAddEvent(false)}>
             <Modal.Header closeButton>
