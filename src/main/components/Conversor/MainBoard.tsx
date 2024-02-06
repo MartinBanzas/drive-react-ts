@@ -1,5 +1,5 @@
 import { Calculator } from "./Calculator";
-import { CurrentWeather } from "./Weather/CurrentWeather";
+
 import { CoinConversor } from "./CoinConversor";
 import { Units } from "./Units";
 
@@ -20,9 +20,8 @@ export const Board = () => {
           <Calculator />
         </div>
         <div className="ms-8 col-md-3 mt-5">
-          <CurrentWeather />
+         
         </div>
-        {/* Agregar otro elemento aquí si es necesario */}
       </div>
     </div>
   );

@@ -78,7 +78,7 @@ return (
               <Link className="nav-link text-white " to="./calendar">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">format_textdirection_r_to_l</i>
+                  <i className="material-icons opacity-10">calendar_month</i>
                 </div>
 
                 <span className="nav-link-text ms-1">Calendario</span>
@@ -86,10 +86,10 @@ return (
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link text-white " to="./messages">
+              <Link className="nav-link text-white " to="./weather">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">notifications</i>
+                  <i className="material-icons opacity-10">thermostat</i>
                 </div>
 
                 <span className="nav-link-text ms-1">El Tiempo</span>

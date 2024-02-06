@@ -1,6 +1,6 @@
 import React from "react";
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from "react-accessible-accordion";
-import { translations } from "../utils/Utils";
+import { translations } from "./Utils";
 
 interface ForecastProps {
     forecast: {
@@ -34,7 +34,6 @@ export const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
 
     return (
         <div className="forecast-horizontal">
-            <label className="title">Previsión</label>
             <Accordion className="accordion-horizontal">
                 {forecast.list.slice(0, 7).map((item, idx) => (
                     <AccordionItem key={idx} className="accordion-item">
@@ -42,7 +41,7 @@ export const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
                             <AccordionItemButton className="accordion-item-button">
                                 <div className="daily-item">
                                     <img src={`weather_icons/${item.weather[0].icon}.png`} className="icon-small" alt="weather" />
-                                    <label className="day text-primary">{forecastDays[idx]}</label>
+                                    <label className="day text-white">{forecastDays[idx]}</label>
                                     <label className="description text-white">{translations[item.weather[0].description]}</label>
                                     <label className="min-max text-white">{Math.round(item.main.temp_max)}°C / {Math.round(item.main.temp_min)}°C</label>
                                 </div>

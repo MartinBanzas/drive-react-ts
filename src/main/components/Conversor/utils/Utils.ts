@@ -9,15 +9,3 @@ export const calcFactorial=(num:number)=>  {
     }
 }
 
-export const translations: Record<string, string> = {
-    "clear sky": "Despejado",
-    "broken clouds": "Nubes ocasionales",
-    "light rain": "Lluvia ligera",
-    "thunderstorm": "Tormenta eléctrica",
-    "snow": "Nieve",
-    "mist": "Niebla",
-    "drizzle": "Orballo",
-    "overcast clouds": "Nubes", 
-    "shower rain": "Lluvia torrencial",
-    "few clouds": "Pocas nubes"
-  };

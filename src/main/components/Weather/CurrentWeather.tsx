@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { fetchClimateData } from "../utils/DataAPI";
+import { fetchClimateData } from "./Utils";
 import { Forecast}  from "./Forecast";
-import { translations } from "../utils/Utils";
+import { translations } from "./Utils";
 
 export interface WeatherData {
   name: string;
@@ -31,7 +31,10 @@ export const CurrentWeather = () => {
   };
 
   return (
-    <div>
+    <div className="align-items-center mx-auto w-50">
+      <span className="badge bg-secondary">¡Busca tu ciudad!</span>
+      <span className="badge bg-secondary ms-2">¡Previsión a cinco días!</span>
+      <span className="badge bg-secondary ms-2">¡Fiabilidad (no) garantizada!</span>
       <input
         type="text"
         className="form-text mt-3 w-100"
@@ -93,7 +96,7 @@ export const CurrentWeather = () => {
           </div>
         </div>
       )}
-      {isWeatherSet && forecast ? <div className="mt-2"><Forecast forecast={forecast}/></div> : null}
+      {isWeatherSet && forecast ? <div className="mt-2 mx-auto w-75"><Forecast forecast={forecast}/></div> : null}
     </div>
 
   );

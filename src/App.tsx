@@ -18,6 +18,7 @@ import './assets/css/material-dashboard.css'
 import './assets/css/main.css'
 import { ChatWindow } from './main/components/Chat/ChatWindow';
 import { About } from './main/components/About';
+import { Weather } from './main/components/Weather/Weather';
 
 
 const handleLogin: any = () => {
@@ -100,6 +101,11 @@ const global: any = () => {
         <Route path='/about'>
         <SideBar/>
         <About/>
+       </Route>
+
+       <Route path='/weather'>
+        <SideBar/>
+        <Weather/>
        </Route>
 
         <Route>
