@@ -42,7 +42,7 @@ export const formatSize = (size: number) => {
 
 export const getImg = (tipo: string) => {
 
-    console.log(tipo);
+  //  console.log(tipo);
     switch (tipo) {
 
         

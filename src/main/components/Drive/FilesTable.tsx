@@ -1,15 +1,31 @@
 import React, { useEffect, useState, useCallback } from "react";
 import FicheroModel from "../../../models/FicheroModel";
-import { Download } from "./Download";
 import { formatFecha, formatSize, getImg } from "./utils/Utils";
 import { FileRejection, useDropzone } from "react-dropzone";
+import { ContextMenu } from "./ContextMenu";
 
 export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
   const [newUpload, setNewUpload] = useState(false);
+  const [isVisible, setIsVisible]=useState(false);
+  const items = ['Eliminar', 'Renombrar', 'Por fecha', 'Por nombre']
+  const [selectedRightClickFile, setSelectedRightClickFile]=useState("");
+  const [coordinates, setCoordinates]=useState({x:0, y:0});
 
-  //File Upload handling
+  const handleRightClick = (e: any, id: any) => {
+      e.preventDefault();
+      setSelectedRightClickFile(id);
+      console.log(selectedRightClickFile);
+      setIsVisible(true);
+      const coords = {x:e.clientX, y:e.clientY}
+      setCoordinates(coords);
+  }
+
+  const onHide = () => {
+    setIsVisible(false);
+  }
+
   const onDrop = useCallback(
     async (
       acceptedFiles: File[],
@@ -94,7 +110,7 @@ export const FilesTable = () => {
     );
   }
   const ficherosDestacados = ficheros.slice(-3);
-  const baseUrl = "http://localhost:8081/drive";
+  const baseUrl = "http://localhost:8080/drive";
 
   return (
     <div className="container-md text-center bg-white mt-6 rounded">
@@ -188,7 +204,9 @@ export const FilesTable = () => {
             {ficheros.map((file) => (
               <tr key={file.id}>
                 <td>
-                  <Download file={file} />
+                <a href={`${baseUrl}/get/${file.id}`} defaultValue={file.id} onContextMenu={(e)=>handleRightClick(e, file.id)} download={file.ruta}>
+            {file.ruta}
+        </a>
                 </td>
                 <td>{file.descripcion}</td>
                 <td>
@@ -201,6 +219,7 @@ export const FilesTable = () => {
           </tbody>
         </table>
       </div>
+      {isVisible && <ContextMenu onHide={onHide} items={items} coordinates={coordinates} id={selectedRightClickFile}/>}
     </div>
   );
 };

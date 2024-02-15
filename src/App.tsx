@@ -39,7 +39,12 @@ const handleLogin: any = () => {
           <Register />
         </Route>
 
+        <Route path='/home'>
+          <SideBar />
+          <FilesTable />
+        </Route>
 
+      
     
        <Footer/>
       </div>
