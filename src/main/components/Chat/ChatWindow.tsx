@@ -74,7 +74,7 @@ export const ChatWindow = () => {
   const postNewMsg = async (event: any) => {
     const newMsg = {
       key: nanoid(),
-      sender: getNombre, // Invoca la función getNombre para obtener el nombre del remitente
+      sender: getNombre, 
       body: inputText,
       receiver: userSelected,
       date:formatDateTime(Date.now())

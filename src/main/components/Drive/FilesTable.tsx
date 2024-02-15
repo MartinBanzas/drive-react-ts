@@ -188,7 +188,7 @@ export const FilesTable = () => {
             {ficheros.map((file) => (
               <tr key={file.id}>
                 <td>
-                  <Download file={file} />{" "}
+                  <Download file={file} />
                 </td>
                 <td>{file.descripcion}</td>
                 <td>

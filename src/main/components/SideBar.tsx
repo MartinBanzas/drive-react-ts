@@ -17,7 +17,7 @@ return (
         <i className="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
         <Link className="navbar-brand m-0" to="./home" target="_blank">
           <img src={logo} className="navbar-brand-img h-100" alt="main_logo" />
-          <span className="ms-1 font-weight-bold text-white">Martin's Drive</span>
+          <span className="ms-1 font-weight-bold text-white">El hogar de la empresa</span>
         </Link>
       </div>
 

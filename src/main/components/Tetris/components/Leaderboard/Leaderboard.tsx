@@ -4,7 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 
 interface LeaderboardProps {
     isOpen: boolean;
-    handleClose: () => void; // Especifica el tipo de handleClose más precisamente
+    handleClose: () => void; // Hay que especificar el tipo de handleClose más precisamente o TypeScript se queja
     playerList: UserModel[];
 }
 

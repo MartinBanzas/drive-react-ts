@@ -12,6 +12,7 @@ import sql from "../../../../assets/icons/sql.png";
 import txt from "../../../../assets/icons/txt.png";
 import cpp from "../../../../assets/icons/cpp.png"
 import js from "../../../../assets/icons/js.png"
+import mp3 from "../../../../assets/icons/mp3.png"
 import ImgDefault from "../../../../assets/icons/_blank.png"
 
 
@@ -54,9 +55,9 @@ export const getImg = (tipo: string) => {
         case "image/jpg": return jpg; 
         case "image/png": return png; 
         case "application/msword": return doc;
-
+        case "audio/mpeg": return mp3;
         case "text/javascript":
-        case "application/json": return js; ;
+        case "application/json": return js; 
 
         case "application/x-zip-compressed":
         case "application/x-7z-compressed":

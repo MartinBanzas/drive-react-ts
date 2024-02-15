@@ -23,6 +23,7 @@
 
     // Agregar el evento contextmenu
     customContextMenu.addEventListener("contextmenu", (event) => {
+      event.stopPropagation();
       event.preventDefault(); // Evitar que aparezca el menú predeterminado
 
       // Obtener las coordenadas del clic derecho

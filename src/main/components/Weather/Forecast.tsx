@@ -35,13 +35,13 @@ export const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
     return (
         <div className="forecast-horizontal">
             <Accordion className="accordion-horizontal">
-                {forecast.list.slice(0, 7).map((item, idx) => (
-                    <AccordionItem key={idx} className="accordion-item">
+                {forecast.list.slice(0, 7).map((item, index) => (
+                    <AccordionItem key={index} className="accordion-item">
                         <AccordionItemHeading className="accordion-item-heading">
                             <AccordionItemButton className="accordion-item-button">
                                 <div className="daily-item">
                                     <img src={`weather_icons/${item.weather[0].icon}.png`} className="icon-small" alt="weather" />
-                                    <label className="day text-white">{forecastDays[idx]}</label>
+                                    <label className="day text-white">{forecastDays[index]}</label>
                                     <label className="description text-white">{translations[item.weather[0].description]}</label>
                                     <label className="min-max text-white">{Math.round(item.main.temp_max)}°C / {Math.round(item.main.temp_min)}°C</label>
                                 </div>
