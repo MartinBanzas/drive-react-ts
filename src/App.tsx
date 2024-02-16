@@ -44,6 +44,10 @@ const handleLogin: any = () => {
           <FilesTable />
         </Route>
 
+        <Route path='/calendar'>
+          <SideBar />
+          <CalendarMain />
+        </Route>
       
     
        <Footer/>
@@ -87,12 +91,6 @@ const global: any = () => {
           <Main />
         </Route>
 
-        <Route path='/calendar'>
-          <SideBar />
-          <CalendarMain />
-        </Route>
-
-      
 
         <Route path='/login'>
           <Login />

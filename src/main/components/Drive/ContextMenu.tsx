@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { ModalRename } from "./utils/ModalRename";
 
 export interface ContextMenuProps {
   id: string;
@@ -10,6 +11,7 @@ export interface ContextMenuProps {
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates, onHide, handleFilesUpdated }) => {
   const menuRef = useRef<HTMLUListElement>(null);
+  const [showModalRename, setShowModalRename] = React.useState(false);
 
   const url="http://localhost:8080/drive"
   const handleFileDelete = async () => {
@@ -29,7 +31,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates
   };
 
   const handleFileRename = () => {
-    console.log("renombrar");
+    setShowModalRename(true);
   };
 
   const sortByName = () => {
@@ -81,6 +83,7 @@ return (
           {item}
         </li>
       ))}
+      <ModalRename setShowModalRename={setShowModalRename} showModalRename={showModalRename}/>
     </ul>
   ) 
 }
