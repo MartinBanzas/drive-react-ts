@@ -5,13 +5,26 @@ export interface ContextMenuProps {
   items: string[];
   coordinates: {x:number, y:number};
   onHide:()=>void
+  handleFilesUpdated: ()=>void
 }
 
-export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates, onHide }) => {
+export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates, onHide, handleFilesUpdated }) => {
   const menuRef = useRef<HTMLUListElement>(null);
 
-  const handleFileDelete = () => {
+  const url="http://localhost:8080/drive"
+  const handleFileDelete = async () => {
    
+    const response = await fetch (`http://localhost:8080/drive/delete/${id}`, {
+      method: "DELETE"
+    })
+    console.log(response);
+    if (response.ok) {
+      console.log(response)
+      onHide();
+      handleFilesUpdated();
+    }
+
+    
     console.log(id);
   };
 
@@ -35,10 +48,9 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates
 
 
   useEffect(() => {
-    // Adjuntar el event listener al documento para manejar los clics fuera del menú
     document.addEventListener("click", handleClickOutside);
 
-    // Remover el event listener cuando el componente se desmonte para evitar fugas de memoria
+    // Quitar el event listener cuando el componente se desmonte para evitar fugas de memoria
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };

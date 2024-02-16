@@ -12,11 +12,16 @@ export const FilesTable = () => {
   const items = ['Eliminar', 'Renombrar', 'Por fecha', 'Por nombre']
   const [selectedRightClickFile, setSelectedRightClickFile]=useState("");
   const [coordinates, setCoordinates]=useState({x:0, y:0});
+  const [filesUpdated, setFilesUpdated] = useState(false);
+
+
+  const handleFilesUpdated = () => {
+    setFilesUpdated(true);
+  };
 
   const handleRightClick = (e: any, id: any) => {
       e.preventDefault();
       setSelectedRightClickFile(id);
-      console.log(selectedRightClickFile);
       setIsVisible(true);
       const coords = {x:e.clientX, y:e.clientY}
       setCoordinates(coords);
@@ -92,10 +97,15 @@ export const FilesTable = () => {
           fCreacion: formatFecha(responseData[key].fcreacion),
         });
       }
-
+      setFilesUpdated(false);
       setFicheros(loadedFiles);
     } catch (error) {}
-  }, []);
+  }, [filesUpdated==true]);
+  //Controlamos desde este componente si se han actualizado
+  //los ficheros en el componente hijo al hacer borrados/renombrados
+  //en caso positivo se establece desde allí como true el booleano pasado como props
+  //se actualiza el estado y desde la api se coge la nueva lista, renderizando de nuevo
+
 
   //Initial load of data with fetchFicheros
   useEffect(() => {
@@ -219,7 +229,7 @@ export const FilesTable = () => {
           </tbody>
         </table>
       </div>
-      {isVisible && <ContextMenu onHide={onHide} items={items} coordinates={coordinates} id={selectedRightClickFile}/>}
+      {isVisible && <ContextMenu onHide={onHide} handleFilesUpdated={handleFilesUpdated} items={items} coordinates={coordinates} id={selectedRightClickFile}/>}
     </div>
   );
 };
