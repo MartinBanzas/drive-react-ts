@@ -29,9 +29,9 @@ export const About = () => {
               </a>
             </li>
             <li>
-                <span className="fw-bold">Material Dashboard</span>
+        
               <a href="https://www.creative-tim.com/product/material-dashboard" className="text-decoration-none">
-                <span className="fw-bold"> de Creative Tim</span>
+                <span className="fw-bold">Material Dashboard de Creative Tim</span>
               </a> como tema de Bootstrap, bajo licencia MIT
             </li>
           </ul>
@@ -42,7 +42,7 @@ export const About = () => {
           </p>
           <ul className="list-unstyled mt-4">
             <li>
-              <span className="fw-bold">Frankfurter:</span> para la obtención de tasas de intercambio de las monedas
+              <span className="fw-bold text-bold">Frankfurter:</span> para la obtención de tasas de intercambio de las monedas
             </li>
             <li>
               <span className="fw-bold">OpenWeatherMap:</span> para meteorología

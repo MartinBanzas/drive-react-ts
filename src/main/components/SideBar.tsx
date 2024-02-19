@@ -114,15 +114,16 @@ return (
             </li>
 
             <li className="nav-item">
-              <a className="nav-link text-white " href="./profile.html">
+            <Link className="nav-link text-white " to="./profile">
 
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">person</i>
                 </div>
 
-                <span className="nav-link-text ms-1">Perfil</span>
-              </a>
+                <span className="nav-link-text ms-1">Mi perfil</span>
+              </Link>
             </li>
+        
 
 
             <li className="nav-item">

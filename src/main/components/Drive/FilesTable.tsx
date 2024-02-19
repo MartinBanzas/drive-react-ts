@@ -8,28 +8,61 @@ export const FilesTable = () => {
   const [ficheros, setFicheros] = useState<FicheroModel[]>([]);
   const [httpError, setHttpError] = useState(null);
   const [newUpload, setNewUpload] = useState(false);
-  const [isVisible, setIsVisible]=useState(false);
-  const items = ['Eliminar', 'Renombrar', 'Por fecha', 'Por nombre']
-  const [selectedRightClickFile, setSelectedRightClickFile]=useState("");
-  const [coordinates, setCoordinates]=useState({x:0, y:0});
+  const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
+  const items = [
+    "Eliminar",
+    "Renombrar",
+    "Por fecha",
+    "Por nombre",
+    "Por tamaño",
+  ];
+  const [selectedRightClickFile, setSelectedRightClickFile] = useState("");
+  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [filesUpdated, setFilesUpdated] = useState(false);
 
+  const sortByDate = () => {
+    const sortedFicheros = [...ficheros];
+    sortedFicheros.sort((a, b) => {
+      const dateA = new Date(a.fCreacion);
+      const dateB = new Date(b.fCreacion);
+      return dateA.getTime() - dateB.getTime();
+    });
+    setFicheros(sortedFicheros);
+  };
+
+  const sortBySize = () => {
+    const sortedFicheros = [...ficheros];
+    sortedFicheros.sort((a, b) => {
+      console.log(a.size, b.size);
+      return Number(b.size) - Number(a.size);
+    });
+    setFicheros(sortedFicheros);
+  };
+  
+  const sortByName = () => {
+    const sortedFicheros = [...ficheros];
+    sortedFicheros.sort((a, b) => {
+      return a.ruta.localeCompare(b.ruta);
+    });
+
+    setFicheros(sortedFicheros);
+  };
 
   const handleFilesUpdated = () => {
     setFilesUpdated(true);
   };
 
   const handleRightClick = (e: any, id: any) => {
-      e.preventDefault();
-      setSelectedRightClickFile(id);
-      setIsVisible(true);
-      const coords = {x:e.clientX, y:e.clientY}
-      setCoordinates(coords);
-  }
+    e.preventDefault();
+    setSelectedRightClickFile(id);
+    setIsContextMenuVisible(true);
+    const coords = { x: e.clientX, y: e.clientY };
+    setCoordinates(coords);
+  };
 
-  const onHide = () => {
-    setIsVisible(false);
-  }
+  const hideContextMenu = () => {
+    setIsContextMenuVisible(false);
+  };
 
   const onDrop = useCallback(
     async (
@@ -93,19 +126,18 @@ export const FilesTable = () => {
           descripcion: responseData[key].descripcion,
           ruta: responseData[key].ruta,
           tipo: getImg(responseData[key].tipo),
-          size: formatSize(responseData[key].size),
+          size: responseData[key].size,
           fCreacion: formatFecha(responseData[key].fcreacion),
         });
       }
       setFilesUpdated(false);
       setFicheros(loadedFiles);
     } catch (error) {}
-  }, [filesUpdated==true]);
+  }, [filesUpdated == true]);
   //Controlamos desde este componente si se han actualizado
   //los ficheros en el componente hijo al hacer borrados/renombrados
   //en caso positivo se establece desde allí como true el booleano pasado como props
   //se actualiza el estado y desde la api se coge la nueva lista, renderizando de nuevo
-
 
   //Initial load of data with fetchFicheros
   useEffect(() => {
@@ -214,22 +246,38 @@ export const FilesTable = () => {
             {ficheros.map((file) => (
               <tr key={file.id}>
                 <td>
-                <a href={`${baseUrl}/get/${file.id}`} defaultValue={file.id} onContextMenu={(e)=>handleRightClick(e, file.id)} download={file.ruta}>
-            {file.ruta}
-        </a>
+                  <a
+                    href={`${baseUrl}/get/${file.id}`}
+                    defaultValue={file.id}
+                    onContextMenu={(e) => handleRightClick(e, file.id)}
+                    download={file.ruta}
+                  >
+                    {file.ruta}
+                  </a>
                 </td>
                 <td>{file.descripcion}</td>
                 <td>
                   <img src={file.tipo} height="28px" width="28px" alt="icono" />
                 </td>
-                <td>{file.size}</td>
+                <td>{formatSize(Number(file.size))}</td>
                 <td>{file.fCreacion}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {isVisible && <ContextMenu onHide={onHide} handleFilesUpdated={handleFilesUpdated} items={items} coordinates={coordinates} id={selectedRightClickFile}/>}
+      {isContextMenuVisible && (
+        <ContextMenu
+          sortBySize={sortBySize}
+          sortByDate={sortByDate}
+          sortByName={sortByName}
+          hideContextMenu={hideContextMenu}
+          handleFilesUpdated={handleFilesUpdated}
+          items={items}
+          coordinates={coordinates}
+          id={selectedRightClickFile}
+        />
+      )}
     </div>
   );
 };

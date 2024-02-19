@@ -8,7 +8,6 @@ import { ListContainer } from './main/components/Trello/ListContainer';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Board } from './main/components/Conversor/MainBoard';
 import { Main } from './main/components/Tetris/components/TetrisMain';
-import { CalendarMain } from './main/components/Calendar/CalendarMain';
 import { Login } from './main/components/Login/Login';
 import { Register } from './main/components/Login/Register';
 import { isTokenValid } from './main/components/Login/TokenHandler';
@@ -19,6 +18,8 @@ import './assets/css/main.css'
 import { ChatWindow } from './main/components/Chat/ChatWindow';
 import { About } from './main/components/About';
 import { Weather } from './main/components/Weather/Weather';
+import {CalendarMain} from './main/components/Calendar/CalendarMain';
+import { Profile } from './main/components/Profile/Profile';
 
 
 const handleLogin: any = () => {
@@ -91,6 +92,11 @@ const global: any = () => {
           <Main />
         </Route>
 
+        <Route path='/calendar'>
+          <SideBar />
+          <CalendarMain />
+        </Route>
+      
 
         <Route path='/login'>
           <Login />
@@ -110,6 +116,13 @@ const global: any = () => {
         <SideBar/>
         <Weather/>
        </Route>
+
+
+       <Route path='/profile'>
+        <SideBar/>
+        <Profile/>
+       </Route>
+
 
         <Route>
           <Error />

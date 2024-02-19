@@ -4,59 +4,62 @@ import { ModalRename } from "./utils/ModalRename";
 export interface ContextMenuProps {
   id: string;
   items: string[];
-  coordinates: {x:number, y:number};
-  onHide:()=>void
-  handleFilesUpdated: ()=>void
+  coordinates: { x: number; y: number };
+  hideContextMenu: () => void;
+  handleFilesUpdated: () => void;
+  sortByName: () => void;
+  sortByDate: () => void;
+  sortBySize: () => void;
 }
 
-export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates, onHide, handleFilesUpdated }) => {
+export const ContextMenu: React.FC<ContextMenuProps> = ({
+  id,items,coordinates,hideContextMenu,handleFilesUpdated,sortByDate,sortByName,sortBySize,
+}) => {
   const menuRef = useRef<HTMLUListElement>(null);
   const [showModalRename, setShowModalRename] = React.useState(false);
+  const [newName, setNewName] = React.useState("");
 
-  const url="http://localhost:8080/drive"
   const handleFileDelete = async () => {
-   
-    const response = await fetch (`http://localhost:8080/drive/delete/${id}`, {
-      method: "DELETE"
-    })
-    console.log(response);
+    const response = await fetch(`http://localhost:8080/drive/delete/${id}`, {
+      method: "DELETE",
+    });
+
     if (response.ok) {
-      console.log(response)
-      onHide();
+      hideContextMenu();
       handleFilesUpdated();
     }
-
-    
-    console.log(id);
   };
-
-  const handleFileRename = () => {
-    setShowModalRename(true);
-  };
-
-  const sortByName = () => {
-    console.log("sortName");
-  };
-
-  const sortByDate = () => {
-    console.log("sortDate");
+  const handleFileRename = async () => {
+    const response = await fetch(
+      `http://localhost:8080/drive/rename/${id}?newName=${encodeURIComponent(
+        newName
+      )}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(newName),
+      }
+    );
+    if (response.ok) {
+      console.log(response);
+      hideContextMenu();
+      handleFilesUpdated();
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      onHide();
+      hideContextMenu();
     }
-  };
 
+  };
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
-    // Quitar el event listener cuando el componente se desmonte para evitar fugas de memoria
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []); 
+  }, []);
 
   const handleEvent = (item: string) => {
     switch (item) {
@@ -64,7 +67,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates
         handleFileDelete();
         break;
       case "Renombrar":
-        handleFileRename();
+        setShowModalRename(true);
         break;
       case "Por fecha":
         sortByDate();
@@ -72,18 +75,30 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ id, items, coordinates
       case "Por nombre":
         sortByName();
         break;
+      case "Por tamaño":
+        sortBySize();
+        break;
     }
   };
 
-
-return (
-    <ul ref={menuRef} className="ContextMenu" style={{ top: coordinates.y, left: coordinates.x }}>
+  return (
+    <ul
+      ref={menuRef}
+      className="ContextMenu"
+      style={{ top: coordinates.y, left: coordinates.x }}
+    >
       {items.map((item: string) => (
-        <li key={item} className=""  onClick={() => handleEvent(item)}>
+        <li key={item} className="" onClick={() => handleEvent(item)}>
           {item}
         </li>
       ))}
-      <ModalRename setShowModalRename={setShowModalRename} showModalRename={showModalRename}/>
+      <ModalRename
+        handleFileRename={handleFileRename}
+        setNewName={setNewName}
+        setShowModalRename={setShowModalRename}
+        showModalRename={showModalRename}
+    
+      />
     </ul>
-  ) 
-}
+  );
+};
