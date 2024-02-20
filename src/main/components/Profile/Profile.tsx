@@ -5,7 +5,7 @@ export const Profile = () => {
     <>
     <div className="d-inline-block container mt-5 ">
       <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-        <div className="bg-gradient-dark  border-radius-lg pt-4 pb-3 d-flex align-items-center">
+        <div className="bg-primary  border-radius-lg pt-4 pb-3 d-flex align-items-center">
           <img
             src={profilePic}
             width={64}
