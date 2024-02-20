@@ -33,7 +33,7 @@ interface Range {
 }
 
 export const CalendarMain = () => {
-  /*const saveToFirebase = async (data: any) => {
+  const saveToFirebase = async (data: any) => {
     try {
       const docRef = doc(db, "tarjetas", "calendario");
       const dataToSave = { lists: data };
@@ -41,7 +41,7 @@ export const CalendarMain = () => {
     } catch (error) {
       console.error("Error al guardar en Firestore:", error);
     }
-  };*/
+  };
 
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [eventsToShow, setEventsToShow] = useState<EventList[]>();
@@ -91,13 +91,13 @@ export const CalendarMain = () => {
     };
   }, []);
 
- /* const saveEventsToFirestore = () => {
+  const saveEventsToFirestore = () => {
     if (fireBaseEvents) {
       saveToFirebase(fireBaseEvents);
     }
-  };*/
+  };
 
- /* useEffect(() => {
+  useEffect(() => {
     return () => {
       saveEventsToFirestore();
     };
@@ -105,13 +105,12 @@ export const CalendarMain = () => {
 
   useEffect(() => {
     saveEventsToFirestore();
-  }, [fireBaseEvents]);*/
+  }, [fireBaseEvents]);
 
-  
   const handleEventResize = (arg: EventResizeDoneArg) => {
     const { event, oldEvent } = arg;
-  console.log(arg);
-    /*if (fireBaseEvents) {
+  
+    if (fireBaseEvents) {
       const updatedEvents = fireBaseEvents.map((fbEvent) => {
         if (fbEvent.id === event.id) {
           // Asegurarse de que event.start y event.end no sean null
@@ -127,16 +126,19 @@ export const CalendarMain = () => {
           // Si el ID no coincide, no se modifica este evento
           return fbEvent;
         }
-      });*/
+      });
   
-    //  saveToFirebase(updatedEvents);
+      saveToFirebase(updatedEvents);
       // Filtrar los elementos null de updatedEvents
-      //const filteredEvents = updatedEvents.filter((event) => event !== null);
+      const filteredEvents = updatedEvents.filter((event) => event !== null);
   
       // Establecer el estado fireBaseEvents
-     // setFireBaseEvents(filteredEvents);
-    
-
+      setFireBaseEvents(filteredEvents);
+    }
+  
+    console.log("Evento redimensionado:", event.start, event.end);
+    console.log("Fecha :", oldEvent.end, oldEvent.start);
+    console.log("Fecha de fin:");
   };
 
   const handleNewEvent = () => {
@@ -174,9 +176,13 @@ export const CalendarMain = () => {
         dateClick={(arg: { dateStr: any }) => setShowAddEvent(true)}
         editable={true}
         selectable={true}
-        events={eventsToShow}
-         
-        
+        events={eventsToShow?.map((event) => ({
+          ...event,
+          start: event.date,
+          range: event.range
+            ? { start: event.range.start, end: event.range.end }
+            : undefined,
+        }))}
         select={(arg: DateSelectArg) => setNewDate(arg)}
         eventClick={handleEventClick}
         eventResize={(arg: EventResizeDoneArg) => handleEventResize(arg)}
