@@ -26,7 +26,7 @@ const handleLogin: any = () => {
 
   return (
     <Switch>
-      <div className='App Site bg-gray-200'>
+      <div className='App Site bg-gray-200 '>
         
         <Route path='/' exact>
           <Redirect to='/login' />
@@ -50,6 +50,10 @@ const handleLogin: any = () => {
           <CalendarMain />
         </Route>
       
+      <Route path='/profile'>
+        <SideBar/>
+        <Profile/>
+       </Route>
     
        <Footer/>
       </div>
