@@ -11,7 +11,7 @@ import { useGameStatus } from "../Hooks/useGameStatus";
 import { Music } from "../Music";
 import { Leaderboard } from "./Leaderboard/Leaderboard";
 import { useState } from "react";
-import { fetchResults } from "./Leaderboard/ScoreRest";
+import { fetchResults } from "../../../utils/UserDataRest";
 import UserModel from "../../../../models/UserModel";
 import { handleNewMaximumScore } from "./Leaderboard/NewMaximumScore";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserModel from "../../../models/UserModel";
-import { fetchResults } from "../Tetris/components/Leaderboard/ScoreRest";
+import { fetchResults } from "../../utils/UserDataRest";
 import { getNombre } from "../Login/TokenHandler";
 import { Link } from "react-router-dom";
 import './custom.css'

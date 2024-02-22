@@ -1,6 +1,24 @@
+import { useEffect } from "react";
 import profilePic from "../../../assets/img/avatar2.jpg";
+import { fetchResults } from "../../utils/UserDataRest";
+import UserModel from "../../../models/UserModel";
+import React from "react";
 
 export const Profile = () => {
+
+const [users, setUsers]=React.useState<UserModel[]>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const result = await fetchResults();
+        setUsers(result);
+    };
+
+    fetchData();
+}, []); 
+//si coincide con el logeado, a un array, los demás usuarios a otro?
+
+
   return (
     <div className="container-fluid px-2 px-md-4 main-content w-auto">
       <div

@@ -1,4 +1,4 @@
-import UserModel from "../../../../../models/UserModel";
+import UserModel from "../../models/UserModel";
 
 
 export const fetchResults = async () => {
@@ -20,6 +20,11 @@ export const fetchResults = async () => {
             users.push({
                 nombre: responseData[key].nombre,
                 puntuacion: responseData[key].puntuacion,
+                bio: responseData[key].bio,
+                facebook: responseData[key].facebook,
+                twitter: responseData[key].twitter,
+                movil: responseData[key].movil,
+                instagram: responseData[key].instagram
             });
         }
 
