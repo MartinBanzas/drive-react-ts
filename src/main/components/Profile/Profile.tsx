@@ -3,19 +3,26 @@ import profilePic from "../../../assets/img/avatar2.jpg";
 import { fetchResults } from "../../utils/UserDataRest";
 import UserModel from "../../../models/UserModel";
 import React from "react";
+import { getNombre } from "../Login/TokenHandler";
 
 export const Profile = () => {
 
-const [users, setUsers]=React.useState<UserModel[]>([])
+const [mainUser, setMainUser]=React.useState<UserModel>();
+const [otherUsers, setOtherUsers]=React.useState<UserModel[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-        const result = await fetchResults();
-        setUsers(result);
-    };
+useEffect(() => {
+  const fetchData = async () => {
+      const result = await fetchResults();
+      setOtherUsers(result);
+      const main = otherUsers.find(user => user.nombre === getNombre);
+      if (main) {
+          setMainUser(main);
+          console.log(main.bio)
+      }
+  };
 
-    fetchData();
-}, []); 
+  fetchData();
+}, []);
 //si coincide con el logeado, a un array, los demás usuarios a otro?
 
 
@@ -43,7 +50,7 @@ const [users, setUsers]=React.useState<UserModel[]>([])
           </div>
           <div className="col-auto my-auto">
             <div className="h-100">
-              <h5 className="mb-1">Richard Davis</h5>
+              <h5 className="mb-1">{mainUser?.nombre}</h5>
               <p className="mb-0 font-weight-normal text-sm">
                 CEO / Co-Founder
               </p>
@@ -77,7 +84,7 @@ const [users, setUsers]=React.useState<UserModel[]>([])
                     <i className="material-icons text-lg position-relative">
                       email
                     </i>
-                    <span className="ms-1">Messages</span>
+                    <span className="ms-1">Mensajes</span>
                   </a>
                 </li>
                 <li className="nav-item">
@@ -91,7 +98,7 @@ const [users, setUsers]=React.useState<UserModel[]>([])
                     <i className="material-icons text-lg position-relative">
                       settings
                     </i>
-                    <span className="ms-1">Settings</span>
+                    <span className="ms-1">Configuración</span>
                   </a>
                 </li>
               </ul>
@@ -233,47 +240,44 @@ const [users, setUsers]=React.useState<UserModel[]>([])
                 </div>
                 <div className="card-body p-3">
                   <p className="text-sm">
-                    Hi, I’m Alec Thompson, Decisions: If you can’t decide, the
-                    answer is no. If two equally difficult paths, choose the one
-                    more painful in the short term (pain avoidance is creating
-                    an illusion of equality).
+                    {mainUser?.bio}
                   </p>
                   <hr className="horizontal gray-light my-4" />
                   <ul className="list-group">
                     <li className="list-group-item border-0 ps-0 pt-0 text-sm">
                       <strong className="text-dark">Nombre completo:</strong> &nbsp;
-                      Alec M. Thompson
+                     {mainUser?.nombre}
                     </li>
                     <li className="list-group-item border-0 ps-0 text-sm">
                       <strong className="text-dark">Móvil:</strong> &nbsp; (44)
-                      123 1234 123
+                      {mainUser?.movil}
                     </li>
                     <li className="list-group-item border-0 ps-0 text-sm">
                       <strong className="text-dark">Email:</strong> &nbsp;
-                      alecthompson@mail.com
+                     {mainUser?.email}
                     </li>
                     <li className="list-group-item border-0 ps-0 text-sm">
                       <strong className="text-dark">País:</strong> &nbsp;
-                      USA
+                      España
                     </li>
                     <li className="list-group-item border-0 ps-0 pb-0">
                       <strong className="text-dark text-sm">Redes:</strong>{" "}
                       &nbsp;
                       <a
                         className="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0"
-                        href="javascript:;"
+                        href={`https://www.twitter.com/${mainUser?.twitter}`}
                       >
                         <i className="fab fa-facebook fa-lg" />
                       </a>
                       <a
                         className="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0"
-                        href="javascript:;"
+                        href={`https://www.facebook.com/${mainUser?.facebook}`}
                       >
                         <i className="fab fa-twitter fa-lg" />
                       </a>
                       <a
                         className="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0"
-                        href="javascript:;"
+                        href={`https://www.instagram.com/${mainUser?.instagram}`}
                       >
                         <i className="fab fa-instagram fa-lg" />
                       </a>
@@ -282,116 +286,42 @@ const [users, setUsers]=React.useState<UserModel[]>([])
                 </div>
               </div>
             </div>
+
+
             <div className="col-12 col-xl-4">
-              <div className="card card-plain h-100">
-                <div className="card-header pb-0 p-3">
-                  <h6 className="mb-0">Conversations</h6>
-                </div>
-                <div className="card-body p-3">
-                  <ul className="list-group">
-                    <li className="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0">
-                      <div className="avatar me-3">
-                        <img
-                          src="../assets/img/kal-visuals-square.jpg"
-                          alt="kal"
-                          className="border-radius-lg shadow"
-                        />
-                      </div>
-                      <div className="d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="mb-0 text-sm">Sophie B.</h6>
-                        <p className="mb-0 text-xs">
-                          Hi! I need more information..
-                        </p>
-                      </div>
-                      <a
-                        className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
-                        href="javascript:;"
-                      >
-                        Reply
-                      </a>
-                    </li>
-                    <li className="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                      <div className="avatar me-3">
-                        <img
-                          src="../assets/img/marie.jpg"
-                          alt="kal"
-                          className="border-radius-lg shadow"
-                        />
-                      </div>
-                      <div className="d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="mb-0 text-sm">Anne Marie</h6>
-                        <p className="mb-0 text-xs">Awesome work, can you..</p>
-                      </div>
-                      <a
-                        className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
-                        href="javascript:;"
-                      >
-                        Reply
-                      </a>
-                    </li>
-                    <li className="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                      <div className="avatar me-3">
-                        <img
-                          src="../assets/img/ivana-square.jpg"
-                          alt="kal"
-                          className="border-radius-lg shadow"
-                        />
-                      </div>
-                      <div className="d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="mb-0 text-sm">Ivanna</h6>
-                        <p className="mb-0 text-xs">About files I can..</p>
-                      </div>
-                      <a
-                        className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
-                        href="javascript:;"
-                      >
-                        Reply
-                      </a>
-                    </li>
-                    <li className="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                      <div className="avatar me-3">
-                        <img
-                          src="../assets/img/team-4.jpg"
-                          alt="kal"
-                          className="border-radius-lg shadow"
-                        />
-                      </div>
-                      <div className="d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="mb-0 text-sm">Peterson</h6>
-                        <p className="mb-0 text-xs">Have a great afternoon..</p>
-                      </div>
-                      <a
-                        className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
-                        href="javascript:;"
-                      >
-                        Reply
-                      </a>
-                    </li>
-                    <li className="list-group-item border-0 d-flex align-items-center px-0">
-                      <div className="avatar me-3">
-                        <img
-                          src="../assets/img/team-3.jpg"
-                          alt="kal"
-                          className="border-radius-lg shadow"
-                        />
-                      </div>
-                      <div className="d-flex align-items-start flex-column justify-content-center">
-                        <h6 className="mb-0 text-sm">Nick Daniel</h6>
-                        <p className="mb-0 text-xs">
-                          Hi! I need more information..
-                        </p>
-                      </div>
-                      <a
-                        className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
-                        href="javascript:;"
-                      >
-                        Reply
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+  <div className="card card-plain h-100">
+    <div className="card-header pb-0 p-3">
+      <h6 className="mb-0">Conversations</h6>
+    </div>
+    <div className="card-body p-3">
+      <ul className="list-group">
+        {otherUsers.map((user) => (
+          <li className="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0" key={user.nombre}>
+            <div className="avatar me-3">
+              <img
+                src="../assets/img/kal-visuals-square.jpg"
+                alt="kal"
+                className="border-radius-lg shadow"
+              />
             </div>
+            <div className="d-flex align-items-start flex-column justify-content-center">
+              <h6 className="mb-0 text-sm">{user.nombre}</h6>
+              <p className="mb-0 text-xs">
+                "Un texto de prueba..."
+              </p>
+            </div>
+            <a
+              className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
+              href="javascript:;"
+            >
+              Reply
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
           
                 </div>
               </div>

@@ -36,6 +36,16 @@ const handleLogin: any = () => {
           <Footer />
         </Route>
 
+        <Route path='/trello'>
+          <SideBar />
+          <ListContainer />
+        </Route>
+
+        <Route path='/conversor'>
+          <SideBar />
+          <Board />
+        </Route>
+
         <Route path='/register'>
           <Register />
         </Route>
@@ -53,6 +63,36 @@ const handleLogin: any = () => {
       <Route path='/profile'>
         <SideBar/>
         <Profile/>
+       </Route>
+
+       <Route path='/tetris'>
+          <SideBar />
+          <Main />
+        </Route>
+
+        <Route path='/calendar'>
+          <SideBar />
+          <CalendarMain />
+        </Route>
+      
+
+        <Route path='/login'>
+          <Login />
+        </Route>
+
+        <Route path='/messages'>
+         <SideBar/>
+          <ChatWindow/>
+        </Route>
+
+        <Route path='/about'>
+        <SideBar/>
+        <About/>
+       </Route>
+
+       <Route path='/weather'>
+        <SideBar/>
+        <Weather/>
        </Route>
     
        <Footer/>

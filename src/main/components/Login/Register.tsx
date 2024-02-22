@@ -6,8 +6,9 @@ import { FormValidation } from './FormValidation';
 export const Register = () => {
   // // style="background-image: url('../assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
 
-
-  const [labelName, setLabelName] = React.useState("Nombre");
+  const [username, setUsername]=React.useState("");
+  const [labelLogin, setLabelLogin]=React.useState('Nombre de inicio de sesión');
+  const [labelName, setLabelName] = React.useState("Nombre completo");
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [labelPassword, setLabelPassword] = React.useState("Contraseña");
@@ -33,14 +34,17 @@ export const Register = () => {
       case "password": setLabelPassword(""); break;
       case "email": setLabelEmail(""); break;
       case "name": setLabelName(""); break;
+      case "username": setLabelLogin(""); break;
     }
   }
 
   const sendRegisterRequest = useCallback(async () => {
     const formData = {
+      username:username,
+      password: password,
+      email: email,
       nombre: name,
-      username: email,
-      password: password
+      
     };
 
     try {
@@ -88,21 +92,27 @@ export const Register = () => {
                   <div className="card card-plain">
                     <div className="card-header bg-gray-200">
                       <h4 className="font-weight-bolder">Iniciar sesión</h4>
-                      <p className="mb-0">Introduce tu email y contraseña para registrarte</p>
+                      <p className="mb-0">Introduce tus datos para registrarte</p>
                     </div>
                     <div className="card-body">
                       <form role="form">
+                    
+
                         <div className="input-group input-group-outline mb-3">
-                          <label className="form-label">{name ? "" : labelName} </label>
-                          <input type="text" onChange={(event) => setName(event?.target.value)} onClick={handleLabelClick} id="name" className="form-control" />
-                        </div>
-                        <div className="input-group input-group-outline mb-3">
-                          <label className="form-label">{email ? "" : labelEmail} </label>
-                          <input type="email" onChange={(event) => setEmail(event?.target.value)} onClick={handleLabelClick} id="email" className="form-control" />
+                          <label className="form-label">{username ? "" : labelLogin} </label>
+                          <input type="email" onChange={(event) => setUsername(event?.target.value)} onClick={handleLabelClick} id="username" className="form-control" autoComplete='off' />
                         </div>
                         <div className="input-group input-group-outline mb-3">
                           <label className="form-label">{password ? "": labelPassword}</label>
-                          <input type="password" onChange={(event) => setPassword(event?.target.value)} onClick={handleLabelClick} id="password" className="form-control" />
+                          <input type="password" onChange={(event) => setPassword(event?.target.value)} onClick={handleLabelClick} id="password" className="form-control" autoComplete='off'/>
+                        </div>
+                        <div className="input-group input-group-outline mb-3">
+                          <label className="form-label">{name ? "" : labelName} </label>
+                          <input type="text" onChange={(event) => setName(event?.target.value)} onClick={handleLabelClick} id="name" className="form-control" autoComplete='off' />
+                        </div>
+                        <div className="input-group input-group-outline mb-3">
+                          <label className="form-label">{email ? "" : labelEmail} </label>
+                          <input type="email" onChange={(event) => setEmail(event?.target.value)} onClick={handleLabelClick} id="email" className="form-control" autoComplete='off' />
                         </div>
                         <div className="form-check form-check-info text-start ps-0">
                           <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked />

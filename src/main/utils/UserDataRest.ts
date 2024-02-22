@@ -4,6 +4,7 @@ import UserModel from "../../models/UserModel";
 export const fetchResults = async () => {
     const baseUrl: string = "http://localhost:8080/api/users";
     const url: string = `${baseUrl}`;
+    const bioDefault="Este es un espacio en el que nos cuentes un poco acerca de ti mismo. No seas tímido y permite que tus compañeros te conozcan";
 
     try {
         const response = await fetch(url);
@@ -20,13 +21,15 @@ export const fetchResults = async () => {
             users.push({
                 nombre: responseData[key].nombre,
                 puntuacion: responseData[key].puntuacion,
-                bio: responseData[key].bio,
+                bio: responseData[key].bio != null ? responseData[key].bio : bioDefault,
+                email:responseData[key].email,
                 facebook: responseData[key].facebook,
                 twitter: responseData[key].twitter,
                 movil: responseData[key].movil,
                 instagram: responseData[key].instagram
             });
         }
+       
 
         return users;
     } catch (error) {
