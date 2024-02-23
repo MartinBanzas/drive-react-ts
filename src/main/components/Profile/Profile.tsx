@@ -6,33 +6,32 @@ import React from "react";
 import { getNombre } from "../Login/TokenHandler";
 
 export const Profile = () => {
+  const [mainUser, setMainUser] = React.useState<UserModel>();
+  const [otherUsers, setOtherUsers] = React.useState<UserModel[]>([]);
 
-const [mainUser, setMainUser]=React.useState<UserModel>();
-const [otherUsers, setOtherUsers]=React.useState<UserModel[]>([]);
-
-useEffect(() => {
-  const fetchData = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
       const result = await fetchResults();
-      setOtherUsers(result);
-      const main = otherUsers.find(user => user.nombre === getNombre);
-      if (main) {
-          setMainUser(main);
-          console.log(main.bio)
+
+      const mainUser = result.find((user) => user.nombre === getNombre);
+      const otherUsers = result.filter((user) => user.nombre !== getNombre);
+      setOtherUsers(otherUsers);
+      if (mainUser) {
+        setMainUser(mainUser);
       }
-  };
+    };
 
-  fetchData();
-}, []);
-//si coincide con el logeado, a un array, los demás usuarios a otro?
-
+    fetchData();
+  }, []);
+  //si coincide con el logeado, a un array, los demás usuarios a otro?
 
   return (
-    <div className="container-fluid px-2 px-md-4 main-content w-auto">
+    <div className="container-fluid px-2 px-md-7 main-content w-auto">
       <div
         className="page-header min-height-300 border-radius-xl mt-4"
         style={{
           backgroundImage:
-            'url("https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80")'
+            'url("https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80")',
         }}
       >
         <span className="mask  bg-gradient-primary  opacity-6" />
@@ -63,7 +62,7 @@ useEffect(() => {
                   <a
                     className="nav-link mb-0 px-0 py-1 active "
                     data-bs-toggle="tab"
-                    href="javascript:;"
+                    href=""
                     role="tab"
                     aria-selected="true"
                   >
@@ -77,7 +76,7 @@ useEffect(() => {
                   <a
                     className="nav-link mb-0 px-0 py-1 "
                     data-bs-toggle="tab"
-                    href="javascript:;"
+                    href=""
                     role="tab"
                     aria-selected="false"
                   >
@@ -91,7 +90,7 @@ useEffect(() => {
                   <a
                     className="nav-link mb-0 px-0 py-1 "
                     data-bs-toggle="tab"
-                    href="javascript:;"
+                    href=""
                     role="tab"
                     aria-selected="false"
                   >
@@ -114,7 +113,7 @@ useEffect(() => {
                 </div>
                 <div className="card-body p-3">
                   <h6 className="text-uppercase text-body text-xs font-weight-bolder">
-                    Account
+                   Cuenta
                   </h6>
                   <ul className="list-group">
                     <li className="list-group-item border-0 px-0">
@@ -129,7 +128,7 @@ useEffect(() => {
                           className="form-check-label text-body ms-3 text-truncate w-80 mb-0"
                           htmlFor="flexSwitchCheckDefault"
                         >
-                          Email me when someone follows me
+                          Tema oscuro
                         </label>
                       </div>
                     </li>
@@ -144,7 +143,7 @@ useEffect(() => {
                           className="form-check-label text-body ms-3 text-truncate w-80 mb-0"
                           htmlFor="flexSwitchCheckDefault1"
                         >
-                          Email me when someone answers on my post
+                         Mostrar imagen de perfil de otros usuarios
                         </label>
                       </div>
                     </li>
@@ -166,7 +165,7 @@ useEffect(() => {
                     </li>
                   </ul>
                   <h6 className="text-uppercase text-body text-xs font-weight-bolder mt-4">
-                    Application
+                    Aplicación
                   </h6>
                   <ul className="list-group">
                     <li className="list-group-item border-0 px-0">
@@ -180,7 +179,7 @@ useEffect(() => {
                           className="form-check-label text-body ms-3 text-truncate w-80 mb-0"
                           htmlFor="flexSwitchCheckDefault3"
                         >
-                          New launches and projects
+                         Nuevos lanzamientos y proyectos
                         </label>
                       </div>
                     </li>
@@ -196,7 +195,7 @@ useEffect(() => {
                           className="form-check-label text-body ms-3 text-truncate w-80 mb-0"
                           htmlFor="flexSwitchCheckDefault4"
                         >
-                          Monthly product updates
+                         Actualizaciones mensuales del producto
                         </label>
                       </div>
                     </li>
@@ -211,7 +210,7 @@ useEffect(() => {
                           className="form-check-label text-body ms-3 text-truncate w-80 mb-0"
                           htmlFor="flexSwitchCheckDefault5"
                         >
-                          Subscribe to newsletter
+                         Suscripción a la Newsletter
                         </label>
                       </div>
                     </li>
@@ -227,7 +226,7 @@ useEffect(() => {
                       <h6 className="mb-0">Información de perfil</h6>
                     </div>
                     <div className="col-md-4 text-end">
-                      <a href="javascript:;">
+                      <a href="">
                         <i
                           className="fas fa-user-edit text-secondary text-sm"
                           data-bs-toggle="tooltip"
@@ -239,26 +238,24 @@ useEffect(() => {
                   </div>
                 </div>
                 <div className="card-body p-3">
-                  <p className="text-sm">
-                    {mainUser?.bio}
-                  </p>
+                  <p className="text-sm">{mainUser?.bio}</p>
                   <hr className="horizontal gray-light my-4" />
                   <ul className="list-group">
                     <li className="list-group-item border-0 ps-0 pt-0 text-sm">
-                      <strong className="text-dark">Nombre completo:</strong> &nbsp;
-                     {mainUser?.nombre}
+                      <strong className="text-dark">Nombre completo:</strong>{" "}
+                      &nbsp;
+                      {mainUser?.nombre}
                     </li>
                     <li className="list-group-item border-0 ps-0 text-sm">
-                      <strong className="text-dark">Móvil:</strong> &nbsp; (44)
+                      <strong className="text-dark">Móvil:</strong> &nbsp; 
                       {mainUser?.movil}
                     </li>
                     <li className="list-group-item border-0 ps-0 text-sm">
                       <strong className="text-dark">Email:</strong> &nbsp;
-                     {mainUser?.email}
+                      {mainUser?.email}
                     </li>
                     <li className="list-group-item border-0 ps-0 text-sm">
-                      <strong className="text-dark">País:</strong> &nbsp;
-                      España
+                      <strong className="text-dark">País:</strong> &nbsp; España
                     </li>
                     <li className="list-group-item border-0 ps-0 pb-0">
                       <strong className="text-dark text-sm">Redes:</strong>{" "}
@@ -287,46 +284,46 @@ useEffect(() => {
               </div>
             </div>
 
-
             <div className="col-12 col-xl-4">
-  <div className="card card-plain h-100">
-    <div className="card-header pb-0 p-3">
-      <h6 className="mb-0">Conversations</h6>
-    </div>
-    <div className="card-body p-3">
-      <ul className="list-group">
-        {otherUsers.map((user) => (
-          <li className="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0" key={user.nombre}>
-            <div className="avatar me-3">
-              <img
-                src="../assets/img/kal-visuals-square.jpg"
-                alt="kal"
-                className="border-radius-lg shadow"
-              />
-            </div>
-            <div className="d-flex align-items-start flex-column justify-content-center">
-              <h6 className="mb-0 text-sm">{user.nombre}</h6>
-              <p className="mb-0 text-xs">
-                "Un texto de prueba..."
-              </p>
-            </div>
-            <a
-              className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
-              href="javascript:;"
-            >
-              Reply
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-</div>
-          
+              <div className="card card-plain h-100">
+                <div className="card-header pb-0 p-3">
+                  <h6 className="mb-0">Conversations</h6>
+                </div>
+                <div className="card-body p-3">
+                  <ul className="list-group">
+                    {otherUsers.map((user) => (
+                      <li
+                        className="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0"
+                        key={user.nombre}
+                      >
+                        <div className="avatar me-3">
+                          <img
+                            src="../assets/img/kal-visuals-square.jpg"
+                            alt="kal"
+                            className="border-radius-lg shadow"
+                          />
+                        </div>
+                        <div className="d-flex align-items-start flex-column justify-content-center">
+                          <h6 className="mb-0 text-sm">{user.nombre}</h6>
+                          <p className="mb-0 text-xs">
+                            "Un texto de prueba..."
+                          </p>
+                        </div>
+                        <a
+                          className="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
+                          href=""
+                        >
+                          Reply
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-
+        </div>
+      </div>
+    </div>
   );
 };
