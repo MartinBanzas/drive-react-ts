@@ -44,8 +44,6 @@ export const ChatWindow = () => {
   };
 
 
-
-
   const saveToFirebase = async (modifiedList:Message[]) => {
     const docRef = doc(db, "tarjetas", "mensajes");
 
@@ -77,7 +75,7 @@ export const ChatWindow = () => {
       sender: getNombre, 
       body: inputText,
       receiver: userSelected,
-      date:formatDateTime(Date.now())
+      date:Date.now()
     };
 
     try {
