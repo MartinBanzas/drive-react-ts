@@ -6,14 +6,14 @@ import { setDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
 import { getNombre } from "../../Login/TokenHandler";
 import { db } from "../../../utils/FirebaseConfig";
 
-interface ModalProps {
+interface ChatModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   showModal: boolean;
   msgList: Message[];
   receiver: string;
 }
 
-export const ChatModal: React.FC<ModalProps> = ({
+export const ChatModal: React.FC<ChatModalProps> = ({
   showModal,
   setShowModal,
   msgList,

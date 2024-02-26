@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import profilePic from "../../../assets/img/avatar2.jpg";
 import { fetchResults } from "../../utils/UserDataRest";
 import UserModel from "../../../models/UserModel";
@@ -8,7 +8,8 @@ import { onSnapshot, doc } from "firebase/firestore";
 import { db } from "../../utils/FirebaseConfig";
 import { SpinnerLoading } from "../../utils/SpinnerLoading";
 import avatar from "../../../assets/img/avatar2.jpg";
-import { ChatModal } from "./ChatModals/ChatModal";
+import { ChatModal } from "./Modals/ChatModal";
+import { EditModal } from "./Modals/EditModal";
 
 export interface Message {
   key: string;
@@ -23,8 +24,31 @@ export const Profile = () => {
   const [otherUsers, setOtherUsers] = React.useState<UserModel[]>([]);
   const [fireBaseMessages, setFireBaseMessages] = React.useState<Message[]>([]);
   const [isReady, setIsReady] = React.useState<boolean>(false);
-  const [showModal, setShowModal] = React.useState(false);
+  const [chatModal, setChatModal] = React.useState(false);
+  const [editModal, setEditModal]=React.useState(false);
   const [msgFromThisUser, setMsgFromThisUser]=React.useState<Message[]>([]);
+
+
+
+  const updateUser = useCallback(async (id: number, newName: string, newBio: string, newPhone: number) => {
+    const formData = {
+      newName: newName,
+      newPhone: newPhone,
+      newBio: newBio  
+    };
+  
+    try {
+      const response = await fetch(`http://localhost:8080/auth/updateUserData/${id}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+    } catch (error) {
+      console.log("Error actualizando el recurso");
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "tarjetas", "mensajes"), (doc) => {
@@ -55,7 +79,7 @@ export const Profile = () => {
       return dateB.getTime() - dateA.getTime();
     });
     setMsgFromThisUser(msgFromThisUser);
-    setShowModal(true);
+    setChatModal(true);
    
   }
 
@@ -73,7 +97,7 @@ export const Profile = () => {
    
     // Devolver el primer mensaje del array, que será el más reciente
     const currentlastMsg = msgFromThisUser[0];
-    return currentlastMsg.body;
+    return currentlastMsg === undefined ? "Aún no hay mensajes con este usuario" : currentlastMsg.body;
   };
 
 
@@ -92,7 +116,7 @@ export const Profile = () => {
 
     fetchData();
   }, []);
-  //si coincide con el logeado, a un array, los demás usuarios a otro?
+
 
   return isReady ? (
     <div className="container-fluid px-2 px-md-7 main-content w-auto">
@@ -295,7 +319,7 @@ export const Profile = () => {
                       <h6 className="mb-0">Información de perfil</h6>
                     </div>
                     <div className="col-md-4 text-end">
-                      <a href="">
+                      <a onClick={()=>setEditModal(true)}>
                         <i
                           className="fas fa-user-edit text-secondary text-sm"
                           data-bs-toggle="tooltip"
@@ -376,9 +400,9 @@ export const Profile = () => {
                           <h6 className="mb-0 text-sm">{user.nombre}</h6>
                           <p className="mb-0 text-xs">{lastMsg(user.nombre)}</p>
                           <ChatModal
-                          setShowModal={setShowModal}
+                          setShowModal={setChatModal}
                           receiver={user.nombre}
-                          showModal={showModal}
+                          showModal={chatModal}
                           msgList={msgFromThisUser}
                         />
                         </div>
@@ -399,8 +423,13 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+      <EditModal setEditModal={setEditModal} editModal={editModal} updateUser={updateUser}/>
     </div>
   ) : (
     <SpinnerLoading />
   );
 };
+function async(): any {
+  throw new Error("Function not implemented.");
+}
+
