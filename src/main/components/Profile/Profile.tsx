@@ -3,13 +3,15 @@ import profilePic from "../../../assets/img/avatar2.jpg";
 import { fetchResults } from "../../utils/UserDataRest";
 import UserModel from "../../../models/UserModel";
 import React from "react";
-import { getNombre } from "../Login/TokenHandler";
+import { getId, getNombre } from "../Login/TokenHandler";
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from "../../utils/FirebaseConfig";
 import { SpinnerLoading } from "../../utils/SpinnerLoading";
 import avatar from "../../../assets/img/avatar2.jpg";
 import { ChatModal } from "./Modals/ChatModal";
 import { EditModal } from "./Modals/EditModal";
+import { AvatarModal } from "./Modals/AvatarModal";
+import unknown from "../../../assets/icons/User_icon.png"
 
 export interface Message {
   key: string;
@@ -25,30 +27,39 @@ export const Profile = () => {
   const [fireBaseMessages, setFireBaseMessages] = React.useState<Message[]>([]);
   const [isReady, setIsReady] = React.useState<boolean>(false);
   const [chatModal, setChatModal] = React.useState(false);
-  const [editModal, setEditModal]=React.useState(false);
-  const [msgFromThisUser, setMsgFromThisUser]=React.useState<Message[]>([]);
+  const [editModal, setEditModal] = React.useState(false);
+  const [msgFromThisUser, setMsgFromThisUser] = React.useState<Message[]>([]);
+  const [avatarModal, setAvatarModal] = React.useState(false);
 
+  const updateUser = useCallback(
+    async (id: number, newName: string, newBio: string, newPhone: number) => {
+      console.log(id);
+      const formData = {
+        newName: newName,
+        newPhone: newPhone,
+        newBio: newBio,
+      };
 
-
-  const updateUser = useCallback(async (id: number, newName: string, newBio: string, newPhone: number) => {
-    const formData = {
-      newName: newName,
-      newPhone: newPhone,
-      newBio: newBio  
-    };
-  
-    try {
-      const response = await fetch(`http://localhost:8080/auth/updateUserData/${id}`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-    } catch (error) {
-      console.log("Error actualizando el recurso");
-    }
-  }, []);
+      try {
+        const response = await fetch(
+          `http://localhost:8080/auth/updateUserData/${id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+        if (response.ok) {
+          const responseBody = await response.text();
+        }
+      } catch (error) {
+        console.log("Error actualizando el recurso");
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "tarjetas", "mensajes"), (doc) => {
@@ -67,7 +78,44 @@ export const Profile = () => {
     };
   }, []);
 
-  const handleModal = (username:string) => {
+
+
+  const handleImgUpload = useCallback(
+   
+    async (
+      acceptedFiles: File[],
+
+    ) => {
+     console.log(typeof acceptedFiles );
+      const file = new FileReader();
+    
+      const formData = new FormData();
+      formData.append("file", acceptedFiles[0]);
+      formData.append("id", getId);
+  
+      try {
+        const response = await fetch("http://localhost:8080/drive/avatar", {
+          method: "POST",
+          body: formData,
+        });
+        console.log(response);
+        if (response.ok) {
+          console.log(response);
+          console.log("File uploaded successfully");
+  
+        } else {
+          console.error("Failed to upload file");
+        }
+      } catch (error) {
+        console.error("Error uploading file", error);
+      }
+     
+    },
+    []
+  );
+
+
+  const handleChatModal = (username: string) => {
     const msgFromThisUser = fireBaseMessages.filter(
       (element) =>
         (element.sender === username && element.receiver === getNombre) ||
@@ -80,8 +128,7 @@ export const Profile = () => {
     });
     setMsgFromThisUser(msgFromThisUser);
     setChatModal(true);
-   
-  }
+  };
 
   const lastMsg = (username: string) => {
     const msgFromThisUser = fireBaseMessages.filter(
@@ -94,13 +141,13 @@ export const Profile = () => {
       const dateB = new Date(b.date);
       return dateB.getTime() - dateA.getTime();
     });
-   
+
     // Devolver el primer mensaje del array, que será el más reciente
     const currentlastMsg = msgFromThisUser[0];
-    return currentlastMsg === undefined ? "Aún no hay mensajes con este usuario" : currentlastMsg.body;
+    return currentlastMsg === undefined
+      ? "Aún no hay mensajes con este usuario"
+      : currentlastMsg.body;
   };
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,7 +163,6 @@ export const Profile = () => {
 
     fetchData();
   }, []);
-
 
   return isReady ? (
     <div className="container-fluid px-2 px-md-7 main-content w-auto">
@@ -137,6 +183,7 @@ export const Profile = () => {
                 src={avatar}
                 alt="profile_image"
                 className="w-100 border-radius-lg shadow-sm"
+                onDoubleClick={()=>setAvatarModal(true)}
               />
             </div>
           </div>
@@ -319,7 +366,7 @@ export const Profile = () => {
                       <h6 className="mb-0">Información de perfil</h6>
                     </div>
                     <div className="col-md-4 text-end">
-                      <a onClick={()=>setEditModal(true)}>
+                      <a onClick={() => setEditModal(true)}>
                         <i
                           className="fas fa-user-edit text-secondary text-sm"
                           data-bs-toggle="tooltip"
@@ -391,29 +438,29 @@ export const Profile = () => {
                       >
                         <div className="avatar me-3">
                           <img
-                            src={avatar}
+                            src={user.avatar == null ? unknown : user.avatar }
                             alt="kal"
                             className="border-radius-lg shadow"
+                            
                           />
                         </div>
                         <div className="d-flex align-items-start flex-column justify-content-center w-75">
                           <h6 className="mb-0 text-sm">{user.nombre}</h6>
                           <p className="mb-0 text-xs">{lastMsg(user.nombre)}</p>
                           <ChatModal
-                          setShowModal={setChatModal}
-                          receiver={user.nombre}
-                          showModal={chatModal}
-                          msgList={msgFromThisUser}
-                        />
+                            setShowModal={setChatModal}
+                            receiver={user.nombre}
+                            showModal={chatModal}
+                            msgList={msgFromThisUser}
+                          />
                         </div>
-                        
+
                         <button
-                          onClick={()=>handleModal(user.nombre)}
+                          onClick={() => handleChatModal(user.nombre)}
                           className="text-xs btn btn-sm btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto"
                         >
                           Ver
                         </button>
-                      
                       </li>
                     ))}
                   </ul>
@@ -423,13 +470,19 @@ export const Profile = () => {
           </div>
         </div>
       </div>
-      <EditModal setEditModal={setEditModal} editModal={editModal} updateUser={updateUser}/>
+      <AvatarModal
+        setAvatarModal={setAvatarModal}
+        avatarModal={avatarModal}
+        handleImgUpload={handleImgUpload}
+      />
+      <EditModal
+        setEditModal={setEditModal}
+        editModal={editModal}
+        updateUser={updateUser}
+      />
     </div>
   ) : (
     <SpinnerLoading />
   );
 };
-function async(): any {
-  throw new Error("Function not implemented.");
-}
 

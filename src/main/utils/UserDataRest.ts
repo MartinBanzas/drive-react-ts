@@ -26,7 +26,8 @@ export const fetchResults = async () => {
                 facebook: responseData[key].facebook,
                 twitter: responseData[key].twitter,
                 movil: responseData[key].movil,
-                instagram: responseData[key].instagram
+                instagram: responseData[key].instagram,
+                avatar: responseData[key].avatar
             });
         }
        

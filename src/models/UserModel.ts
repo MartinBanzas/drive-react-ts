@@ -7,9 +7,10 @@ class UserModel {
     twitter:string;
     movil:number;
     instagram:string;
+    avatar:string;
     
 
-    constructor (puntuacion:number, nombre:string, bio:string, email:string, facebook:string, twitter:string, movil:number, instagram:string) {
+    constructor (puntuacion:number, nombre:string, bio:string, email:string, facebook:string, twitter:string, movil:number, instagram:string, avatar:string) {
         this.nombre=nombre;
         this.puntuacion=puntuacion;
         this.bio=bio;
@@ -18,6 +19,7 @@ class UserModel {
         this.twitter=twitter;
         this.movil=movil;
         this.instagram=instagram;
+        this.avatar=avatar;
     }
 
 }

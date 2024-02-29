@@ -21,8 +21,6 @@ export const ChatModal: React.FC<ChatModalProps> = ({
 }) => {
   const [inputText, setInputText] = React.useState("");
 
-  console.log(msgList);
-
   const postNewMsg = async (event: any) => {
     const newMsg = {
       key: nanoid(),
@@ -47,6 +45,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
           element.sender === receiver ||
           (element.sender === getNombre && element.receiver === receiver)
       );
+      
 
       // Limpia el texto de entrada
       setInputText("");
@@ -74,7 +73,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
   return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Lista de mensajes</Modal.Title>
+        <Modal.Title>Historial de mensajes</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {msgList.map((message) => (
@@ -93,18 +92,22 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             </div>
           </div>
         ))}
+     
         <input
+        id="messageBody"
           className="mt-2"
           type="text"
+          placeholder="Escribe aquí..."
           onChange={(event) => setInputText(event.target.value)}
         />
+          
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => setShowModal(false)}>
           Cerrar
         </Button>
         <Button variant="primary" onClick={postNewMsg}>
-          Confirmar
+          Enviar
         </Button>
       </Modal.Footer>
     </Modal>
