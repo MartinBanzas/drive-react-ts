@@ -3,7 +3,7 @@ import profilePic from "../../../assets/img/avatar2.jpg";
 import { fetchResults } from "../../utils/UserDataRest";
 import UserModel from "../../../models/UserModel";
 import React from "react";
-import { getId, getNombre } from "../Login/TokenHandler";
+import {  getNombre, userId } from "../Login/TokenHandler";
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from "../../utils/FirebaseConfig";
 import { SpinnerLoading } from "../../utils/SpinnerLoading";
@@ -31,26 +31,25 @@ export const Profile = () => {
   const [msgFromThisUser, setMsgFromThisUser] = React.useState<Message[]>([]);
   const [avatarModal, setAvatarModal] = React.useState(false);
 
-  const updateUser = useCallback(
-    async (id: number, newName: string, newBio: string, newPhone: number) => {
-      console.log(id);
-      const formData = {
-        newName: newName,
-        newPhone: newPhone,
-        newBio: newBio,
-      };
 
+
+  const updateUser = useCallback(
+    async (newEmail: string, newBio: string, newPhone: number) => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/auth/updateUserData/${id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          }
-        );
+        
+        
+        const formData = new URL(`http://localhost:8080/auth/updateUserData/${userId}`);
+        formData.searchParams.append('newEmail', newEmail);
+        formData.searchParams.append('newBio', newBio);
+        formData.searchParams.append('newPhone', String(newPhone));
+        
+        const response = await fetch(formData.toString(), {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        
         if (response.ok) {
           const responseBody = await response.text();
         }
@@ -60,7 +59,6 @@ export const Profile = () => {
     },
     []
   );
-
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "tarjetas", "mensajes"), (doc) => {
       if (doc.exists()) {
@@ -81,17 +79,15 @@ export const Profile = () => {
 
 
   const handleImgUpload = useCallback(
-   
-    async (
-      acceptedFiles: File[],
-
-    ) => {
-     console.log(typeof acceptedFiles );
-      const file = new FileReader();
-    
+    async (file: File | null) => {
+      if (!file) {
+        console.error("No se ha seleccionado ningún archivo");
+        return;
+      }
+  
       const formData = new FormData();
-      formData.append("file", acceptedFiles[0]);
-      formData.append("id", getId);
+      formData.append("file", file);
+      formData.append("id", userId);
   
       try {
         const response = await fetch("http://localhost:8080/drive/avatar", {
@@ -100,20 +96,16 @@ export const Profile = () => {
         });
         console.log(response);
         if (response.ok) {
-          console.log(response);
-          console.log("File uploaded successfully");
-  
+          console.log("Archivo subido exitosamente");
         } else {
-          console.error("Failed to upload file");
+          console.error("Error al subir el archivo");
         }
       } catch (error) {
-        console.error("Error uploading file", error);
+        console.error("Error al subir el archivo", error);
       }
-     
     },
-    []
+    [userId]
   );
-
 
   const handleChatModal = (username: string) => {
     const msgFromThisUser = fireBaseMessages.filter(

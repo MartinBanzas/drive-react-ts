@@ -19,13 +19,12 @@ const TokenHandler = () => {
    
     const expirationDate = new Date(expirationTimestamp * 1000);
 
-  
     //username
     const roles=payload.roles;
     const nombre = payload.nombre;
-    const id=payload.id;
+    const userId=payload.id;
 
-    return { valid: expirationDate.getTime() > Date.now(), nombre: nombre, role:roles, id:id };
+    return { valid: expirationDate.getTime() > Date.now(), nombre: nombre, role:roles, userId:userId };
 }
 
-export const { valid: isTokenValid, nombre: getNombre, role:roles, id: getId } = TokenHandler();
+export const { valid: isTokenValid, nombre: getNombre, role:roles, userId:userId } = TokenHandler();
