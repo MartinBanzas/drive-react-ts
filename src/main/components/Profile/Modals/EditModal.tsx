@@ -12,13 +12,13 @@ export const EditModal: React.FC<EditModalProps> = ({
   editModal,
   updateUser
 }) => {
-  const [inputName, setInputName] = React.useState("");
+  const [inputEmail, setInputEmail] = React.useState("");
   const [inputBio,setInputBio]= React.useState("")
   const [inputPhone, setInputPhone]=React.useState("");
 
   const handleEdit = () => {
     setEditModal(false);
-    updateUser()
+    updateUser(inputEmail, inputBio, inputPhone)
   };
 
   return (
@@ -32,15 +32,15 @@ export const EditModal: React.FC<EditModalProps> = ({
         
           <label
             className="h6 display-6 form-check-label text-body text-truncate w-80 "
-            htmlFor="name"
+            htmlFor="email"
           >
-            Nombre completo
+            Email
           </label>
           <input
             className="mt-0"
             type="text"
-            onChange={(event) => setInputName(event.target.value)}
-            id="name"
+            onChange={(event) => setInputEmail(event.target.value)}
+            id="email"
           />
           <label
             className="h6 display-6 form-check-label text-body text-truncate w-80 mt-2"
