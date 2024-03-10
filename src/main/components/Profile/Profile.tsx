@@ -3,7 +3,7 @@ import profilePic from "../../../assets/img/avatar2.jpg";
 import { fetchResults } from "../../utils/UserDataRest";
 import UserModel from "../../../models/UserModel";
 import React from "react";
-import {  getNombre, userId } from "../Login/TokenHandler";
+import { getNombre, userId } from "../Login/TokenHandler";
 import { onSnapshot, doc } from "firebase/firestore";
 import { db } from "../../utils/FirebaseConfig";
 import { SpinnerLoading } from "../../utils/SpinnerLoading";
@@ -11,7 +11,7 @@ import avatar from "../../../assets/img/avatar2.jpg";
 import { ChatModal } from "./Modals/ChatModal";
 import { EditModal } from "./Modals/EditModal";
 import { AvatarModal } from "./Modals/AvatarModal";
-import unknown from "../../../assets/icons/User_icon.png"
+import unknown from "../../../assets/icons/User_icon.png";
 
 export interface Message {
   key: string;
@@ -30,26 +30,28 @@ export const Profile = () => {
   const [editModal, setEditModal] = React.useState(false);
   const [msgFromThisUser, setMsgFromThisUser] = React.useState<Message[]>([]);
   const [avatarModal, setAvatarModal] = React.useState(false);
-
-
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [userImageUrls, setUserImageUrls] = React.useState<{
+    [key: number]: string;
+  }>({});
 
   const updateUser = useCallback(
     async (newEmail: string, newBio: string, newPhone: number) => {
       try {
-        
-        
-        const formData = new URL(`http://localhost:8080/auth/updateUserData/${userId}`);
-        formData.searchParams.append('newEmail', newEmail);
-        formData.searchParams.append('newBio', newBio);
-        formData.searchParams.append('newPhone', String(newPhone));
-        
+        const formData = new URL(
+          `http://localhost:8080/auth/updateUserData/${userId}`
+        );
+        formData.searchParams.append("newEmail", newEmail);
+        formData.searchParams.append("newBio", newBio);
+        formData.searchParams.append("newPhone", String(newPhone));
+
         const response = await fetch(formData.toString(), {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
         });
-        
+
         if (response.ok) {
           const responseBody = await response.text();
         }
@@ -59,24 +61,6 @@ export const Profile = () => {
     },
     []
   );
-  useEffect(() => {
-    const unsubscribe = onSnapshot(doc(db, "tarjetas", "mensajes"), (doc) => {
-      if (doc.exists()) {
-        const data = doc.data().lists;
-        setFireBaseMessages(data);
-        console.log("Datos recibidos de Firebase:", data);
-        setIsReady(true);
-      } else {
-        console.log("No hay datos en Firebase.");
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-
 
   const handleImgUpload = useCallback(
     async (file: File | null) => {
@@ -84,11 +68,11 @@ export const Profile = () => {
         console.error("No se ha seleccionado ningún archivo");
         return;
       }
-  
+
       const formData = new FormData();
       formData.append("file", file);
       formData.append("id", userId);
-  
+
       try {
         const response = await fetch("http://localhost:8080/drive/avatar", {
           method: "POST",
@@ -141,6 +125,24 @@ export const Profile = () => {
       : currentlastMsg.body;
   };
 
+  //useEffects para obtener mensajes, filtrarlos, obtener los avatares...
+  useEffect(() => {
+    const unsubscribe = onSnapshot(doc(db, "tarjetas", "mensajes"), (doc) => {
+      if (doc.exists()) {
+        const data = doc.data().lists;
+        setFireBaseMessages(data);
+        console.log("Datos recibidos de Firebase:", data);
+        setIsReady(true);
+      } else {
+        console.log("No hay datos en Firebase.");
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetchResults();
@@ -155,6 +157,80 @@ export const Profile = () => {
 
     fetchData();
   }, []);
+
+  const fetchImage = async (id: Number) => {
+    console.log(userId);
+    console.log(id);
+    try {
+      const response = await fetch(
+        `http://localhost:8080/drive/get/avatar/${id}`,
+        {
+          method: "GET",
+        }
+      );
+      if (response.ok) {
+        const blob = await response.blob();
+        if (id == userId) {
+          setImageUrl(URL.createObjectURL(blob));
+        }
+        return URL.createObjectURL(blob);
+      } else {
+        console.log(response);
+        console.error("Error al obtener la imagen");
+      }
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchImageMain = async (id: Number) => {
+      console.log(userId);
+      try {
+        const response = await fetch(
+          `http://localhost:8080/drive/get/avatar/${id}`,
+          {
+            method: "GET",
+          }
+        );
+        if (response.ok) {
+          const blob = await response.blob();
+          setImageUrl(URL.createObjectURL(blob));
+          return URL.createObjectURL(blob);
+        } else {
+          console.log(response);
+          console.error("Error al obtener la imagen");
+        }
+      } catch (error) {
+        console.error("Error al realizar la solicitud:", error);
+      }
+    }
+    fetchImageMain(userId);
+  }, []);
+
+  useEffect(() => {
+    const fetchUserImages = async () => {
+      const urls: { [key: number]: string } = {};
+      for (const user of otherUsers) {
+        try {
+          const url = await fetchImage(user.id);
+          if (url) {
+            // Verificar si la URL no es undefined
+            urls[user.id] = url;
+          } else {
+            console.error(
+              `La URL de imagen para el usuario ${user.id} es undefined`
+            );
+          }
+        } catch (error) {
+          console.error(`Error fetching image for user ${user.id}:`, error);
+        }
+      }
+      setUserImageUrls(urls);
+    };
+
+    fetchUserImages();
+  }, [otherUsers]);
 
   return isReady ? (
     <div className="container-fluid px-2 px-md-7 main-content w-auto">
@@ -172,10 +248,10 @@ export const Profile = () => {
           <div className="col-auto">
             <div className="avatar avatar-xl position-relative">
               <img
-                src={avatar}
-                alt="profile_image"
+                src={imageUrl}
+                alt="Imagen de perfil del usuario"
                 className="w-100 border-radius-lg shadow-sm"
-                onDoubleClick={()=>setAvatarModal(true)}
+                onDoubleClick={() => setAvatarModal(true)}
               />
             </div>
           </div>
@@ -241,7 +317,7 @@ export const Profile = () => {
             <div className="col-12 col-xl-4">
               <div className="card card-plain h-100">
                 <div className="card-header pb-0 p-3">
-                  <h6 className="mb-0">Platform Settings</h6>
+                  <h6 className="mb-0">Opciones de la plataforma</h6>
                 </div>
                 <div className="card-body p-3">
                   <h6 className="text-uppercase text-body text-xs font-weight-bolder">
@@ -291,7 +367,7 @@ export const Profile = () => {
                           className="form-check-label text-body ms-3 text-truncate w-80 mb-0"
                           htmlFor="flexSwitchCheckDefault2"
                         >
-                          Email me when someone mentions me
+                          Recibir notificaciones de mensajes
                         </label>
                       </div>
                     </li>
@@ -430,10 +506,14 @@ export const Profile = () => {
                       >
                         <div className="avatar me-3">
                           <img
-                            src={user.avatar == null ? unknown : user.avatar }
+                            src={
+                              user.avatar == null
+                                ? unknown
+                                : userImageUrls[user.id]
+                            }
                             alt="kal"
                             className="border-radius-lg shadow"
-                            
+                            width={"10px"} 
                           />
                         </div>
                         <div className="d-flex align-items-start flex-column justify-content-center w-75">
@@ -477,4 +557,3 @@ export const Profile = () => {
     <SpinnerLoading />
   );
 };
-

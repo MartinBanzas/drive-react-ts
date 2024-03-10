@@ -19,6 +19,7 @@ export const fetchResults = async () => {
 
         for (const key in responseData) {
             users.push({
+                id:responseData[key].id,
                 nombre: responseData[key].nombre,
                 puntuacion: responseData[key].puntuacion,
                 bio: responseData[key].bio != null ? responseData[key].bio : bioDefault,
